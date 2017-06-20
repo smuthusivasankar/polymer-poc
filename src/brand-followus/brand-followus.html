@@ -1,0 +1,95 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+
+
+<dom-module id = "follow-us">
+<template>
+        <style include="store-foundation">
+            :host{
+                display: block;
+            };
+	.follow-us-container {width:950px;}
+	.follow-us-headline {text-align:center;font-family: 'adilight',Arial,Helvetica,Verdana,sans-serif;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-size: 32px;
+    line-height: 95%;
+    font-weight: 100; }
+	.follow-us-social {width:236px; float:left; height:200px; border-left:2px solid #ebebeb;}
+	.follow-us-social.first {border:none;}
+	.follow-us-social .social-image {height:110px; width:100%; text-align:center; display:table;}
+	.follow-us-social .social-image > div {display:table-cell; vertical-align:middle;}
+	.follow-us-social .social-image > div:before {color:#000; font-size:48px; display: block; font-family: 'icomoonregular'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
+	.follow-us-social .social-image.facebook > div:before {content: "\e618"}
+	.follow-us-social .social-image.pinit > div:before {content: "\e619"}
+	.follow-us-social .social-image.twitter > div:before {content: "\e61a"}
+	.follow-us-social .social-image.google-plus > div:before {content: "\e61b"}
+	.follow-us-social .social-label {text-align:center; font:14px/18px 'adiBlack',Arial,Helvetica,Verdana,sans-serif; margin:6px 0 16px;}
+    .follow-us-social .social-button {text-align:center;}
+    .follow-us-social .social-button.google-plus {padding:0 0 0 68px;}
+
+</style>        
+<div class="contentstack clearfix contentstack-common ">
+<div class="contentasset" data-contentasset-id="follow_us-Originals" data-contentasset="follow_us-Originals">
+
+<div class="follow-us-container">
+<h2 class="follow-us-headline">Follow us</h2>
+	<div class="follow-us-social first">
+		<div class="social-image facebook">
+			<div></div>
+		</div>
+		<div class="social-label">Facebook</div>
+		<div class="social-button">
+			<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="http://staticxx.facebook.com/connect/xd_arbiter/r/JtmcTFxyLye.js?version=42#channel=faa126de25c7ac&amp;origin=http%3A%2F%2Fwww.adidas.co.uk" style="border: none;"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="https://staticxx.facebook.com/connect/xd_arbiter/r/JtmcTFxyLye.js?version=42#channel=faa126de25c7ac&amp;origin=http%3A%2F%2Fwww.adidas.co.uk" style="border: none;"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+			<!--<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>-->
+			<div class="fb-like fb_iframe_widget" data-href="http://www.facebook.com/adidasOriginals" data-layout="button" data-action="like" data-show-faces="false" data-share="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=236&amp;href=http%3A%2F%2Fwww.facebook.com%2FadidasOriginals&amp;layout=button&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false"><span style="vertical-align: bottom; width: 50px; height: 20px;"><iframe name="f4ec6b41ccf268" width="1000px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="https://www.facebook.com/v2.0/plugins/like.php?action=like&amp;app_id=&amp;channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FJtmcTFxyLye.js%3Fversion%3D42%23cb%3Df7a965e6f08ab4%26domain%3Dwww.adidas.co.uk%26origin%3Dhttp%253A%252F%252Fwww.adidas.co.uk%252Ffaa126de25c7ac%26relation%3Dparent.parent&amp;container_width=236&amp;href=http%3A%2F%2Fwww.facebook.com%2FadidasOriginals&amp;layout=button&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false" style="border: none; visibility: visible; width: 50px; height: 20px;" class=""></iframe></span></div>
+		</div>
+	</div>
+<div class="follow-us-social">
+		<div class="social-image">
+			<div><img src="http://demandware.edgesuite.net/aagl_prd/on/demandware.static/-/Sites-adidas-GB-Library/default/dw969b0d60/icon-social-instagram.png"></div>
+		</div>
+		<div class="social-label">Instagram</div>
+		<div class="social-button">
+			<a target="_blank" href="https://instagram.com/adidasoriginals/">
+				<img alt="Instagram" src="https://badges.instagram.com/static/thirdparty/images/badges/ig-badge-view-24.png/c2f23494e67d.png">
+			</a>
+		</div>
+	</div>
+	<div class="follow-us-social">
+		<div class="social-image twitter">
+			<div></div>
+		</div>
+		<div class="social-label">Twitter</div>
+		<div class="social-button">
+			<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="http://platform.twitter.com/widgets/follow_button.5b6375bb17bd9edb2f4e7f8f12971999.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=adidasoriginals&amp;show_count=false&amp;show_screen_name=false&amp;size=m&amp;time=1495012255848" style="position: static; visibility: visible; width: 62px; height: 20px;" data-screen-name="adidasoriginals"></iframe>
+			<!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>	-->
+		</div>
+	</div>
+	<div class="follow-us-social">
+		<div class="social-image">
+			<div><img src="http://demandware.edgesuite.net/aagl_prd/on/demandware.static/-/Sites-adidas-GB-Library/default/dwd78eca6a/icon-social-youtube.png"></div>
+		</div>
+		<div class="social-label">YouTube</div>
+		<div class="social-button">
+			<div id="___ytsubscribe_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 123px; height: 24px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 123px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" tabindex="0" vspace="0" width="100%" id="I0_1495012248107" name="I0_1495012248107" src="https://www.youtube.com/subscribe_embed?usegapi=1&amp;channel=adidasoriginals&amp;layout=default&amp;count=default&amp;origin=http%3A%2F%2Fwww.adidas.co.uk&amp;gsrc=3p&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en_GB.o-MmFS4l3D8.O%2Fm%3D__features__%2Fam%3DAQ%2Frt%3Dj%2Fd%3D1%2Frs%3DAGLTcCMLontrX8acE-WBZqi4k0FUR7FMXA#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh%2Conload&amp;id=I0_1495012248107&amp;parent=http%3A%2F%2Fwww.adidas.co.uk&amp;pfname=&amp;rpctoken=12690250" data-gapiattached="true"></iframe></div>			
+			<!--<script src="https://apis.google.com/js/platform.js" gapi_processed="true"></script>-->
+		</div>
+	</div>
+</div>
+</div>	
+	</div>    
+    </template>
+	<script>
+    Polymer({
+        is : "follow-us",
+    });
+    </script>
+</dom-module>

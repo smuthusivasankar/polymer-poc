@@ -1,0 +1,491 @@
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-image-viewer/store-image-viewer.html">
+<link rel="import" href="../store-price/store-price.html">
+<link rel="import" href="../store-breadcrumbs-stack/store-breadcrumbs-stack.html">
+<link rel="import" href="../store-product-size-dropdown/store-product-size-dropdown.html">
+<link rel="import" href="../store-product-qty-dropdown/store-product-qty-dropdown.html">
+
+<dom-module id="store-hero-stack">
+  <template>
+    <style include="store-foundation">
+      #hero {
+        background: transparent;
+        transition: height 0.2s ease-in-out;
+      }
+      @media (min-width: 960px) {
+        #hero {
+          background-size: contain !important;
+          min-height: 520px;
+          max-height: 800px;
+        }
+        #hero > .container, #hero > .container > .row {
+          height: 100%;
+        }
+      }
+      @media (min-width: 960px) and (min-height: 500px) {
+        #hero {height: 500px;}
+      }
+      @media (min-width: 960px) and (min-height: 600px) {
+        #hero {height: 600px;}
+      }
+      @media (min-width: 960px) and (min-height: 800px) {
+        #hero {height: 700px;}
+      }
+      @media (min-width: 960px) and (min-height: 1000px) {
+        #hero {height: 800px;
+        }
+      }
+
+      #order-information {
+        padding: 30px 15px 0;
+        background: #fff;
+      }
+      @media (min-width: 960px) {
+        #order-information {
+          margin-top: -10px;
+          margin-bottom: -10px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+      }
+      @media (min-width: 1280px) {
+        #order-information {
+          padding: 30px;
+        }
+      }
+
+      #sizechart {
+        --store-modal-dialog: {
+          top: 5vh;
+        }
+      }
+      #sizechart h3 {
+        font-size: calc(var(--FontDtBaseline) * 1.571);
+        margin-bottom: calc(var(--HorizontalBaseline) * 2);
+        line-height: calc(var(--HorizontalBaseline) * 2);
+      }
+      #sizechart p {
+        margin-bottom: calc(var(--HorizontalBaseline) * 2);
+        line-height: calc(var(--HorizontalBaseline) * 2);
+      }
+
+      #sizechart-link , #cta, #product-reviews,
+      #product-information,
+      #check-availability  {
+        margin-bottom: 20px;
+      }
+      #product-reviews {
+        margin-bottom: 10px;
+      }
+      #product-reviews .icon:before{
+        color: var(--AdiFeedback);
+        font-size: calc(var(--FontDtBaseline) * 1.143);
+      }
+      #product-reviews a{
+        display: inline-block;
+        vertical-align: bottom;
+        margin-left: 10px;
+      }
+      #cta .btn-bag {
+        width: calc(100% - 70px);
+        margin-right: 20px;
+      }
+      .quick-title {
+        margin-bottom: 10px;
+      }
+      .quick-title i {
+        margin-right: 10px;
+      }
+
+      @media (max-width: 959px) {
+        #delivery-information {
+          margin-top: -20px;
+          padding: 40px 0 0;
+        }
+      }
+      #delivery-information span {
+        display: inline-block;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
+      #delivery-information .icon:before {
+        color: var(--AdiPrimary);
+        font-size: 1.25rem;
+      }
+      #delivery-information .delivery-information {
+        padding-bottom: 20px;
+      }
+      .badge {
+        position: absolute;
+        top: 0px;
+        left: 5px;
+      }
+      @media (min-width: 960px) {
+        .badge {
+          top: 30px;
+        }
+      }
+
+      .zoom-container {
+        opacity: 0;
+        visibility: hidden;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+      }
+      @media (min-width: 768px) {
+        #order-information {
+          position: relative;
+        }
+        .zoom-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          overflow: hidden;
+          border: 6px solid var(--AdiGrey10);
+          z-index: var(--z-index-product-image-zoom-desktop);
+          transition: opacity 0.2s ease-in-out;
+        }
+        .zoom-container.zoom-active {
+          opacity: 1;
+          visibility: visible;
+          height: 100%;
+          transition: opacity 0.2s ease-in-out;
+        }
+        .zoom-image {
+          position: relative;
+        }
+      }
+    </style>
+
+    <store-added-to-bag-modal id="addToBagModal">
+    </store-added-to-bag-modal>
+
+    <store-breadcrumbs-stack
+      breadcrumbs="[[product.breadcrumb_list]]"
+      current-page-title="[[product.name]]"
+    ></store-breadcrumbs-stack>
+
+
+    <div id="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-mb-12 col-dt-16 col-xl-18 no-gutters">
+            <store-image-viewer views="[[product.view_list]]" active-view-index={{activeViewIndex}} background="{{background}}" mobile="{{mobile}}" zoom-url={{zoomUrl}} zoom-active="{{zoomActive}}" zoom-position="{{zoomPosition}}"></store-image-viewer>
+          </div>
+
+          <template is="dom-if" if="[[hasBadge(product)]]">
+            <div class$="[[badgeClass(product)]]">
+               [[product.attribute_list.badge_text]]
+            </div>
+          </template>
+
+          <div id="order-information" class="col-mb-12 col-dt-8 col-xl-6">
+            <div id="zoomContainer" class="zoom-container">
+              <img class="zoom-image" src="{{zoomUrl}}" id="zoomImage"></img>
+            </div>
+            <div class="row">
+              <iron-form id="form" on-iron-form-presubmit="_presubmitForm" on-iron-form-response="_successResponseHandler" on-iron-form-error="_errorResponseHandler">
+                <form action="" method="POST" enctype="application/x-www-form-urlencoded">
+                  <input type="hidden" name="product_id" value="[[product.id]]">
+                  <div id="product-information">
+                    <div id="product-reviews">
+                      <i class$="{{starStyle(1, product.attribute_list.rating_avg)}}"></i>
+                      <i class$="{{starStyle(2, product.attribute_list.rating_avg)}}"></i>
+                      <i class$="{{starStyle(3, product.attribute_list.rating_avg)}}"></i>
+                      <i class$="{{starStyle(4, product.attribute_list.rating_avg)}}"></i>
+                      <i class$="{{starStyle(5, product.attribute_list.rating_avg)}}"></i>
+                      <template is="dom-if" if="[[hasRatings(product.attribute_list.rating_count)]]">
+                        <a href="#reviews">
+                          <t>Read all<t> [[round(product.attribute_list.rating_count)]] <t>Reviews</t>
+                        </a>
+                      </template>
+                      <template is="dom-if" if="[[!hasRatings(product.attribute_list.rating_count)]]">
+                        <a href="http://www.adidas.co.uk/on/demandware.store/Sites-adidas-GB-Site/en_GB/Bazaarvoice-SubmissionContainer?pid=[[product.model_number]]&bvdisplaycode=1576-en_gb&bvappcode=rr&bvproductid=[[product.model_number]]&bvpage=http%3A%2F%2Fadidas.ugc.bazaarvoice.com%2Fsubmit%2F1576-en_gb%2FWI883%2Fsubmitreview.htm%3Fauthsourcetype%3D__AUTHTYPE__%26format%3Dembedded%26return%3Dhttp%253A%252F%252Fwww.adidas.co.uk%252%253Fpr%253Dproduct2_rr%2526slot%253D3%2523reviews%26sessionparams%3D__BVSESSIONPARAMS__%26user%3D__USERID__&bvcontenttype=REVIEW_SUBMISSION&bvauthenticateuser=false">
+                          <t>Write a Review</t>
+                        </a>
+                      </template>
+                    </div>
+
+                    <template is="dom-if" if="[[product.name]]">
+                      <h4 id="product-title" >[[product.name]]</h4>
+                    </template>
+                    <template is="dom-if" if="[[product.attribute_list.brand]]">
+                      <h5 class="light" id="product-category" >[[product.attribute_list.brand]]</h4>
+                      </template>
+
+                      <store-price prices=[[product.pricing_information]]></store-price>
+                    </div>
+
+                    <dom-if if="_getColorVariations(product)">
+                      <template>
+                        <div class="hr-2-dotted-grey"></div>
+
+                        <store-color-chooser
+                        products="{{_getColorVariations(product)}}"
+                        current-product-image="[[product.view_list.0.image_url]]"
+                        >
+                      </store-color-chooser>
+                    </template>
+                  </dom-if>
+
+                  <div class="hr-2-dotted-grey"></div>
+
+                  <div class="row no-gutters">
+                    <div id="size-wrapper" class="col-mb-7">
+                      <store-product-size-dropdown
+                      required
+                      name="product_variation_sku"
+                      product=[[product]]
+                      value={{selectedSize}}
+                      threshold=[[configuration.product.availability.threshold]]
+                      threshold-warning=[[configuration.product.availability.warningType]]></store-product-size-dropdown>
+                    </div>
+                    <div id="amount-wrapper" class="offset-mb-1 col-mb-4">
+                      <store-product-qty-dropdown
+                      name="quantity"
+                      required
+                      value={{selectedQuantity}}
+                      product-availability=[[productAvailability]]
+                      product-max-quantity=[[productMaxQuantity]]
+                      site-max-quantity=[[configuration.product.maxOrderQuantity]]
+                      ></store-product-qty-dropdown>
+                    </div>
+                  </div>
+
+                  <dom-if if="[[showQuantityExceededError]]">
+                    <template>
+                      <div class="col-dt-24 col-mb-12 message error">
+                        <t>Limited to 10 item(s) per purchase</t>
+                      </div>
+                    </template>
+                  </dom-if>
+
+                  <dom-if if="[[product.attribute_list.size_chart_link]]">
+                    <template>
+                      <p id="sizechart-link">
+                        <a on-click="_openSizeChart"><t>Size Chart</t></a>
+                      </p>
+                      <store-modal id="sizechart" title="Size Chart" s18n-attrs="title">
+                      </store-modal>
+                      <iron-ajax
+                        url="[[_getSizeChartLink(product.attribute_list.size_chart_link)]]"
+                        handle-as="text"
+                        last-response="{{sizeChartResponse}}"
+                        id="sizechart-xhr"
+                      ></iron-ajax>
+                    </template>
+                  </dom-if>
+
+                  <div id="customization">
+                    <div class="quick-title"><i class="icon icon-personalize"></i><strong>QUICK</strong> PERSONALIZATION</div>
+                    <input id="right-shoe" type="text" placeholder="RIGHT SHOE (A-Z, 0-9)">
+                    <input id="left-shoe" type="text" placeholder="LEFT SHOE (A-Z, 0-9)">
+                  </div>
+
+                  <div id="cta" class="row no-gutters">
+                    <button id="add-to-bag" class$="btn btn-bag {{_submitButtonLoading(_isSubmitting)}}" type="submit" disabled="[[_isSubmitting]]"><t>Add To Bag</t></button>
+                    <button type="button" class="btn btn-white btn-wishlist"><i class="icon icon-heart-empty"></i></button>
+                  </div>
+
+                  <div class="hr-2-dotted-grey"></div>
+                  <div id="check-availability">
+                    <button class="btn btn-store-finder">Check store availability</button>
+                  </div>
+                  <div class="hr-2-dotted-grey hidden-mb"></div>
+                </form>
+              </iron-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+    class StoreHeroStack extends StoreBaseElement {
+      static get is () { return 'store-hero-stack' }
+      static get properties () {
+        return {
+          product: {
+            type: Object,
+            value: {},
+            observer: '_updateQuantity'
+          },
+          activeViewIndex: {
+            type: Number,
+            value: 0
+          },
+          background: {
+            type: String,
+            value: '',
+            observer: '_onBackgroundChange'
+          },
+          zoomActive: {
+            type: Boolean,
+            value: false,
+            observer: '_setZoomContainerClass'
+          },
+          zoomPosition: {
+            type: Object,
+            value: {},
+            observer: '_setZoomPosition'
+          },
+          selectedSize: {
+            type: 'String',
+            observer: '_updateQuantity'
+          },
+          selectedQuantity: {
+            type: Number
+          },
+          productMaxQuantity: {
+            type: Number
+          },
+          productAvailability: {
+            type: Number
+          },
+          showQuantityExceededError: Boolean,
+          _isSubmitting: Boolean
+        }
+      }
+      round (value) {
+        return parseInt(value)
+      }
+      hasRatings (value) {
+        const roundedValue = this.round(value)
+        return roundedValue != null && roundedValue > 0
+      }
+      hasBadge (product) {
+        return true
+      }
+      badgeClass (product) {
+        return 'badge ' + product.attribute_list.badge_style
+      }
+      starStyle (index, ratingAvg) {
+        const rating = parseInt(ratingAvg)
+        if (rating > index * 20 - 10) {
+          return 'icon icon-star-filled'
+        } else {
+          return 'icon icon-star-empty'
+        }
+      }
+      availableProducts () {
+        return this.product != null ? this.product.variation_list.filter(i => i.availability > 0) : []
+      }
+      selectedProduct () {
+        return this.product && this.product.variation_list ? this.product.variation_list.find(i => i.size === this.selectedSize) : null
+      }
+      connectedCallback () {
+        super.connectedCallback()
+        this.$.form._getSubmittableElements = function () {
+          return Array.prototype.slice.call(Polymer.dom(this._form).querySelectorAll('*'))
+            .filter(el => !el.disabled && el.name)
+        }
+      }
+
+      addOption (element, key, value) {
+        const option = document.createElement('option')
+        option.text = key
+        option.value = value
+        element.add(option)
+      }
+      _onBackgroundChange (background) {
+        if (this.$.hero && !this.mobile) {
+          this.$.hero.style.background = background
+        }
+      }
+      _setZoomContainerClass (zoomActive) {
+        if (zoomActive) {
+          this.$.zoomContainer.classList.add('zoom-active')
+        } else {
+          this.$.zoomContainer.classList.remove('zoom-active')
+        }
+      }
+      _setZoomPosition (zoomPosition) {
+        const xOffset = this.$.zoomContainer.offsetWidth
+        const yOffset = this.$.zoomContainer.offsetHeight
+        let positionY = zoomPosition.y - (yOffset / 2)
+        let positionX = zoomPosition.x - (xOffset / 2)
+        positionX = positionX > (2000 - xOffset) ? 2000 - xOffset : positionX
+        positionY = positionY > (2000 - yOffset) ? 2000 - yOffset : positionY
+        this.$.zoomImage.style.transform = 'translate3d(-' + positionX + 'px, -' + positionY + 'px, 0)'
+      }
+
+      _getColorVariations (product) {
+        return product ? product.product_link_list.filter(link => link.type === 'color-variation') : undefined
+      }
+
+      _updateQuantity () {
+        const product = this.selectedProduct()
+        if (product) {
+          this.productMaxQuantity = parseInt(product.max_order_quantity)
+          this.productAvailability = parseInt(product.availability)
+        } else {
+          this.productMaxQuantity = null
+          this.productAvailability = null
+        }
+      }
+
+      _successResponseHandler (e, response) {
+        this._isSubmitting = false
+        const result = response.parseResponse()
+        this.$.addToBagModal.product = result.product
+        this.$.addToBagModal.cart = result.cart
+        this.$.addToBagModal.open = true
+        window.dispatchEvent(new Event('basket-amount-changed'))
+      }
+
+      _errorResponseHandler (event, ajaxError) {
+        this._isSubmitting = false
+        const error = ajaxError.request.parseResponse()
+        if (error.message === 'Quantity exceeded') {
+          this.showQuantityExceededError = true
+        } else {
+          this.showQuantityExceededError = false
+        }
+        window.dispatchEvent(new Event('basket-amount-changed'))
+      }
+
+      _presubmitForm (event) {
+        const form = this.$.form
+        this.showQuantityExceededError = false
+        this._isSubmitting = true
+        form.ajax.contentType = form._form.enctype
+      }
+
+      _submitButtonLoading (isLoading) {
+        return isLoading ? 'btn-loading' : ''
+      }
+
+      _openSizeChart (sizeChartLink) {
+        const xhr = this.shadowRoot.querySelector('#sizechart-xhr')
+        const sizeChart = this.shadowRoot.querySelector('#sizechart')
+
+        if (xhr.loading) {
+          return
+        }
+
+        if (xhr.lastResponse) {
+          sizeChart.open = true
+        } else {
+          xhr.addEventListener('response', () => {
+            sizeChart.innerHTML = JSON.parse(request.response).content || ''
+            sizeChart.open = true
+          })
+          const request = xhr.generateRequest()
+        }
+      }
+
+      _getSizeChartLink (sizeChartLinkFromProductInfo) {
+        const [_, cid] = /cid=([^&]+)(&|$)/.exec(sizeChartLinkFromProductInfo) || []
+        if (!cid) {
+          return
+        }
+
+        return `/api/size_charts/${cid}`
+      }
+    }
+    customElements.define(StoreHeroStack.is, StoreHeroStack)
+  </script>
+</dom-module>

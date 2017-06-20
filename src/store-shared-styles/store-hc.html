@@ -1,0 +1,294 @@
+<dom-module id="store-hc">
+    <template>
+        <custom-style>
+            <style>
+                /* GENERAL PLP */
+                .hockeycard,
+                .hockeycard .product-carousel,
+                .hockeycard .wishlist,
+                .hockeycard .aditype,
+                .hockeycard .img-hover,
+                .hockeycard.look .btn {
+                    transition: all .2s ease-in-out;
+                }
+
+                .hockeycard {
+                    width: 100%;
+                    position: relative;
+                    background: #fff;
+                    color: #000;
+                    cursor: pointer;
+                }
+                @media (min-width : 960px) {
+                    .hockeycard:hover {
+                        box-shadow: 0 0 20px rgba(0,0,0,.15);
+                    }
+                }
+                .hockeycard:hover .img-hover {
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .hockeycard .img-normal,
+                .hockeycard .img-hover {
+                    width: 100%;
+                    display: block;
+                }
+                .hockeycard .img-hover {
+                    visibility: hidden;
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                }
+                .hockeycard .badge{
+                    position: absolute;
+                    top: 10px;
+                }
+                @media (min-width : 960px) {
+                    .hockeycard .badge{
+                        top: 40px;
+                    }
+                }
+                .hockeycard .aditype {
+                    opacity: 0;
+                    visibility: hidden;
+                    width: 21px;
+                    height: 21px;
+                    position: absolute;
+                    top: 13px;
+                    left: 10px;
+                    background-image: url(../../img/adidas_desktop_sprite.png);
+                    background-position: -940px -1251px;
+                }
+                .hockeycard:hover .aditype {
+                    opacity: 1;
+                    visibility: visible;
+                }
+                .hockeycard .wishlist {
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+                    color: var(--AdiGrey60);
+                    padding: 10px;
+                    font-size: 24px;
+                    line-height: 1;
+                    opacity: 0;
+                    visibility: hidden;
+                }
+                .hockeycard .wishlist:hover {
+                    color: var(--AdiPrimary);
+                }
+                .hockeycard:hover .wishlist {
+                    opacity: 1;
+                    visibility: visible;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard:hover .aditype {
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                    .hockeycard .wishlist {
+                        opacity: 1;
+                        visibility: visible;
+                        padding: 12px;
+                        font-size: 18px;
+                    }
+                }
+
+                .hockeycard .product-details {
+                    padding: 10px 10px 20px;
+                    overflow: auto;
+                }
+                .hockeycard .product-color,
+                .hockeycard .product-personal {
+                    color: var(--AdiGrey60);
+                    padding-bottom: 6px;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard .product-color,
+                    .hockeycard .product-personal {
+                        font-size: calc(var(--FontMbBaseline) * 0.8571);
+                        padding-bottom: 0px;
+                    }
+                }
+                @media (min-width : 960px) {
+                    .hockeycard:hover .product-color,
+                    .hockeycard:hover .product-personal {
+                        display: none;
+                    }
+                }
+                .hockeycard .product-color {
+                    float: left;
+                }
+                .hockeycard .product-personal {
+                    float: right;
+                }
+                .hockeycard .product-personal span {
+                    padding-right: 6px;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard .product-personal span {
+                        display: none;
+                    }
+                }
+                .hockeycard .product-carousel {
+                    clear: both;
+                    text-align: center;
+                    position: relative;
+                    height: 0;
+                    overflow: hidden;
+                    display: table-column;
+                }
+                .hockeycard:hover .product-carousel {
+                    height: 60px;
+                    display: block;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard:hover .product-carousel {
+                        display: none;
+                    }
+                }
+                .hockeycard .product-carousel:after,
+                .hockeycard .product-carousel:before {
+                    position: absolute;
+                    font-family: 'icomoonregular';
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    line-height: 54px;
+                }
+                .hockeycard .product-carousel:after {
+                    content: "\e627";
+                    left: 0;
+                }
+                .hockeycard .product-carousel:before {
+                    content: "\e628";
+                    right:0;
+                }
+                .hockeycard .product-carousel img {
+                    width: 50px;
+                    display: inline-block;
+                    cursor: pointer;
+                    margin: 2px;
+                    border-bottom: 2px solid transparent;
+                }
+                .hockeycard .product-carousel img:hover {
+                    border-color: #000;
+                }
+                .hockeycard .product-carousel img.active {
+                    border-color: var(--AdiPrimary);
+                }
+                .hockeycard .product-main {
+                    clear: both;
+                    height: 68px;
+                }
+                .hockeycard .product-name {
+                    font-family: 'adihausbold';
+                    text-transform: uppercase;
+                    border-top: 1px dotted var(--AdiGrey20);
+                    padding: 10px 0 4px 0;
+                    line-height: 1;
+                    font-size: calc(var(--FontMbBaseline) * 0.8571);
+                }
+                @media (min-width : 960px) {
+                    .hockeycard .product-name {
+                        font-size: calc(var(--FontDtBaseline) * 1.143);
+                    }
+                }
+                .hockeycard .product-category {
+                    color: var(--AdiGrey60);
+                    white-space: normal;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard .product-category {
+                        font-size: calc(var(--FontMbBaseline) * 0.75);
+                    }
+                }
+                .hockeycard .price {
+                    float: left;
+                }
+                .hockeycard .product-reviews {
+                    display: inline-block;
+                    vertical-align: top;
+                    float: right;
+                    font-size: calc(var(--FontDtBaseline) * 0.8571);
+                    line-height: 1rem;
+                }
+                .hockeycard .product-reviews .rating-number {
+                    display: inline-block;
+                    vertical-align: -1px;
+                    margin-left: 4px;
+                    color: var(--AdiGrey60);
+                }
+                .hockeycard .product-reviews i {
+                    font-size: calc(var(--FontDtBaseline) * 0.8571);
+                    color: var(--AdiFeedback);
+                    margin-right: -2px;
+                }
+
+                /* MINIMAL */
+                .hockeycard.minimal .product-details {
+                    text-align: center;
+                    padding: 20px;
+                }
+                .hockeycard.minimal .price {
+                    float: none;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard.minimal .badge,
+                    .hockeycard.minimal .wishlist {
+                        display: none;
+                    }
+                }
+
+                /* CAROUSEL */
+                .hockeycard.carousel .product-name {
+                    border-top: 1px solid transparent;
+                    padding: 0 0 4px 0;
+                }
+
+                /* MEDIASLIDER */
+                .hockeycard.mediaslider .price {
+                    padding: 4px 0;
+                }
+                .hockeycard.mediaslider .product-details {
+                    padding: 10px;
+                }
+                .hockeycard.mediaslider .btn {
+                    margin-bottom: 0;
+                }
+
+
+                /* SHOP THE LOOK PDP */
+                .hockeycard.look .product-main {
+                    height: auto;
+                }
+                .hockeycard.look .btn {
+                    margin-bottom: 0;
+                    visibility: hidden;
+                    opacity: 0;
+                }
+                .hockeycard.look:hover .btn {
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .hockeycard.look .product-details {
+                    padding: 10px;
+                }
+                .hockeycard.look .product-name {
+                    font-family: 'adiblack';
+                    border-top: 1px solid transparent;
+                    padding: 10px 0 20px 0;
+                    font-size: calc(var(--FontDtBaseline) * 1.286);
+                }
+                .hockeycard.look .price {
+                   font-size: calc(var(--FontDtBaseline) * 1.143);
+                   margin-bottom: 10px;
+                }
+                @media (max-width : 959px) {
+                    .hockeycard.look .product-name,
+                    .hockeycard.look .btn {
+                        display: none;
+                    }
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

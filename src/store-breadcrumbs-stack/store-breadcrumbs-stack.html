@@ -1,0 +1,96 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<dom-module id="store-breadcrumbs-stack">
+  <template>
+    <style include="store-foundation">
+    :host {
+      display: none;
+    }
+
+    ul {
+      padding: 5px 0;
+      margin-bottom: 0;
+    }
+
+    li {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 0 4px 0 0;
+      color: var(--AdiGrey40);
+    }
+
+    li a,
+    li.back {
+      color: var(--AdiBlack);
+    }
+    .spacer {
+      color: var(--AdiBlack);
+      padding: 0 4px 0 0;
+    }
+
+    li.back {
+      cursor: pointer;
+    }
+
+    li.back * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    li.back i {
+      margin: -2px 6px 0 0;
+    }
+
+    @media (min-width: 960px) {
+      :host {
+        display: block;
+      }
+    }
+    </style>
+    <div id="breadcrumb">
+      <div class="container">
+        <div class="row">
+          <ul>
+            <li class="back">
+              <i class="icon icon-arrow-left-circle"></i>
+              <strong><t>Back</t></strong>
+            </li>
+            <li>
+              <span class="spacer">|</span>
+              <a href="/"><t>Home</t></a>
+            </li>
+            <template is="dom-repeat" items="[[breadcrumbs]]">
+              <li>
+                <span class="spacer">/</span>
+                <template is="dom-if" if="[[item.link]]">
+                   <a href="/[[item.link]]">[[item.text]]</a>
+                </template>
+                <template is="dom-if" if="[[!item.link]]">
+                  <span>[[item.text]]</span>
+                </template>
+              </li>
+            </template>
+            <template is="dom-if" if="[[currentPageTitle]]">
+              <span class="spacer">/</span>
+              <li>[[currentPageTitle]]</li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+
+  class StoreBreadcrumbsStack extends StoreBaseElement {
+    static get is () { return 'store-breadcrumbs-stack' }
+    static get properties () {
+      return {
+        breadcrumbs: Array,
+        currentPageTitle: String
+      }
+    }
+  }
+
+  customElements.define(StoreBreadcrumbsStack.is, StoreBreadcrumbsStack)
+  </script>
+</dom-module>

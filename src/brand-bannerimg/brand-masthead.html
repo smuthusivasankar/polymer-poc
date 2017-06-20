@@ -1,0 +1,522 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../store-hero-stack/store-hero-stack.html">
+<link rel="import" href="../store-description-stack/store-description-stack.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-header/store-header.html">
+<link rel="import" href="../store-footer/store-footer.html">
+<link rel="import" href="../store-shared-styles/store-grid.html">
+<link rel="import" href="../store-shared-styles/store-z-index.html">
+<link rel="import" href="../store-carousel/store-carousel.html">
+<link rel="import" href="../store-slider-stack/store-slider-stack.html">
+<dom-module id="brand-masthead">
+   <template>
+      <style>
+         :host {
+            display: block;
+        }
+
+        .adihaus,
+        body,
+        p,
+        .para-intro,
+        .button-primary,
+        .primary-label,
+        .link-headline,
+        input {
+            font-family: adihausregular, Arial, Helvetica, Verdana, sans-serif;
+        }
+
+        .button-primary,
+        .primary-label {
+            position: relative;
+            display: block;
+            float: left;
+            padding: 12px 46px 8px 30px;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 24px;
+        }
+
+        .button-primary::after,
+        .primary-label::after,
+        .button-atb span::after,
+        .bp-custom span::after,
+        .button-ctn span::after,
+        .link-headline::after,
+        .button-forward span::after,
+        .btn_primary span::after {
+            position: absolute;
+            display: block;
+            font-family: icomoonregular;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant-ligatures: normal;
+            font-variant-caps: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .button-primary::after,
+        .primary-label::after {
+            content: "";
+            z-index: 1;
+            top: 14px;
+            right: 20px;
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+        }
+
+        .button-primary,
+        .button-primary:hover,
+        .button-primary:active,
+        .button-primary span {
+            color: rgb(255, 255, 255);
+        }
+
+        .button-primary:hover,
+        .primary-label:hover {
+            padding: 10px 44px 6px 28px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+
+        .button-primary:hover::after,
+        .primary-label:hover::after {
+            top: 12px;
+            right: 18px;
+        }
+
+        .button-primary.button-brd:hover {
+            padding: 10px 44px 6px 28px;
+        }
+
+        .masthead_container .masthead .button-primary,
+        .masthead_container .masthead .primary-label {
+            float: none;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .masthead_container .masthead.light .masthead-cta .button-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgba(2, 134, 205, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .masthead_container .masthead.light .masthead-cta .button-primary span {
+            color: rgb(255, 255, 255);
+        }
+
+        .masthead_container .masthead.dark .masthead-cta .button-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .masthead_container .masthead.dark .masthead-cta .button-primary span {
+            color: rgb(255, 255, 255);
+        }
+
+        .masthead_container .masthead.originals .masthead-cta .button-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgba(2, 134, 205, 0.8);
+        }
+
+        .masthead_container .masthead.originals .masthead-cta .button-primary span {
+            color: rgb(255, 255, 255);
+        }
+
+        .masthead_container .masthead.neo .masthead-cta .button-primary {
+            color: rgb(0, 0, 0);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .masthead_container .masthead.neo .masthead-cta .button-primary span {
+            color: rgb(0, 0, 0);
+        }
+
+        .masthead_container .masthead.boost .masthead-cta .button-primary {
+            color: rgb(0, 0, 0);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .masthead_container .masthead.boost .masthead-cta .button-primary span {
+            color: rgb(0, 0, 0);
+        }
+
+        .masthead_container .masthead.light .masthead-cta .button-primary:hover,
+        .masthead_container .masthead.light .masthead-cta .button-primary:focus {
+            color: rgb(255, 255, 255);
+            background-color: rgb(2, 134, 205);
+        }
+
+        .home-page-slot-hero .masthead_container .button-primary:hover::after {
+            top: 12px;
+            right: 18px;
+        }
+
+        .light .cta-container .button-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgba(2, 134, 205, 0.8);
+        }
+
+        button,
+        button span,
+        .button-primary,
+        .bp-custom,
+        .bp-custom::after,
+        .bp-custom span,
+        .button-ctn span,
+        .button-atb,
+        .button-atb span,
+        .primary-label {
+            font-family: adiblack, Arial, Helvetica, Verdana, sans-serif;
+            font-size: 17px;
+            font-weight: normal;
+            text-transform: uppercase;
+            height: auto;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none !important;
+        }
+
+        .button-primary:hover,
+        .primary-label:hover {
+            text-decoration: none;
+        }
+
+        .button-primary span {
+            position: relative;
+            top: -2px;
+        }
+
+        .button-primary,
+        .button-primary:hover,
+        .button-primary::after,
+        .button-primary:hover::after {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button-primary,
+        .button-primary:hover {
+            border: none;
+            padding: 14px 46px 10px 20px !important;
+        }
+
+        .button-primary::after,
+        .button-primary:hover::after {
+            padding-right: 5px;
+            top: 16px !important;
+            right: 20px !important;
+        }
+
+        .button-primary:hover::after {
+            right: 15px !important;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .row > .container {
+            width: 950px;
+            margin: 0px auto;
+        }
+
+        .container > div:first-child {
+            margin: 0px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .adineue-bd,
+        .title-mega,
+        .title-super,
+        .title-48,
+        .title-32,
+        .title-28,
+        .title-22,
+        .title-18,
+        .title-16 {
+            font-family: adiblack, Arial, Helvetica, Verdana, sans-serif !important;
+            text-transform: uppercase !important;
+        }
+
+        .title-super {
+            font-size: 56px !important;
+            line-height: 80% !important;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .masthead_container {
+            margin: 0px auto -337px;
+            top: 0px;
+            width: 100%;
+            left: 0px;
+        }
+
+        .masthead_container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .masthead_container .headercover {
+            bottom: 0px;
+            position: absolute;
+            height: 150px;
+            /*width: 100%;*/
+            width:100% !important;
+            background-image: linear-gradient(rgba(255, 255, 255, 0) 0px, rgb(255, 255, 255) 64%, rgb(255, 255, 255) 100%);
+            
+            width:950px;
+            margin:0 auto;
+        }
+
+        .masthead_container .masthead {
+            position: absolute;
+            top: -100px;
+            left: 10%;
+            margin: 0px;
+            padding: 0px 0px 307px;
+            height: 100%;
+        }
+
+        .masthead_container .masthead > div {
+            display: table;
+            width: 425px;
+            height: 100%;
+        }
+
+        .masthead_container .masthead > div > div {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .masthead_container .masthead .headline {
+            position: relative;
+            width: 425px;
+            margin: 0px 0px 10px;
+        }
+
+        .masthead_container .masthead .headline,
+        .masthead_container .masthead .headline span {
+            margin-bottom: 16px;
+        }
+
+        .masthead_container .masthead.light .headline span {
+            color: rgb(255, 255, 255);
+        }
+
+        .title-super {
+            font-size: 56px !important;
+            line-height: 80% !important;
+        }
+
+        .masthead_container .masthead .headline span {
+            display: block;
+            margin: 0px 0px 10px;
+        }
+
+        .masthead_container .masthead .headline,
+        .masthead_container .masthead .headline span {
+            margin-bottom: 16px;
+        }
+
+        .caption {
+            clear: both;
+            display: block;
+            margin: 0px 0px 7px;
+            font-size: 0.9em;
+            color: rgb(51, 51, 51);
+        }
+
+        .masthead_container .masthead .caption {
+            margin: 0px 0px 23px;
+            position: relative;
+            width: 425px;
+        }
+
+        .masthead_container .masthead .caption {
+            margin-bottom: 32px;
+        }
+
+        .para-intro {
+            font-size: 18px !important;
+            margin: 20px 20px 40px 0px !important;
+            line-height: 24px !important;
+            font-weight: normal !important;
+        }
+
+        .masthead .para-intro {
+            margin: 0px 20px 20px 0px !important;
+        }
+
+        .masthead_container .masthead .caption .para-intro {
+            line-height: 24px;
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0px;
+            color: rgb(255, 255, 255);
+            text-align: left;
+            font-family: adihausregular, Arial, Helvetica, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            margin: 0px auto;
+        }
+          
+          
+        .container > div:first-child {
+            margin-top: 0px;
+            width: 1366px;
+            margin: 0 auto;
+        }
+          
+        @media (max-width: 959px) {
+            h2, .title-super {
+            font-size: 2.0rem !important;
+            color:red !important;
+            }
+
+            .masthead_container .masthead {
+                top: 100px;
+            } 
+            
+            .masthead_container
+            {
+                width: 100%;
+                margin: 0 auto;
+            }
+            
+            .container > div:first-child {
+                margin-top: 0px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            #masthead_image_mobile{
+            display:block !important;
+            }
+
+            #masthead_image_desktop{
+            display:none !important;
+            }
+
+            .masthead-cta>a{
+              width:70%;
+              text-align: center;
+            }
+        }
+          
+      </style>
+      <!-- MASTHEAD -->
+      <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+
+      <div class="container" style="display:block;">
+         <div class="masthead_container">
+            <li style="
+                list-style: none;
+                overflow: hidden;
+                margin-left: 0px;
+                float:left;
+                position: relative;
+                width:100%;
+                height: auto;" class="lastVisible">
+                
+               <img id="masthead_image_mobile" class="masthead-image" src="{{mastheadStack.mobile_masthead_image}}" style="height: auto;display:none;">
+               <img id="masthead_image_desktop" class="masthead-image" src="{{mastheadStack.bannerImage}}" style="height: auto;">
+                
+               <div class="headercover"></div>
+               <div class="masthead  caption-enabled  light" data-contentasset="" data-contenttheme="light">
+                  <div>
+                     <div>
+                        <div class="masthead-bottom">
+                           <div class="headline"><span class="title-super">[[mastheadStack.title]]</span></div>
+                           <div class="caption">
+                              <p class="para-intro">[[mastheadStack.caption]]</p>
+                           </div>
+                           <div class="cta-container">
+                            <template is="dom-repeat" items="[[mastheadStack.callToAction]]">
+                              <template is="dom-if" if="[[item.title]]">
+                                <div class="masthead-cta">
+                                 <a class="button-primary button-brd btn-regular-red" href="[[item.url]]" data-linktype="link" ><span>[[item.title]]</span></a>
+                                </div>
+                              </template>
+                            </template>                            
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+         </div>
+      </div>
+      <div style="clear:both"></div>
+      <!-- MASTHEAD END -->
+      <iron-ajax
+            auto
+            url="http://10.67.90.232:83/api/fragment/getContent"
+            id="mastheadDataRequest"
+            handle-as="json"
+            params="{{filter}}"
+            on-response="handleResponse_MastheadData">
+         </iron-ajax>     
+       
+   </template>
+   <script>
+      class Masthead extends Polymer.Element {
+        static get is() { return 'brand-masthead'; }
+          
+        static get properties () {
+              return {
+                  
+                    mastheadStack: {
+                        type: Object,
+                        value: {
+                                "bannerImage":"",
+                            
+                                "mobile_masthead_image":"",
+                            
+                                "title":"",
+                            
+                                "caption":"",
+                            
+                                "callToAction":[]
+                            
+                                }
+                      },
+
+                      filter: Object
+                  
+              }
+            }
+         ready() {
+              super.ready()
+              this.filter = (this.filter ==null || this.filter ==undefined ) ? this.queryParams : this.filter;
+                this.$.mastheadDataRequest.generateRequest();                             
+          }
+
+        handleResponse_MastheadData(data)
+          {
+              this.mastheadStack = data.detail.response;
+          }
+         
+          
+      }
+      
+      window.customElements.define(Masthead.is, Masthead);
+   </script>
+</dom-module>

@@ -1,0 +1,125 @@
+<dom-module id="store-colors">
+    <template>
+        <custom-style>
+            <style>
+                :root {
+                    /* Primary colors */
+                    --AdiWhite: #fff;
+                    --AdiBlack: #000;
+                    --AdiPrimary: #0286CD;
+                    --AdiSecondary: #025F8E;
+
+                    /* Gradients colors */
+                    --AdiPrimaryGradient: linear-gradient(to right, var(--AdiSecondary) , var(--AdiPrimary));
+                    --AdiSecondaryGradient: linear-gradient(to right, var(--AdiGrey20) , var(--AdiGrey10));
+
+                    /* Grey Colors to be improved */
+                    --AdiGrey80: #363738; /* AdiDarkestGrey */
+                    --AdiGrey60: #616363; /* AdiDarkGrey */
+                    --AdiGrey40: #9A9B9B; /* AdiMediumGrey */
+                    --AdiGrey20: #C8CBCC; /* AdiLightGrey */
+                    --AdiGrey10: #EBEBEB; /* AdiLightestGrey */
+                    --AdiGrey00: #f9f9f9; /* AdiSuperLightGrey */
+
+                    /* Secondary colors */
+                    --AdiNew: #73A962;
+                    --AdiSale: #C53622;
+                    --AdiFeedback: #ffb600;
+                    --AdiHighlight: #52c1b8;
+
+                    /* Alerts colors */
+                    --AdiSuccess: #009736;
+                    --AdiError: #f9423a;
+                    --AdiInfo: #58c2e9;
+                    --AdiWarning: #ffb600;
+                    --AdiSuccessLight: #d8efe1;
+                    --AdiErrorLight: #ffe3e2;
+                    --AdiInfoLight: #ddf3fb;
+                    --AdiWarningLight: #fff9ca;
+                }
+
+                /* Primary colors */
+                .adi-white {
+                    background: var(--AdiWhite);
+                }
+                .adi-black {
+                    background: var(--AdiBlack);
+                }
+                .adi-main {
+                    background: var(--AdiPrimary);
+                }
+                .adi-secondary {
+                    background: var(--AdiSecondary);
+                }
+
+                /* Gradients colors */
+                .adi-primary-gradient {
+                    background: var(--AdiPrimaryGradient);
+                }
+                .adi-secondary-gradient {
+                    background: var(--AdiSecondaryGradient);
+                }
+
+                /* Grey colors */
+                .adi-grey-80 {
+                    background: var(--AdiGrey80);
+                }
+                .adi-grey-60 {
+                    background: var(--AdiGrey60);
+                }
+                .adi-grey-40 {
+                    background: var(--AdiGrey40);
+                }
+                .adi-grey-20 {
+                    background: var(--AdiGrey20);
+                }
+                .adi-grey-10 {
+                    background: var(--AdiGrey10);
+                }
+                .adi-grey-00 {
+                    background: var(--AdiGrey00);
+                }
+
+                /* Secondary colors */
+                .adi-new {
+                    background: var(--AdiNew);
+                }
+                .adi-sale {
+                    background: var(--AdiSale);
+                }
+                .adi-feedback {
+                    background: var(--AdiFeedback);
+                }
+                .adi-highlight {
+                    background: var(--AdiHighlight);
+                }
+
+                /* Alerts colors */
+                .adi-error {
+                    background: var(--AdiError);
+                }
+                .adi-success {
+                    background: var(--AdiSuccess);
+                }
+                .adi-info {
+                    background: var(--AdiInfo);
+                }
+                .adi-warning {
+                    background: var(--AdiWarning);
+                }
+                .adi-error-light {
+                    background: var(--AdiErrorLight);
+                }
+                .adi-success-light {
+                    background: var(--AdiSuccessLight);
+                }
+                .adi-info-light {
+                    background: var(--AdiInfoLight);
+                }
+                .adi-warning-light {
+                    background: var(--AdiWarningLight);
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

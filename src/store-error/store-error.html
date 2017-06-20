@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<dom-module id="store-error">
+    <template>
+        <style include="store-foundation">
+            @media (min-width: 960px) {
+                .description {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+            }
+        </style>
+	<app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+	<!--<div><h2> {{queryParams}}</h2></div>-->
+        <div class="container stack">
+            <div class="row">                
+		<div class="col-mb-12 col-dt-24 text-center">
+		<div class="col-mb-12 col-dt-24 text-center">
+        <h1 class="light">Page not found</h1>
+<div class="col-dt-12 col-mb-12 no-gutters">
+        <p style="font-family:adiLight"> return to the <a href="#" title="Home page"><span style="color:#ADD8E6;">homepage</span></a> and start again.</p>
+</div>
+    </div>
+</div>
+
+                
+                
+            </div>
+        </div>
+
+    </template>
+    <script>
+        class StoreError extends StoreBaseElement {
+		
+          static get is () { return 'store-error' }
+          static get properties () {
+            return {	 				
+			   
+            }
+          }
+		
+        }
+        customElements.define(StoreError.is, StoreError)
+    </script>
+</dom-module>

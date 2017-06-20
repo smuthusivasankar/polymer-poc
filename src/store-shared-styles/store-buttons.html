@@ -1,0 +1,346 @@
+<dom-module id="store-buttons">
+    <template>
+        <custom-style>
+            <style>
+                button:focus {
+                    outline: none!important;
+                }
+
+                .btn {
+                    font-family: "adiBlack";
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    letter-spacing: 0.05rem;
+                    text-transform: uppercase;
+                    line-height: 1;
+                    color: #fff;
+                    display: inline-block;
+                    border:0;
+                    transition: background 0.2s ease-in-out;
+                    cursor: pointer;
+                    user-select: none;
+                    width: 100%;
+                    line-height: 50px;
+                    padding: 0;
+                    text-align: center;
+                }
+                @media (max-width : 959px) {
+                    .btn {
+                        font-size: var(--FontMbBaseline);
+                    }
+                }
+                .btn::after {
+                    display: inline-block;
+                    font-family: 'icomoonregular';
+                    vertical-align: middle;
+                    margin-left: 10px;
+                    transition: transform 0.2s ease-in-out;
+                }
+
+                /* Button primary */
+                .btn-blue {background: var(--AdiPrimary)}
+                .btn-black {background: var(--AdiBlack)}
+                .btn-white {background: var(--AdiWhite); color: var(--AdiBlack); border:1px solid var(--AdiGrey20); line-height: 48px;}
+                .btn-blue:hover {background: var(--AdiSecondary)}
+                .btn-black:hover {background: var(--AdiGrey80)}
+                .btn-white:hover {background: var(--AdiGrey10)}
+
+                .btn-blue-img {background: rgba(2,134,205,.8)}
+                .btn-black-img {background: rgba(0,0,0,.8)}
+                .btn-white-img {background: rgba(255,255,255,.8); color: var(--AdiBlack)}
+                .btn-blue-img:hover {background: var(--AdiPrimary)}
+                .btn-black-img:hover {background: var(--AdiBlack)}
+                .btn-white-img:hover {background: var(--AdiWhite)}
+
+                .btn-blue::after, .btn-black::after,
+                .btn-blue-img::after, .btn-black-img::after,
+                .btn-white::after, .btn-white-img::after {
+                    content: "\e600";
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    vertical-align: -2px;
+                }
+                .btn-blue:hover::after, .btn-black:hover::after,
+                .btn-blue-img:hover::after, .btn-black-img:hover::after,
+                .btn-white:hover::after, .btn-white-img:hover::after {
+                    transform: translate3d(5px, 0, 0);
+                }
+                .btn-white:after,
+                .btn-white-img:after {
+                    color: #000;
+                }
+                .btn-video::after {
+                    content: "\ea15";
+                }
+
+                /* Button secondary */
+                .btn-sec-blue, .btn-sec-black, .btn-sec-white {
+                    background: transparent;
+                    line-height: 48px;
+                }
+                .btn-sec-blue {
+                    color: var(--AdiPrimary);
+                    border: 1px solid var(--AdiPrimary);
+                }
+                .btn-sec-black {
+                    color: var(--AdiBlack);
+                    border: 1px solid var(--AdiBlack);
+                }
+                .btn-sec-white{
+                    border: 1px solid var(--AdiWhite);
+                }
+
+                .btn-sec-blue::after, .btn-sec-black::after,
+                .btn-sec-white::after {
+                    content: "\e600";
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    vertical-align: -2px;
+                }
+                .btn-sec-blue:hover::after, .btn-sec-black:hover::after,
+                .btn-sec-white:hover::after {
+                    transform: translate3d(5px, 0, 0);
+                }
+
+                /* Link buttons */
+                .btn-link {
+                    line-height: 20px; background:transparent;
+                }
+                .btn-link:hover {
+                    background:transparent;
+                }
+                .btn-blue.btn-link, .btn-blue-img.btn-link {color: var(--AdiPrimary)}
+                .btn-black.btn-link, .btn-black-img.btn-link {color: var(--AdiBlack)}
+                .btn-white.btn-link, .btn-white-img.btn-link {color: var(--AdiWhite); border:0px;}
+                .btn-white.btn-link:after, .btn-white-img.btn-link:after {color: var(--AdiWhite);}
+
+                /* Button wishlist */
+                .btn-wishlist {
+                    height: 50px;
+                    width: 50px;
+                    padding: 0;
+                }
+                .btn-wishlist:hover {
+                    background: var(--AdiWhite);
+                }
+                .btn-wishlist:after {
+                    display: none;
+                }
+                .btn-wishlist i:before {
+                    color: var(--AdiGrey60);
+                }
+                .btn-wishlist:hover i:before {
+                    color: var(--AdiPrimary);
+                }
+
+                /* Button Store finder */
+                .btn-store-finder {
+                    font-family: 'adihausregular';
+                    font-size: 1rem;
+                    height: 50px;
+                    padding: 0 40px;
+                    background: var(--AdiWhite);
+                    color: var(--AdiBlack);
+                    border:1px solid var(--AdiGrey20);
+                    position: relative;
+                }
+                @media (max-width : 959px) {
+                    .btn-store-finder {
+                        font-size: calc(var(--FontMbBaseline) * 0.8571); ;
+                    }
+                }
+                .btn-store-finder:after {
+                    content: '\e628';
+                    position: absolute;
+                    right: 20px;
+                    top: 0px;
+                }
+                .btn-store-finder:before {
+                    background: url(../../img/icon-pin.svg);
+                    background-size: cover;
+                    content: "";
+                    width: 18px;
+                    height: 22px;
+                    position: absolute;
+                    left: 20px;
+                    top: 13px;
+                }
+
+                /* Button bag */
+                .btn-bag {
+                    background: var(--AdiPrimaryGradient);
+                    position: relative;
+                    z-index: 1;
+                }
+                .btn-bag::before {
+                    content: "";
+                    z-index: -1;
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    opacity: 0;
+                    background: var(--AdiSecondary);
+                    transition: opacity 0.2s ease-in-out;
+                }
+                .btn-bag:hover::before {
+                    opacity: 1;
+                }
+                .btn-bag::after {
+                    font-family: 'adiPictoRegular';
+                    content: "\e330";
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    vertical-align: -2px;
+                }
+
+                /* Button customize and personalize */
+                .btn-custom, .btn-personal {
+                    border:1px dotted #000;
+                    background: #fff;
+                    color: #000;
+                    transition: box-shadow 0.2s ease-in-out;
+                    line-height: 48px;
+                }
+                .btn-custom:hover, .btn-personal:hover {
+                    border:1px solid #000;
+                    box-shadow: inset 0 0 0 1px var(--AdiGrey80);
+                }
+                .btn-custom::after,
+                .btn-personal::after {
+                    content: "";
+                    width: 16px;
+                    height: 18px;
+                }
+                .btn-custom::after {
+                    background: url(../../img/adidas_desktop_sprite.png) no-repeat -597px -1403px;
+                }
+                .btn-personal::after {
+                    background: url(../../img/adidas_desktop_sprite.png) no-repeat -536px -1402px;
+                }
+
+                /* Button paypal */
+                .btn-paypal {
+                    border:1px solid var(--AdiGrey20);
+                    background: var(--AdiGrey00);
+                    color: #000;
+                    line-height: 48px;
+                }
+                .btn-paypal:hover {
+                    border:1px solid var(--AdiGrey40);
+                    background: var(--AdiGrey10);
+                }
+                .btn-paypal::after {
+                    content: "";
+                    width: 75px;
+                    height: 20px;
+                    background: url(../../img/adidas_desktop_sprite.png) no-repeat -1440px -1204px;
+                    margin-bottom: -3px;
+                    vertical-align: -2px;
+                }
+
+                /* Button disabled */
+                .btn-disabled, .btn-disabled:hover {
+                    background: var(--AdiGrey10);
+                    cursor: default;
+                }
+                .btn-disabled:hover::after {
+                    transform: none;
+                }
+                .btn-disabled:hover::before {
+                    display: none;
+                }
+                .btn-link.btn-disabled, .btn-link.btn-disabled:hover {
+                    background: transparent;
+                    color: var(--AdiGrey20);
+                    cursor: default;
+                }
+                /* Buttons - END */
+
+                /* Video button - START */
+                .video-icon-wrapper,
+                .video-icon-wrapper:after,
+                .video-icon-wrapper .video-icon {
+                    transition: all 0.2s ease-in-out;
+                }
+                .video-icon-wrapper {
+                    background:rgba(0,0,0,.4);
+                    border-radius: 50%;
+                    position: relative;
+                    cursor: pointer;
+                }
+                .video-icon-wrapper:hover {
+                    background:rgba(0,0,0,.6);
+                }
+                .video-icon-wrapper.icon-small {
+                    width: 48px; height: 48px;
+                }
+                .video-icon-wrapper.icon-medium {
+                    width: 80px; height: 80px;
+                }
+                .video-icon-wrapper.icon-big {
+                    width: 160px; height: 160px;
+                }
+                .video-icon-wrapper.icon-small:after,
+                .video-icon-wrapper.icon-medium:after,
+                .video-icon-wrapper.icon-big:after {
+                    content: "";
+                    border-radius: 50%;
+                    position: absolute;
+                }
+                .video-icon-wrapper.icon-small:after {
+                    border: 2px solid #fff;
+                    width: 40px;
+                    height: 40px;
+                    top: 4px;
+                    left: 4px;
+                }
+                .video-icon-wrapper.icon-medium:after {
+                    border: 3px solid #fff;
+                    width: 70px;
+                    height: 70px;
+                    top: 5px;
+                    left: 5px;
+                }
+                .video-icon-wrapper.icon-big:after {
+                    border: 4px solid #fff;
+                    width: 144px;
+                    height: 144px;
+                    top: 8px;
+                    left: 8px;
+                }
+                .video-icon-wrapper:hover:after {
+                    border-color: var(--AdiPrimary);
+                }
+                .video-icon-wrapper.icon-small .video-icon,
+                .video-icon-wrapper.icon-medium .video-icon,
+                .video-icon-wrapper.icon-big .video-icon {
+                    width: 0;
+                    height: 0;
+                    position: absolute;
+                }
+                .video-icon-wrapper.icon-small .video-icon {
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                    border-left: 13px solid #fff;
+                    top: 16px;
+                    left: 20px;
+                }
+                .video-icon-wrapper.icon-medium .video-icon {
+                    border-top: 12px solid transparent;
+                    border-bottom: 12px solid transparent;
+                    border-left: 21px solid #fff;
+                    top: 28px;
+                    left: 33px;
+                }
+                .video-icon-wrapper.icon-big .video-icon {
+                    border-top: 24px solid transparent;
+                    border-bottom: 24px solid transparent;
+                    border-left: 42px solid #fff;
+                    top: 56px;
+                    left: 64px;
+                }
+                .video-icon-wrapper:hover .video-icon {
+                    border-left-color: var(--AdiPrimary);
+                }
+                /* Video button - END */
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

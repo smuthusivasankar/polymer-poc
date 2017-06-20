@@ -1,0 +1,102 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<dom-module id="store-header-top-desktop">
+  <template>
+    <style>
+    :host {
+      display: block;
+      background: linear-gradient(to right, #000 30%, transparent 50%),  linear-gradient(to bottom, #000 0px, #212020 100%);
+      font: 11px/35px 'adihausregular',Arial,Helvetica,Verdana,sans-serif;
+    }
+    @media (min-width: 1280px) {
+      app-toolbar {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+    app-toolbar {
+      height: 32px;
+      font-size: 11px;
+      line-height: 31px;
+      justify-content: flex-end;
+    }
+    a {
+      padding: 0 10px;
+      color: #c8cbcc;
+      display: inline-block;
+      text-transform: uppercase;
+      text-decoration: none;
+      -webkit-font-smoothing: antialiased;
+      cursor: pointer;
+    }
+    em {
+      font-family: 'adihausbold',Arial,Helvetica,Verdana,sans-serif;
+      display: inline-block;
+      font-style: normal;
+      color: #FFF;
+    }
+    em a {
+      color: inherit;
+    }
+    em:hover,
+    em:focus,
+    em:active {
+      background-color: #ebebeb;
+      color: #000;
+      outline: none;
+    }
+    #login-icon::after {
+      content: '\e65d';
+      font: 11px 'icomoonregular';
+      vertical-align: -1px;
+      margin-left: 5px;
+    }
+    .menu-spacer {
+      background-color: #868686;
+      height: 12px;
+      width: 1px;
+      margin-top: -3px;
+    }
+    </style>
+    <app-toolbar>
+      <template is="dom-if" if="[[!loggedIn]]">
+        <a href="" s18n-attrs="href">
+          <t>Order tracker</t>
+        </a>
+        <div class="menu-spacer"></div>
+        <em tabindex="1"><a><t>Newsletter signup</t></a></em>
+        <a href="header-link-login" s18n-attrs="href">
+          <t>Login</t><i id="login-icon"></i>
+        </a>
+      </template> 
+    </app-toolbar>
+  </template>
+  <script>
+    class StoreHeaderTopDesktop extends StoreBaseElement {
+      static get is () { return 'store-header-top-desktop' }
+      static get properties () {
+        return {
+          newsletterMenuOpen: {
+            type: Boolean,
+            notify: true,
+            value: false
+          },
+          loggedIn: {
+            type: Boolean,
+            value: false
+          },
+          user: {
+            type: Object,
+            value: {}
+          }
+        }
+      }
+      connectedCallback () {
+        super.connectedCallback()
+      }
+    }
+
+    customElements.define(StoreHeaderTopDesktop.is, StoreHeaderTopDesktop)
+  </script>
+</dom-module>

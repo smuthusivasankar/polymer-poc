@@ -1,0 +1,411 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+
+<dom-module id="store-dropdown">
+  <template>
+    <style include="store-foundation"></style>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+        margin-bottom: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .custom-input {
+        display: flex;
+        height: 50px;
+        width: 100%;
+        border: 1px solid var(--AdiGrey20);
+        padding: 0 50px 0 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+        align-items: center;
+        position: relative;
+        background: #FFF;
+      }
+
+      .custom-input:focus {
+        outline: none;
+      }
+
+      .custom-input::after {
+        transform: rotate(90deg);
+        content: '\e628';
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 17px;
+        right: 20px;
+        display: block;
+        font: 14px/1 'icomoonregular';
+      }
+
+      #options {
+        overflow: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        z-index: var(--z-index-dropdown-options);
+        border: 0px;
+        border-top: 1px solid var(--AdiGrey20);
+        border-bottom: 1px solid var(--AdiGrey20);
+        margin-top: -1px;
+        @apply(--options-container-mixin);
+      }
+
+      #options ul {
+        display: block;
+        background: #FFF;
+        width: 100%;
+        padding: 0;
+        font-size: inherit;
+        transform: translate3d(0, -50%, 0);
+        opacity: 0;
+        transition: transform 0.2s ease-in, opacity 0.1s;
+        max-height: 177px;
+        overflow-y: scroll;
+        margin: 0;
+        @apply(--options-ul-mixin);
+      }
+
+      #options ul li {
+        display: block;
+        list-style: none;
+        cursor: pointer;
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: 1px solid var(--AdiGrey20);
+        border-top: 0;
+        line-height: 18px;
+        @apply(--options-ul-li-mixin);
+      }
+
+      #options ul li.selected {
+        border-bottom: 1px solid var(--AdiGrey20);
+        @apply(--options-ul-li-selected-mixin);
+      }
+
+      #options ul li:last-child {
+        border-bottom: 0;
+        @apply(--options-ul-li-last-child-mixin);
+      }
+
+      #options ul li:active,
+      #options ul li:hover,
+      #options ul li:focus {
+        padding-bottom: 9px;
+        border-bottom: 2px solid var(--AdiBlack);
+        color: #000;
+        outline: none;
+      }
+
+      #options ul li:hover {
+        border-bottom: 2px solid var(--AdiBlack);
+        border-left: 1px solid var(--AdiGrey20);
+        border-right: 1px solid var(--AdiGrey20);
+        border-top: 0px;
+        color: #000;
+        cursor: pointer;
+        @apply(--options-ul-li-hover-mixin);
+      }
+
+      #options.open ul {
+        transform: none;
+        opacity: 1;
+        transition: transform 0.2s ease-out, opacity 0.2s;
+      }
+
+
+      #options.open + .custom-input::after {
+        transform: rotate(270deg) translate(-2px, -1px);
+      }
+
+      #options.open + .custom-input {
+        border-bottom: 1px solid var(--AdiGrey20);
+        box-shadow: none;
+        @apply(--custom-input-open-mixin);
+      }
+
+      #wrapper {
+        position: relative;
+      }
+
+      #select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        opacity: 0;
+        display: none;
+      }
+
+      #message {
+        font-size: 12px;
+        color: #9A9B9B;
+        margin-top: 8px;
+      }
+
+      #message:empty {
+        display: none;
+      }
+
+      #message.error {
+        color: #ff6d6d;
+      }
+
+      #message.warning {
+        color: var(--AdiWarning);
+      }
+
+      @media (max-width: 600px) {
+        #select {
+          display: block;
+        }
+
+        #options ul {
+          display: none;
+        }
+      }
+    </style>
+    <div id="wrapper">
+      <div id="options">
+        <slot name="content-before-options"></slot>
+        <ul id="desktopListItems" ></ul>
+        <slot name="content-after-options"></slot>
+      </div>
+      <div on-click="_toggle" id="label" class="custom-input" tabindex="0"></div>
+      <select id="select" on-change="_selectListItem" disabled="[[disabled]]">
+      </select>
+    </div>
+    <div id="message">[[helpText]]</div>
+  </template>
+  <script>
+    class StoreDropdown extends StoreBaseElement {
+      static get is () { return 'store-dropdown' }
+      static get properties () {
+        return {
+          items: {
+            type: Array,
+            observer: '_updateList'
+          },
+          value: {
+            type: String,
+            notify: true
+          },
+          name: {
+            type: String
+          },
+          required: {
+            type: Boolean,
+            value: false
+          },
+          label: String,
+          error: {
+            type: Boolean,
+            observer: '_errorObserver'
+          },
+          disabled: {
+            type: Boolean,
+            observer: '_disabledObserver'
+          },
+          valid: {
+            type: Boolean,
+            observer: '_validObserver'
+          },
+          warning: {
+            type: Boolean,
+            observer: '_warningObserver'
+          },
+          helpText: {
+            type: String,
+            value: ''
+          },
+          _selectedIndex: {
+            type: Number,
+            observer: '_indexChanged'
+          }
+        }
+      }
+
+      connectedCallback () {
+        super.connectedCallback()
+        this.dispatchEvent(new Event('iron-form-element-register'))
+
+        if (!this.label) {
+          this._selectedIndex = 0
+          this.set('value', this._value())
+        }
+      }
+
+      disconnectedCallback () {
+        super.disconnectedCallback()
+        if (this._parentForm) {
+          const event = new Event('iron-form-element-unregister')
+          event.detail = {target: this}
+          this._parentForm.dispatchEvent(event)
+        }
+      }
+      _value () {
+        return this._selectedIndex >= 0 ? this._getValueForItem(this.items[this._selectedIndex]) : null
+      }
+      _toggle () {
+        if (this.disabled || this.$.options.classList.contains('open')) {
+          this.$.options.classList.remove('open')
+          this._once(this.$.options, 'transitionend', () => { this.$.options.style.display = null })
+        } else {
+          this.$.options.style.display = 'block'
+          requestAnimationFrame(() => this.$.options.classList.add('open'))
+          requestAnimationFrame(() => this._bindDismiss())
+        }
+      }
+      _selectListItem (event) {
+        const isDesktopItem = event.target instanceof HTMLLIElement
+
+        if (isDesktopItem) {
+          const previouslySelectedItem = this.root.querySelector('li.selected')
+          if (previouslySelectedItem) {
+            previouslySelectedItem.classList.remove('selected')
+          }
+          event.target.classList.add('selected')
+        }
+
+        this._selectedIndex = isDesktopItem
+          ? event.target.dataset.index
+          : event.target.value
+        this._indexChanged()
+      }
+
+      _addListeners (element, listeners) {
+        const eventNames = Object.keys(listeners)
+        eventNames.forEach(eventName =>
+          element.addEventListener(eventName, listeners[eventName]))
+        return () => eventNames.forEach(eventName =>
+          element.removeEventListener(eventName, listeners[eventName]))
+      }
+
+      _bindDismiss () {
+        const removeListeners = this._addListeners(document, {
+          'keydown': (e) => {
+            const escPressed = e.which === 27
+            if (!escPressed) {
+              return
+            }
+            removeListeners()
+            e.preventDefault()
+            e.stopPropagation()
+            this._toggle()
+          },
+          'click': (e) => {
+            removeListeners()
+            const clickedInside = e.path.includes(this)
+            if (clickedInside) {
+              return
+            }
+            e.preventDefault()
+            e.stopPropagation()
+            this._toggle()
+          }
+        })
+      }
+
+      _updateList (list) {
+        this.$.desktopListItems.innerHTML = ''
+        list.forEach((item, index) => {
+          const desktopElement = document.createElement('li')
+          desktopElement.innerText = this._getLabelForItem(item)
+          desktopElement.dataset.index = index
+          desktopElement.addEventListener('mouseup', e => this._selectListItem(e))
+          this.$.desktopListItems.appendChild(desktopElement)
+        })
+
+        this.$.select.innerHTML = ''
+        list.forEach((item, index) => {
+          const mobileElement = document.createElement('option')
+          mobileElement.innerText = this._getLabelForItem(item)
+          mobileElement.value = index
+          this.$.select.appendChild(mobileElement)
+        })
+
+        if (typeof this.value !== 'undefined' && list.indexOf(this._value) !== this._selectedIndex) {
+          this._selectedIndex = 0
+        }
+
+        this._updateLabel()
+      }
+
+      _indexChanged () {
+        this._updateLabel()
+        this.$.options.style.display = null
+        this.$.options.classList.remove('open')
+        this.$.label.focus()
+        this.set('value', this._value())
+        this.dispatchEvent(new Event('change'))
+      }
+
+      _updateLabel () {
+        const initialLabel = this.label || this._getLabelForItem(this.items[0])
+        this.$.label.innerText = this._selectedIndex >= 0 ? this._getLabelForItem(this.items[this._selectedIndex]) : initialLabel
+        this.$.select.value = this._selectedIndex
+      }
+
+      _errorObserver () {
+        if (this.error) {
+          this.$.label.classList.add('error')
+          this.$.message.classList.add('error')
+        } else {
+          this.$.label.classList.remove('error')
+          this.$.message.classList.remove('error')
+        }
+      }
+
+      _validObserver () {
+        if (this.valid) {
+          this.$.label.classList.add('valid')
+        } else {
+          this.$.label.classList.remove('valid')
+        }
+      }
+
+      _disabledObserver () {
+        if (this.disabled) {
+          this.$.label.classList.add('disabled')
+          this.$.label.removeAttribute('tabindex')
+        } else {
+          this.$.label.classList.remove('disabled')
+          this.$.label.tabIndex = '0'
+        }
+      }
+
+      _warningObserver () {
+        if (this.warning) {
+          this.$.label.classList.add('warning')
+          this.$.message.classList.add('warning')
+        } else {
+          this.$.label.classList.remove('warning')
+          this.$.message.classList.remove('warning')
+        }
+      }
+
+      _getLabelForItem (item) {
+        return item.label ? item.label : item
+      }
+
+      _getValueForItem (item) {
+        return item.value ? item.value : item
+      }
+    }
+
+    customElements.define(StoreDropdown.is, StoreDropdown)
+  </script>
+</dom-module>

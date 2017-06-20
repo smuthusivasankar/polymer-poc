@@ -1,0 +1,309 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<dom-module id="store-carousel">
+  <template>
+    <style include="store-foundation">
+    /* WRAPPERS */
+    #card-wapper {
+      overflow: hidden;
+      position: relative;
+      padding: 0px;
+    }
+    #hockeycards{
+      transition: 0.5s;
+      padding: 20px 0;
+      display: flex;
+    }
+    @media (max-width: 959px) {
+      #hockeycards{
+        padding: 10px 0 0 0;
+      }
+    }
+    .hockeycard-container {
+      flex-grow: 0;
+      flex-shrink: 0;
+      padding: 0 5px;
+      width: 100%;
+    }
+  .product-image {
+  position: relative;
+  width: 38%;
+  text-align: center;
+  margin-left: 80px;
+  float: left;
+}
+.product-details {
+  margin: 0;
+  text-align: left;
+  display: inline-block;
+  width: 38%;
+}
+    @media (max-width: 959px) {
+      .hockeycard-container  {
+        padding: 0 1px;
+      }
+    }
+@media (max-width: 600px) {      
+	  .img-normal{
+		width:80%;
+		}
+		.product-image {
+		margin-left: 0px;
+		text-align: justify;
+		width: 50%
+		}
+	}
+    .dots {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+    }
+    .dots li {
+      display: inline-block;
+      cursor: pointer;
+    }
+    .dot, .selected-dot{
+      width: 5px;
+      height: 5px;
+      display: block;
+      border-radius: 50%;
+      margin: 0 3px;
+    }
+    .dot {
+      background: var(--AdiGrey20);
+    }
+    .dot:hover {
+      background: var(--AdiGrey60);
+    }
+    .selected-dot {
+      background: var(--AdiPrimary);
+    }
+
+    .left-arrow, .right-arrow {
+      display: none;
+    }
+    @media (min-width: 960px) {
+      .left-arrow, .right-arrow {
+        display: block;
+        height: 24px;
+        width: 24px;
+        line-height: 22px;
+        text-align: center;
+        top: 36%;
+        margin-top: -12px;
+        position: absolute;
+        background: rgba(255,255,255,.7);
+        z-index: 1;
+        transition: all 0.2s ease-in-out;
+      }
+      .left-arrow:hover, .right-arrow:hover {
+        background: var(--AdiPrimary);
+        color: #fff;
+      }
+      .right-arrow {
+        right: 5px;
+      }
+      .left-arrow {
+        left: 5px;
+      }
+    }
+  </style>
+
+
+<app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+<div class="container stack">
+  <div class="row">
+    <div class="col-mb-12 col-dt-24 text-center">
+      <h4>Technology</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="card-wapper" class="offset-dt-3 offset-mb-0 col-mb-12 col-dt-18">
+      <div class="left-arrow" on-click="previousGroup"><i class="icon icon-arrow-right"></i></div>
+      <div class="right-arrow" on-click="nextGroup"><i class="icon icon-arrow-left"></i></div>
+	  
+	  
+      <div id="hockeycards" on-touchstart="swipeStart" on-touchend="swipeEnd"  on-touchmove="swipe">
+        <dom-repeat items="[[ carousels.carouselList ]]">
+          <template>
+            <div class="hockeycard-container">
+              <div class="carousel">
+                <div class="product-image">
+                  <div><img class="img-normal" src="[[item.imgNormal]]" >
+                  </div>
+                </div>
+                <div class="product-details">
+                <span><img style="height:16px;" src="[[item.logo]]" ></span>
+                <div><h4>[[item.benefit]]</h4></div>
+                <div><h6 class="light">[[item.whatIsIt]]</h6></div>
+                <div> <span class ="small">[[item.shortDesc]]</span>
+                </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </dom-repeat>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-mb-12 col-dt-24 text-center">
+      <ul class="dots">
+       <dom-repeat items="[[ views ]]">
+        <template>
+          <li on-click="select"> <span class$="{{selectedClass(index, selectedGroup)}}" > </span> </li>
+        </template>
+      </dom-repeat>
+    </ul>
+  </div>
+</div>
+
+</div>
+<iron-ajax
+          auto
+          url="http://10.67.90.232:83/api/fragment/getContent"
+          id="carouselRequest"
+          handle-as="json"
+		      params="{{filter}}"
+          last-response="{{carousels}}"
+		      on-response="init">
+</iron-ajax>
+</template>
+
+<script>
+    // Extend Polymer.Element base class
+    class StoreCarousel extends StoreBaseElement {
+      static get is () { return 'store-carousel' }
+      static get properties () {
+        return {
+          selectedView: {
+            type: Number,
+            value: 0
+          },
+          title: {
+            type: String,
+            value: 'Default title'
+          },
+          carousel: {
+            type: Array,
+            observer: 'init'
+          },
+          views: {
+            type: Array,
+            value: []
+          },
+          filter:Object,
+		  
+        }
+      }
+	  
+      selectedClass (index, selectedGroup) {
+        return index === selectedGroup ? 'selected-dot' : 'dot'
+      }
+      
+	   ready(){		
+		  super.ready()
+		  this.filter = (this.filter == null || this.filter ==undefined ) ? this.queryParams : this.filter;
+		  this.$.carouselRequest.generateRequest();
+		  }
+      init () {
+        console.log(this.carousels);
+		
+        let index = -1
+        do {
+          index++
+          const group = this.carousels.carouselList.slice(index * 1, (index * 1) + 1)
+          if (group != null && group.length > 0) {
+            this.views[index] = group
+          }
+        } while (this.views[index] != null)
+        this.selectedGroup = 0
+        this.transform(0)
+      }
+       
+      cardWidth () {
+        const card = this.root.querySelector('.hockeycard-container')
+        return card.offsetWidth
+      }
+      leftMargin () {
+        return this.margin
+      }
+      transform (value) {
+        this.margin = value
+        this.root.querySelector('#hockeycards').style.transform = 'translate3d(' + value + 'px, 0px, 0px)'
+      }
+
+      swipeStart (event) {
+        this.swipestart = {
+          x: event.touches[0].pageX,
+          y: event.touches[0].pageY,
+          leftMargin: this.leftMargin()
+        }
+      }
+      swipe (event) {
+        event.preventDefault()
+        this.swipeCurrent = {
+          x: event.touches[0].pageX,
+          y: event.touches[0].pageY,
+          leftMargin: this.leftMargin()
+        }
+        const delta = event.touches[0].pageX - this.swipestart.x
+        const newMargin = this.swipestart.leftMargin + delta
+        this.transform(newMargin)
+        this.setSelectedGroup()
+      }
+
+      swipeEnd (event) {
+        event.preventDefault()
+        const width = this.cardWidth()
+        const delta = this.leftMargin() - this.swipestart.leftMargin
+        if (this.leftMargin() > 0) {
+          this.transform(0)
+        } else if (this.leftMargin() < -(this.carousels.length - 1) * width) {
+          this.transform(-(this.carousels.length - 1) * width)
+        } else if (delta > 1) {
+          const margin = Math.ceil(this.leftMargin() / width) * width
+          this.transform(margin)
+        } else if (delta < -1) {
+          const margin = Math.ceil(this.leftMargin() / width) * width
+          this.transform(margin)
+        }
+        this.setSelectedGroup()
+      }
+      setSelectedGroup () {
+        this.selectedGroup = Math.abs(Math.floor(this.leftMargin() / (this.cardWidth() * 1)))
+      }
+      select (event) {
+        this.selectGroup(event.model.__data.index)
+      }
+      previousGroup () {
+        this.selectGroup(this.selectedGroup - 1 <= 0 ? 0 : this.selectedGroup - 1)
+      }
+      nextGroup () {
+        if (this.selectedGroup < this.views.length - 1) {
+          this.selectGroup(this.selectedGroup + 1)
+        }
+      }
+      selectGroup (selectedGroup) {
+        let items
+        if (this.carousels.length - (selectedGroup * 1) <= 1) {
+          items = this.carousels.length - 1
+        } else {
+          items = selectedGroup * 1
+        }
+        this.views[selectedGroup].selected = true
+        this.selectedGroup = selectedGroup
+        this.transform(items * -this.cardWidth())
+      }
+
+  }
+    customElements.define(StoreCarousel.is, StoreCarousel)
+  </script>
+</dom-module>

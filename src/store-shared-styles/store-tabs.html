@@ -1,0 +1,62 @@
+<dom-module id="store-tabs">
+    <template>
+        <custom-style>
+            <style>
+                .tabs {
+                    margin: 0;
+                    padding: 0;
+                    overflow: auto;
+                    display: flex;
+                }
+                .tabs li,
+                .tabs li:after {
+                    -webkit-transition: all .3s ease-in-out;
+                    -moz-transition: all .3s ease-in-out;
+                    -ms-transition: all .3s ease-in-out;
+                    -o-transition: all .3s ease-in-out;
+                    transition: all .3s ease-in-out;
+                }
+                .tabs li {
+                    position: relative;
+                    list-style: none;
+                    text-align: center;
+                    line-height: 48px;
+                    border: 1px solid var(--AdiGrey20);
+                    border-right: 0;
+                    font-family: "adiBlack";
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    -webkit-flex-grow: 1;
+                }
+                .tabs li:last-child {
+                    border-right: 1px solid var(--AdiGrey20);
+                }
+                .tabs li.active {
+                    color: var(--AdiPrimary);
+                }
+                .tabs li.disabled {
+                    color: var(--AdiGrey20);
+                    background: var(--AdiGrey00);
+                    cursor: initial;
+                }
+                .tabs li.disabled:hover:after {
+                    display: none;
+                }
+                .tabs li:hover:after , .tabs li.active:after, .tabs li.active:hover:after {
+                    content: "";
+                    background: var(--AdiBlack);
+                    height: 3px;
+                    position: absolute;
+                    bottom: -1px;
+                    left: -1px;
+                    right: -1px;
+                    z-index: 1;
+                }
+                .tabs li.active:after, .tabs li.active:hover:after  {
+                    background: var(--AdiPrimary);
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

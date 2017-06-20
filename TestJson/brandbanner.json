@@ -1,0 +1,16 @@
+{
+    "bannerImage" : "http://127.0.0.1:8081/images/banner.jpg",
+    "title" : "CLIMACOOL",
+    "caption" : "Fearless airflow design. Show up in style.",
+    "callToAction" : [ {
+        "title" : "Discover More",
+        "url" : "#"
+    },
+    {
+        "title" : "Shop Now",
+        "url" : "#"
+    }
+        
+    ]
+    
+}

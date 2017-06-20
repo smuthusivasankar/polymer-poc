@@ -1,0 +1,14 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/store-app/store-app.html",
+  "fragments": [
+    "src/lazy-resources.html"
+  ],
+  "sources": [
+    "images/**/*",
+    "fonts/**"
+  ],
+  "extraDependencies": [
+    "bower_components/**"
+  ]
+}

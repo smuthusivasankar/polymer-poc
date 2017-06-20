@@ -1,0 +1,112 @@
+<dom-module id="store-tooltips">
+    <template>
+        <custom-style>
+            <style>
+                .ui-tooltip {
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    width: 260px;
+                    min-height: 64px;
+                    background-color: #fff;
+                    box-shadow: 0 0 16px rgba(0,0,0,0.2);
+                    margin: 40px;
+                }
+                .ui-tooltip>.arrow {
+                    position: absolute;
+                    display: block;
+                    overflow: hidden;
+                    width: 20px;
+                    height: 40px;
+                }
+                .ui-tooltip.right>.arrow{
+                    top: 20px;
+                    left: -20px;
+                }
+                .ui-tooltip.left>.arrow{
+                    top: 20px;
+                    right: -20px;
+                }
+                .ui-tooltip.right>.arrow:after,
+                .ui-tooltip.left>.arrow:after {
+                    content: "";
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 20px;
+                    height: 20px;
+                    background: #fff;
+                    transform: rotate(45deg);
+                    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+                }
+                .ui-tooltip.left>.arrow:after {
+                    left: -10px;
+                }
+                .ui-tooltip.top>.arrow,
+                .ui-tooltip.bottom>.arrow{
+                    left: 50%;
+                    top: -20px;
+                    width: 40px;
+                    height: 20px;
+                    margin-left: -20px;
+                }
+                .ui-tooltip.bottom>.arrow{
+                    top: auto;
+                    bottom: -20px;
+                }
+                .ui-tooltip.top>.arrow:after,
+                .ui-tooltip.bottom>.arrow:after {
+                    content: "";
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 20px;
+                    height: 20px;
+                    background: #fff;
+                    transform: rotate(45deg);
+                    box-shadow: 0 0 8px rgba(0,0,0,0.2)
+                }
+                .ui-tooltip.bottom>.arrow:after {
+                    top: -10px;
+                }
+                .ui-tooltip-inner {
+                    padding: 20px;
+                }
+                .ui-tooltip-inner h6 {
+                    margin-bottom: calc(var(--HorizontalBaseline) * 1);
+                }
+                .ui-tooltip-inner p {
+                    margin-bottom: 0;
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                @media (max-width : 959px) {
+                    .ui-tooltip {
+                        background: #f2f2f2;
+                        width: 100%;
+                        margin: 0 0 20px;
+                        box-shadow: none;
+                    }
+                    .ui-tooltip.top>.arrow,
+                    .ui-tooltip.bottom>.arrow,
+                    .ui-tooltip.left>.arrow,
+                    .ui-tooltip.right>.arrow {
+                        left: 50%;
+                        top: -20px;
+                        width: 40px;
+                        height: 20px;
+                        margin-left: -20px;
+                    }
+                    .ui-tooltip.top>.arrow:after,
+                    .ui-tooltip.bottom>.arrow:after,
+                    .ui-tooltip.left>.arrow:after,
+                    .ui-tooltip.right>.arrow:after {
+                        background: #f2f2f2;
+                        top: 10px;
+                        left: 10px;
+                        box-shadow: none;
+                    }
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

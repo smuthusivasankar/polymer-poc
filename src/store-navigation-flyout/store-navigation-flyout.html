@@ -1,0 +1,635 @@
+<!-- Load the Polymer.Element base class -->
+<link rel="import" href="../store-base-element/store-base-element.html">
+<!-- this element can be used to start new elements and should not be adjusted -->
+<dom-module id="store-navigation-flyout">
+    <template>
+        <style>
+        /*** uncss> filename: http://demandware.edgesuite.net/aagl_prd/on/demandware.static/Sites-adidas-NL-Site/-/nl_NL/v1485131514779/css/adidas-build-COMMON.css ***/html,body,div,a,img,strong,ul,li{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;background:transparent;max-height:999999px}body{line-height:1}ul{list-style:none}*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;outline:0}html,body{height:100%}strong{font-family:'adihausbold',Arial,Helvetica,Verdana,sans-serif}#header{position:relative;z-index:999;width:100%;height:84px;margin:0 auto;border-bottom:30px solid #000;background-color:#fff}#header .wrapper{position:relative;height:84px;margin:0 auto}.contentasset{width:100%}.clearfix:before,.clearfix:after{content:"";display:table}.clearfix:after{clear:both}.clearfix{zoom:1}a{color:#0286cd}a:hover,a:focus{color:#025f8e}body{background-color:#fff}a:active{color:#000}html,body{-webkit-font-smoothing:antialiased;font-weight:normal;text-rendering:optimizeLegibility;color:#000}body{font-size:14px}a{text-decoration:none}body{font-family:'adihausregular',Arial,Helvetica,Verdana,sans-serif}::-webkit-input-placeholder{text-transform:uppercase;color:#9a9b9b}:-moz-placeholder{text-transform:uppercase;color:#9a9b9b;opacity:1}::-moz-placeholder{text-transform:uppercase;color:#9a9b9b;opacity:1}:-ms-input-placeholder{text-transform:uppercase;color:#9a9b9b}/*! Date and time----------------------------------------*/#header.header-redesign{border-bottom:0;background:#000}#header.header-redesign{height:68px}#header.header-redesign .wrapper{position:static;height:auto}.header-sticky-wrapper{position:relative;background-color:#000;z-index:1001}.header-sticky-wrapper *{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}.header-redesign .column{float:left}#header.header-redesign .flyout-content{display:none;position:absolute;background-color:#fff;width:100%;white-space:normal}#header.header-redesign .topcat-nav .flyout-content{left:0;-moz-box-shadow:0 12px 24px rgba(0,0,0,0.1);-webkit-box-shadow:0 12px 24px rgba(0,0,0,0.1);box-shadow:0 12px 24px rgba(0,0,0,0.1)}.header-redesign .flyout-content .flyout-content-in{margin:0 auto;padding:10px 0 10px 0;float:none}#header.header-redesign .topcat-nav{width:578px;padding:0 0 0 27px;font-size:0;white-space:nowrap}#header.header-redesign .topcat-nav .flyout{display:inline-block;vertical-align:top;font-size:15px}#header.header-redesign .main-line,#header.header-redesign .bottom-line{overflow:hidden}#header.header-redesign .col-5{float:left;width:172px;margin:0 0 0 20px}#header.header-redesign .main-line .col-5{padding:26px 0 0 0}#header.header-redesign .main-line>.col-5:first-child{margin:0}#header.header-redesign .bottom-line>.col-5:first-child{margin:0}#header.header-redesign .flyout .headline a{color:#000}#header.header-redesign .flyout .headline a,#header.header-redesign .flyout .col-5 .headline a,#header.header-redesign .flyout .col-5 .headline{display:block;font-family:"adiBlack",Arial,Helvetica,Verdana,sans-serif;font-size:17px;letter-spacing:1px;margin:0 0 14px;text-transform:uppercase}#header.header-redesign .flyout .col-5{font-family:'adihausregular',Arial,Helvetica,Verdana,sans-serif;font-size:13px}#header.header-redesign .flyout .col-5 a{color:#000}#header.header-redesign .main-line .col-5 li{margin:0 0 10px}#header.header-redesign .main-line .col-5 li.horizontal-separator{width:16px;height:1px;overflow:hidden;background:#ccc;margin:0 0 11px}#header.header-redesign .flyout .bottom-line{padding:0 0 12px}#header.header-redesign .flyout .bottom-line .col-5:before{content:" ";display:block;height:1px;width:100%;overflow:hidden;background:#ccc;margin:0 0 10px}#header.header-redesign .flyout .main-line a:hover{color:#025f8e}#header.header-redesign .flyout .headline a:hover{color:#025f8e;text-decoration:none}#header.header-redesign .flyout .bottom-line a:hover{color:#025f8e;text-decoration:underline}.header-sticky-wrapper .header-redesign .wrapper,.header-redesign .flyout-content .contentasset{margin:0 auto;padding:0 10px}.header-sticky-selfservice-wrapper-main #header.header-redesign{height:48px}@media only screen and (max-width:1064px){.header-sticky-wrapper .header-redesign .wrapper,.header-redesign .flyout-content .flyout-content-in{width:966px}.header-redesign .flyout-content .flyout-content-in{padding:0 0 0 10px}}@media only screen and (min-width:1065px) and (max-width:1279px){.header-sticky-wrapper .header-redesign .wrapper,.header-redesign .flyout-content .contentasset{width:93%}}@media only screen and (min-width:1280px){.header-sticky-wrapper .header-redesign .wrapper,.header-redesign .flyout-content .contentasset{width:1210px}}
+        /* Built with: uncss -s http://demandware.edgesuite.net/aagl_prd/on/demandware.static/Sites-adidas-NL-Site/-/nl_NL/v1485131514779/css/adidas-build-COMMON.css front/src/store-navigation-flyout/store-navigation-flyout.html > out.css */
+        :host {
+          display: inline-block;
+        }
+        #hover {
+          width: 100%;
+          background: #000;
+          color: #FFF;
+          height: 45px;
+          margin-top: 3px;
+        }
+
+        #hover:hover {
+          background: #FFF;
+          color: #000;
+        }
+
+        #label {
+          display: inline-block;
+          color: inherit;
+          font: 15px "adiBlack", Arial, Helvetica, Verdana, sans-serif;
+          letter-spacing: .5px;
+          text-transform: uppercase;
+          line-height: 42px;
+          height: 45px;
+          padding: 1px 3px 0;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        .header-sticky-wrapper {
+          overflow: hidden;
+          display: none;
+          position: fixed;
+          background: transparent;
+          left: 0;
+          right: 0;
+          -moz-box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+          -webkit-box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+          box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+
+        #hover:hover > .header-sticky-wrapper,
+        .header-sticky-wrapper:hover {
+          display: block;
+        }
+        #header.header-redesign .flyout-content {
+          display: block;
+        }
+
+        .header-sticky-selfservice-wrapper-main #header.header-redesign {
+          height: auto;
+        }
+
+        #header.header-redesign .flyout-content {
+          position: static;
+        }
+
+        #header.header-redesign .wrapper,
+        #header.header-redesign .topcat-nav,
+        #header.header-redesign .topcat-nav .flyout {
+          width: 100%;
+          padding: 0;
+        }
+        </style>
+        <div id="hover">
+          <a id="label" href="[[link]]">[[label]]</a>
+
+          <div class="header-sticky-wrapper header-sticky-selfservice-wrapper-main">
+            <div id="header" class="header-redesign">
+              <div class="wrapper clearfix">
+                <div class="column topcat-nav">
+                  <div class="flyout navigation-gender-men hover">
+                    <div class="flyout-content">
+                      <template is="dom-if" if="{{_labelEquals('Men')}}">
+                        <fetch url="header-url-men" s18n-attrs="url">
+                          <div class="contentasset" data-contentasset-id="navigation-gender-men" data-contentasset="navigation-gender-men">
+                            <div class="flyout-content-in">
+                              <div class="main-line">
+                                <div class="col-5">
+                                  <div class="headline"><a href="/heren">TEST</a></div>
+                                  <ul>
+                                    <li><a href="/heren-nieuw_binnen">Nieuwe producten</a></li>
+                                    <li><a href="/heren-bestsellers">Bestsellers van de week</a></li>
+                                    <li class="horizontal-separator"></li>
+                                    <li><a href="/heren-nmd">NMD</a></li>
+                                    <li><a href="/heren-voetbal-schoenen">Chequered Black</a></li>
+                                    <li><a href="/heren-zx_flux">ZX Flux</a></li>
+                                    <li><a href="/heren-training">Nieuwe trainingscollectie</a></li>
+                                    <li><a href="/heren-climaheat">Climaheat</a></li>
+                                    <li><a href="/heren-xbyo">XBYO</a></li>
+                                    <li><a href="/heren-outlet"><img alt="EOSS_NL.jpg" src="https://www.adidas.nl/on/demandware.static/-/Sites-adidas-NL-Library/default/dw98887144/EOSS_NL.jpg"></a></li><li class="horizontal-separator"></li>
+                                    <li><a href="/heren-outlet">SALE - Tot 50% korting</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/heren-schoenen">Schoenen</a></div>
+                                  <ul>
+                                    <li><a href="/heren-originals-schoenen">Originals</a></li>
+                                    <li><a href="/heren-voetbal-schoenen">Voetbal</a></li>
+                                    <li><a href="/heren-hardlopen-schoenen">Hardlopen</a></li>
+                                    <li><a href="/heren-training-schoenen">Training</a></li>
+                                    <li><a href="/heren-adidas_neo-schoenen">adidas neo</a></li>
+                                    <li><a href="/heren-outdoor-schoenen">Outdoor</a></li>
+                                    <li><a href="/heren-basketbal-schoenen">Basketbal</a></li>
+                                    <li><a href="/heren-tennis-schoenen">Tennis</a></li>
+                                    <li><a href="/heren-golf-schoenen">Golf</a></li>
+                                    <li><a href="/heren-sandalen_slippers">Sandalen &amp; slippers</a></li>
+                                    <li><a href="http://www.adidas.nl/schoenen-personaliseren?prefn1=gender&amp;prefv1=Heren">Ontwerp het zelf</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/heren-kleding">Kleding</a></div>
+                                  <ul>
+                                    <li><a href="/heren-shirts">T-Shirts &amp; Polo's</a></li>
+                                    <li><a href="/heren-sweaters">Sweaters</a></li>
+                                    <li><a href="/heren-clubshirts">Clubshirts</a></li>
+                                    <li><a href="/heren-hoodies_vesten">Hoodies &amp; vesten</a></li>
+                                    <li><a href="/heren-jacks">Jacks</a></li>
+                                    <li><a href="/heren-trainingspakken">Trainingspakken</a></li>
+                                    <li><a href="/heren-broeken">Broeken</a></li>
+                                    <li><a href="/heren-leggings">Leggings</a></li>
+                                    <li><a href="/heren-shorts">Shorts</a></li>
+                                    <li><a href="/heren-techfit">Basislaag</a></li>
+                                    <li><a href="/heren-zwemkleding">Zwemkleding</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/heren-accessoires">Accessoires</a></div>
+                                  <ul>
+                                    <li><a href="/heren-tassen">Alle Tassen</a></li>
+                                    <li><a href="/heren-rugzakken">Rugzakken</a></li>
+                                    <li><a href="/heren-clubtassen">Sporttassen</a></li>
+                                    <li><a href="/heren-sokken">Sokken</a></li>
+                                    <li><a href="/heren-petten">Petten</a></li>
+                                    <li><a href="/heren-handschoenen">Handschoenen</a></li>
+                                    <li><a href="/heren-sjaals">Sjaals</a></li>
+                                    <li><a href="/heren-ballen">Ballen</a></li>
+                                    <li><a href="/heren-horloges">Horloges</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/heren-performance">Sporten</a></div>
+                                  <ul>
+                                    <li><a href="/heren-voetbal">Voetbal</a></li>
+                                    <li><a href="/heren-hardlopen">Hardlopen</a></li>
+                                    <li><a href="/heren-training">Training</a></li>
+                                    <li><a href="/heren-basketbal">Basketbal</a></li>
+                                    <li><a href="/heren-outdoor">Outdoors</a></li>
+                                    <li><a href="/heren-golf">Golf</a></li>
+                                    <li><a href="/heren-tennis">Tennis</a></li>
+                                    <li><a href="/heren-zwemmen">Zwemmen</a></li>
+                                    <li><a href="/heren-rugby">Rugby</a></li>
+                                    <li><a href="http://www.adidasspecialtysports.nl/landing/hockey">Hockey</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="bottom-line">
+                                <div class="col-5"><a href="/heren?grid=true"><strong>Alle producten</strong></a></div>
+                                <div class="col-5"><a href="/heren-schoenen"><strong>Alle herenschoenen</strong></a></div>
+                                <div class="col-5"><a href="/heren-kleding"><strong>Alle herenkleding</strong></a></div>
+                                <div class="col-5"><a href="/heren-accessoires"><strong>Alle herenaccessoires</strong></a></div>
+                                <div class="col-5"><a href="/heren-performance"><strong>Alle sporten</strong></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </fetch>
+                      </template>
+                      <template is="dom-if" if="{{_labelEquals('Women')}}">
+                        <fetch url="header-url-women" s18n-attrs="url">
+                          <div class="contentasset" data-contentasset-id="navigation-gender-women" data-contentasset="navigation-gender-women">
+                            <div class="flyout-content-in">
+                              <div class="main-line">
+                                <div class="col-5">
+                                  <div class="headline"><a href="/dames">Uitgelicht</a></div>
+                                  <ul>
+                                    <li><a href="/dames-nieuw_binnen">Nieuwe producten</a></li>
+                                    <li><a href="/dames-bestsellers">Bestsellers van de week</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/dames-athletics">Athletics ZNE</a></li>
+                                    <li><a href="/dames-nmd">NMD</a></li>
+                                    <li><a href="/dames-zx_flux">ZX Flux</a></li>
+                                    <li><a href="/dames-climaheat">Climaheat</a></li>
+                                    <li><a href="/dames-training">Nieuwe trainingscollectie</a></li>
+                                    <li><a href="/dames-xbyo">XBYO</a></li>
+                                    <li><a href="/dames-outlet"><img alt="EOSS_NL.jpg" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw98887144/EOSS_NL.jpg"></a></li><li class ="horizontal-separator"></li>
+                                    <li><a href="/dames-outlet">SALE - Tot 50% korting</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/dames-schoenen">Schoenen</a></div>
+                                  <ul>
+                                    <li><a href="/dames-originals-schoenen">Originals</a></li>
+                                    <li><a href="/dames-hardlopen-schoenen">Hardlopen</a></li>
+                                    <li><a href="/dames-training-schoenen">Training</a></li>
+                                    <li><a href="/dames-adidas_neo-schoenen">adidas neo</a></li>
+                                    <li><a href="/dames-outdoor-schoenen">Outdoor</a></li>
+                                    <li><a href="/dames-tennis-schoenen">Tennis</a></li>
+                                    <li><a href="/dames-golf-schoenen">Golf</a></li>
+                                    <li><a href="/dames-basketbal-schoenen">Basketbal</a></li>
+                                    <li><a href="/dames-voetbal-schoenen">Voetbal</a></li>
+                                    <li><a href="/dames-sandalen_slippers">Sandalen & slippers</a></li>
+                                    <li><a href="http://www.adidas.nl/schoenen-personaliseren?prefn1=gender&amp;prefv1=Dames">Ontwerp het zelf</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/dames-kleding">Kleding</a></div>
+                                  <ul>
+                                    <li><a href="/dames-shirts">T-Shirts & Tanks</a></li>
+                                    <li><a href="/dames-sweaters">Sweaters</a></li>
+                                    <li><a href="/dames-clubshirts">Clubshirts</a></li>
+                                    <li><a href="/dames-sportbhs">Sportbh's</a></li>
+                                    <li><a href="/dames-hoodies_vesten">Hoodies & vesten</a></li>
+                                    <li><a href="/dames-jacks">Jacks</a></li>
+                                    <li><a href="/dames-trainingspakken">Trainingspakken</a></li>
+                                    <li><a href="/dames-broeken">Broeken</a></li>
+                                    <li><a href="/dames-leggings">Leggings</a></li>
+                                    <li><a href="/dames-shorts">Shorts</a></li>
+                                    <li><a href="/dames-rokken_jurken">Rokken & Jurken</a></li>
+                                    <li><a href="/dames-zwemkleding">Zwemkleding</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/dames-accessoires">Accessoires</a></div>
+                                  <ul>
+                                    <li><a href="/dames-tassen">Alle Tassen</a></li>
+                                    <li><a href="/dames-schoudertassen">Schoudertassen</a></li>
+                                    <li><a href="/dames-rugzakken">Rugzakken</a></li>
+                                    <li><a href="/dames-clubtassen">Sporttassen</a></li>
+                                    <li><a href="/dames-sokken">Sokken</a></li>
+                                    <li><a href="/dames-petten">Petten</a></li>
+                                    <li><a href="/dames-handschoenen">Handschoenen</a></li>
+                                    <li><a href="/dames-sjaals">Sjaals</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/dames-performance">Sporten</a></div>
+                                  <ul>
+                                    <li><a href="/dames-hardlopen">Hardlopen</a></li>
+                                    <li><a href="/dames-training">Training</a></li>
+                                    <li><a href="/dames-outdoor">Outdoors</a></li>
+                                    <li><a href="/dames-tennis">Tennis</a></li>
+                                    <li><a href="/dames-zwemmen">Zwemmen</a></li>
+                                    <li><a href="/dames-golf">Golf</a></li>
+                                    <li><a href="/dames-voetbal">Voetbal</a></li>
+                                    <li><a href="/dames-basketbal">Basketbal</a></li>
+                                    <li><a href="/studio">Studio</a></li>
+                                    <li><a href="http://www.adidasspecialtysports.nl/landing/hockey">Hockey</a></li>
+                                    <li><a href="/yoga">Yoga</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="bottom-line">
+                                <div class="col-5"><a href="/dames?grid=true"><strong>Alle producten</strong></a></div>
+                                <div class="col-5"><a href="/dames-schoenen"><strong>Alle damesschoenen</strong></a></div>
+                                <div class="col-5"><a href="/dames-kleding"><strong>Alle dameskleding</strong></a></div>
+                                <div class="col-5"><a href="/dames-accessoires"><strong>Alle damesaccessoires</strong></a></div>
+                                <div class="col-5"><a href="/dames-performance"><strong>Alle sporten</strong></a></div>
+                              </div>
+                            </div>
+                          </div><!-- End contentasset -->
+                        </fetch>
+                      </template>
+                      <template is="dom-if" if="{{_labelEquals('Kids')}}">
+                        <fetch url="header-url-kids" s18n-attrs="url">
+                          <div class="contentasset" data-contentasset-id="navigation-gender-kids" data-contentasset="navigation-gender-kids">
+                            <div class="flyout-content-in">
+                              <div class="main-line">
+                                <div class="col-5">
+                                  <div class="headline"><a href="http://www.adidas.nl/kinderen?grid=true">uitgelicht</a></div>
+                                  <ul>
+                                    <li><a href="/kinderen-nieuw_binnen">Nieuwe producten</a></li>
+                                    <li><a href="/kinderen-bestsellers">Bestsellers van de week</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/star_wars">Star Wars</a></li>
+                                    <li><a href="/disney?grid=true">Disney</a></li>
+                                    <li><a href="/kinderen-voetbal-schoenen">Voetbal Schoenen</a></li>
+                                    <li><a href="/kinderen-voetbal-clubshirts-kleding">Voetbal Clubshirts</a></li>
+                                    <li><a href="/kinderen-outlet"><img alt="EOSS_NL.jpg" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw98887144/EOSS_NL.jpg"></a></li><li class ="horizontal-separator"></li>
+                                    <li><a href="/kinderen-outlet">SALE - Tot 50% korting</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="http://www.adidas.nl/kinderen?prefn1=age&amp;prefv1=8%20-%2014%20jaar">jeugd (8-14 jaar)</a></div>
+                                  <ul>
+                                    <li><a href="http://www.adidas.nl/kinderen-kleding?prefn1=age&amp;prefn2=genderSub&amp;prefv1=8%20-%2014%20jaar&amp;prefv2=Jongens">Jongens kleding</a></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-kleding?prefn1=age&amp;prefn2=genderSub&amp;prefv1=8%20-%2014%20jaar&amp;prefv2=Meisjes">Meisjes kleding</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-schoenen?prefn1=age&amp;prefn2=genderSub&amp;prefv1=8%20-%2014%20jaar&amp;prefv2=Jongens">Jongens schoenen</a></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-schoenen?prefn1=age&amp;prefn2=genderSub&amp;prefv1=8%20-%2014%20jaar&amp;prefv2=Meisjes">Meisjes schoenen</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-accessoires?prefn1=age&amp;prefv1=8%20-%2014%20jaar">Accessoires</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="http://www.adidas.nl/kinderen?prefn1=age&amp;prefv1=4%20-%208%20jaar">kinderen (4-8 jaar)</a></div>
+                                  <ul>
+                                    <li><a href="http://www.adidas.nl/kinderen-kleding?prefn1=age&amp;prefn2=genderSub&amp;prefv1=4%20-%208%20jaar&amp;prefv2=Jongens">Jongens kleding</a></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-kleding?prefn1=age&amp;prefn2=genderSub&amp;prefv1=4%20-%208%20jaar&amp;prefv2=Meisjes">Meisjes kleding</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-schoenen?prefn1=age&amp;prefn2=genderSub&amp;prefv1=4%20-%208%20jaar&amp;prefv2=Jongens">Jongens schoenen</a></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-schoenen?prefn1=age&amp;prefn2=genderSub&amp;prefv1=4%20-%208%20jaar&amp;prefv2=Meisjes">Meisjes schoenen</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-accessoires?prefn1=age&amp;prefv1=4%20-%208%20jaar">Accessoires</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="http://www.adidas.nl/kinderen?prefn1=age&amp;prefv1=0-4%20jaar">baby's (0-4 jaar)</a></div>
+                                  <ul>
+                                    <li><a href="http://www.adidas.nl/kinderen-kleding?prefn1=age&amp;prefv1=0-4%20jaar">Kleding</a></li>
+                                    <li><a href="http://www.adidas.nl/kinderen-schoenen?prefn1=age&amp;prefv1=0-4%20jaar">Schoenen</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/kinderen-performance">sporten</a></div>
+                                  <ul>
+                                    <li><a href="/kinderen-training">Training</a></li>
+                                    <li><a href="/kinderen-voetbal">Voetbal</a></li>
+                                    <li><a href="/kinderen-hardlopen">Hardlopen</a></li>
+                                    <li><a href="/kinderen-zwemmen">Zwemmen</a></li>
+                                    <li><a href="/kinderen-basketbal">Basketbal</a></li>
+                                    <li><a href="/kinderen-golf">Golf</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="bottom-line">
+                                <div class="col-5"><a href="/kinderen?grid=true"><strong>Bekijk alles</strong></a></div>
+                                <div class="col-5"><a href="http://www.adidas.nl/kinderen?prefn1=age&amp;prefv1=8%20-%2014%20jaar"><strong>Bekijk alles</strong></a></div>
+                                <div class="col-5"><a href="http://www.adidas.nl/kinderen?prefn1=age&amp;prefv1=8%20-%2014%20jaar"><strong>Bekijk alles</strong></a></div>
+                                <div class="col-5"><a href="http://www.adidas.nl/kinderen?prefn1=age&amp;prefv1=0-4%20jaar"><strong>Bekijk alles</strong></a></div>
+                                <div class="col-5"><a href="/kinderen-performance"><strong>Bekijk alles</strong></a></div>
+                              </div>
+                            </div>
+                          </div><!-- End contentasset -->
+                        </fetch>
+                      </template>
+                      <template is="dom-if" if="{{_labelEquals('Sports')}}">
+                        <fetch url="header-url-sports" s18n-attrs="url">
+                          <div class="contentasset" data-contentasset-id="navigation-category-sports" data-contentasset="navigation-category-sports">
+                            <div class="flyout-content-in">
+                              <div class="main-line with-line">
+                                <div class="col-5">
+                                  <div class="headline"><a class="text-logo" href="/voetbal">voetbal</a><a class="image-banner" href="/voetbal"><img alt="voetbal" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw20a3ac9b/header-redesign/blueblast.jpg" style="width: 172px; height: 80px;" ></a>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/voetbal-schoenen">Schoenen</a></li>
+                                    <li><a href="/voetbal-kleding">Kleding</a></li>
+                                    <li><a href="/voetbal-accessoires">Accessoires</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/ace">Ace</a></li>
+                                    <li><a href="/x">X</a></li>
+                                    <li><a href="/copa">Copa</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a class="text-logo" href="/hardlopen">hardlopen</a><a class="image-banner" href="/hardlopen"><img alt="hardlopen" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw2e59adfe/header-redesign/Running.png" style="width: 172px; height: 80px;" ></a>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/hardlopen-schoenen">Schoenen</a></li>
+                                    <li><a href="/hardlopen-kleding">Kleding</a></li>
+                                    <li><a href="/hardlopen-accessoires">Accessoires</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/ultra_boost">Ultra Boost</a></li>
+                                    <li><a href="/supernova">Supernova</a></li>
+                                    <li><a href="/pureboost_x">Pure Boost X</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a class="text-logo" href="/basketbal">basketbal</a><a class="image-banner" href="/basketbal"><img alt="basketbal" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw2bdf187d/header-redesign/Basketball.png" style="width: 172px; height: 80px;" ></a>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/basketbal-schoenen">Schoenen</a></li>
+                                    <li><a href="/basketbal-kleding">Kleding</a></li>
+                                    <li><a href="/basketbal-accessoires">Accessoires</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/j_harden">J. Harden collectie</a></li>
+                                    <li><a href="/crazylight">Crazylight Boost</a></li>
+                                    <li><a href="/nba">NBA collectie</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a class="text-logo" href="/training">training</a><a class="image-banner" href="/training"><img alt="training" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwed4cde22/header-redesign/Training10.03.jpg" style="width: 172px; height: 80px;" ></a>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/training-schoenen">Schoenen</a></li>
+                                    <li><a href="/training-kleding">Kleding</a></li>
+                                    <li><a href="/training-accessoires">Accessoires</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/stellasport?grid=true">StellaSport</a></li>
+                                    <li><a href="/techfit?grid=true">Techfit</a></li>
+                                    <li><a href="/climaheat?grid=true">Climaheat</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5 separate">
+                                  <div class="headline">
+                                    <a class="adidas-brand headline" href="#">andere speciale sporten</a>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/outdoor">Outdoors</a></li>
+                                    <li><a href="/golf">Golf</a></li>
+                                    <li><a href="/zwemmen">Zwemmen</a></li>
+                                    <li><a href="/tennis">Tennis</a></li>
+                                    <li><a href="/rugby">Rugby</a></li>
+                                    <li><a href="/skateboarding">Skateboarding</a></li>
+                                    <li><a href="http://www.adidasspecialtysports.nl/cycling">Wielrennen</a></li>
+                                    <li><a href="http://www.adidasspecialtysports.nl/weightlifting">Gewichtheffen</a></li>
+                                    <li><a href="/snowboarding">Snowboarding</a></li>
+                                    <li><a href="http://www.adidasspecialtysports.nl/badminton">Badminton</a></li>
+                                    <li><a href="http://www.adidasspecialtysports.nl/hockey">Hockey</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="bottom-line">
+                                <div class="col-5"><a href="/voetbal?grid=true"><strong>Alles van voetbal</strong></a></div>
+                                <div class="col-5"><a href="/hardlopen?grid=true"><strong>Alles van hardlopen</strong></a></div>
+                                <div class="col-5"><a href="/basketbal?grid=true"><strong>Alles van basketbal</strong></a></div>
+                                <div class="col-5"><a href="/training?grid=true"><strong>Alles van training</strong></a></div>
+                                <div class="col-5"><a href="http://www.adidasspecialtysports.nl"><strong>Specialty Sports</strong></a></div>
+                              </div>
+                            </div>
+                          </div><!-- End contentasset -->
+                        </fetch>
+                      </template>
+                      <template is="dom-if" if="{{_labelEquals('Brands')}}">
+                        <fetch url="header-url-labels" s18n-attrs="url">
+                          <div class="contentasset" data-contentasset-id="navigation-category-labels" data-contentasset="navigation-category-labels">
+                            <div class="flyout-content-in">
+                              <div class="main-line">
+                                <div class="col-5">
+                                  <div class="headline">
+                                    <div class="headline">
+                                      <a class="image-logo" href="/originals">
+                                        <img alt="" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwb6ebbd1b/header-redesign/Originals_Brand_Nav_Title.png" style="width: 172px; height: 30px;" />
+                                      </a>
+                                      <a class="image-banner" href="/originals">
+                                        <img alt="Originals_Brand_Nav_Title.png" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwf373d296/header-redesign/Originals_Brand_Nav_Image.jpg " style="width: 172px; height: 80px;" />
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/originals-schoenen">Schoenen</a></li>
+                                    <li><a href="/originals-kleding">Kleding</a></li>
+                                    <li><a href="/originals-accessoires">Accessoires</a></li>
+                                    <li><a href="/originals-nieuw_binnen">Nieuwe producten</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/superstar">Superstar</a></li>
+                                    <li><a href="/zx_flux">ZX Flux</a></li>
+                                    <li><a href="/tubular?grid=true">Tubular</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline">
+                                    <div class="headline">
+                                      <a class="image-logo" href="/athletics">
+                                        <img alt="" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw508e5e32/header-redesign/athletics-logo.png" style="width: 172px; height: 30px;" />
+                                      </a>
+                                      <a class="image-banner" href="/athletics">
+                                        <img alt="athletics-logo.png" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwb1b695a5/header-redesign/Athletics_Brand_Nav_Image_Bale.jpg " style="width: 172px; height: 80px;" />
+                                      </a>
+                                    </div>
+                                  </div>
+                                  <ul>
+                                    <li><a href="/heren-athletics">Kleding Heren</a></li>
+                                    <li><a href="/dames-athletics">Kleding Dames</a></li>
+                                    <li><a href="/athletics-nieuw_binnen">Nieuwe producten</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/athletics-zne">Z.N.E.</a></li>
+                                    <li><a href="/athletics-icon">Icon</a></li>
+                                    <li><a href="/athletics-id">ID</a></li>
+                                    <li><a href="/athletics-reigning_champ">Reigning Champ</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline">
+                                    <div class="headline">
+                                      <a class="image-logo" href="/adidas_by_stella_mccartney">
+                                        <img alt="" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwe66d69fe/header-redesign/Stella_Brand_Nav_Title.png" style="width: 172px; height: 30px;" />
+                                      </a>
+                                      <a class="image-banner" href="/adidas_by_stella_mccartney">
+                                        <img alt="Stella_Brand_Nav_Title.png" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwb7c2ce40/header-redesign/aSMC_HIIT_172x80.jpg " style="width: 172px; height: 80px;" />
+                                      </a>
+                                    </div>
+                                  </div>
+
+                                  <ul>
+                                    <li><a href="/adidas_by_stella_mccartney-schoenen">Schoenen</a></li>
+                                    <li><a href="/adidas_by_stella_mccartney-kleding">Kleding</a></li>
+                                    <li><a href="/adidas_by_stella_mccartney-accessoires">Accessoires</a></li>
+                                    <li><a href="/adidas_by_stella_mccartney-nieuw_binnen">Nieuwe producten</a></li>
+                                    <li class ="horizontal-separator"></li>
+                                    <li><a href="/adidas_by_stella_mccartney-training">Studio & Yoga</a></li>
+                                    <li><a href="/adidas_by_stella_mccartney-hardlopen">Hardlopen</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline">
+                                    <div class="headline">
+                                      <a class="image-logo" href="/porsche_design_sport_by_adidas">
+                                        <img alt="" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwb93d7471/header-redesign/Porsche_Brand_Nav_Title.png" style="width: 172px; height: 30px;" /> </a><a class="image-banner" href="/porsche_design_sport_by_adidas"> <img alt="Porsche_Brand_Nav_Title.png" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw6881ae7e/header-redesign/Porsche_Brand_Nav_Image.jpg " style="width: 172px; height: 80px;" /> </a>
+
+                                      </div>
+                                    </div>
+
+                                    <ul>
+                                      <li><a href="/porsche_design_sport_by_adidas-schoenen">Schoenen</a></li>
+                                      <li><a href="/porsche_design_sport_by_adidas-kleding">Kleding</a></li>
+                                      <li><a href="/porsche_design_sport_by_adidas-accessoires">Accessoires</a></li>
+                                      <li><a href="/porsche_design_sport_by_adidas-nieuw_binnen">Nieuwe producten</a></li>
+                                      <li class ="horizontal-separator"></li>
+                                      <li><a href="/porsche_design_sport_by_adidas-driving">Driving</a></li>
+                                      <li><a href="/porsche_design_sport_by_adidas-hardlopen">Hardlopen</a></li>
+                                    </ul>
+                                  </div>
+                                  <div class="col-5">
+                                    <div class="headline">
+                                      <div class="headline">
+                                        <a class="image-logo" href="/adidas_neo">
+                                          <img alt="" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw8a44ac59/header-redesign/Neo_Brand_Nav_Title.png" style="width: 172px; height: 30px;" />
+                                        </a>
+                                        <a class="image-banner" href="/adidas_neo">
+                                          <img alt="Neo_Brand_Nav_Title.png" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dw4f951bb2/header-redesign/new_header_flyout.jpg " style="width: 172px; height: 80px;" />
+                                        </a>
+                                      </div>
+                                    </div>
+                                    <ul>
+                                      <li><a href="/adidas_neo-schoenen">Schoenen</a></li>
+                                      <li><a href="/adidas_neo-kleding">Kleding</a></li>
+                                      <li><a href="/adidas_neo-accessoires">Accessoires</a></li>
+                                      <li><a href="/adidas_neo-nieuw_binnen">Nieuwe producten</a></li>
+                                      <li class ="horizontal-separator"></li>
+                                      <li><a href="/adidas_neo-jacks">Jacks</a></li>
+                                      <li><a href="/cloudfoam">Cloudfoam</a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                <div class="bottom-line">
+                                  <div class="col-5"><a href="/originals?grid=true"><strong>Alles van adidas Originals</strong></a></div>
+                                  <div class="col-5"><a href="/athletics?grid=true"><strong>Alles van athletics</strong></a></div>
+                                  <div class="col-5"><a href="/adidas_by_stella_mccartney"><strong>Alles van adidas by stella mccartney</strong></a></div>
+                                  <div class="col-5"><a href="/porsche_design_sport_by_adidas?grid=true"><strong>Alles van Porsche Design Sport by adidas</strong></a></div>
+                                  <div class="col-5"><a href="/adidas_neo"><strong>Alles van adidas neo</strong></a></div>
+                                </div>
+                              </div>
+                            </div><!-- End contentasset -->
+                        </fetch>
+                      </template>
+                      <template is="dom-if" if="{{_labelEquals('Customise')}}">
+                        <fetch url="header-url-customise" s18n-attrs="url">
+                          <div class="contentasset" data-contentasset-id="navigation-services-customise" data-contentasset="navigation-services-customise">
+                            <div class="flyout-content-in">
+                              <div class="main-line">
+                                <div class="col-5">
+                                  <div class="headline"><a href="/personaliseren?grid=true">Featured</a></div>
+                                  <ul>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=outlet&prefv3=Superstar&srule=sort2-category-topsellers&prefv1=Originals&prefv2=regular&prefn3=productLineStyle">Superstar </a></li>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=outlet&prefv3=Stan%20Smith&srule=sort2-category-topsellers&prefv1=Originals&prefv2=regular&prefn3=productLineStyle">Stan Smith</a></li>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=outlet&prefv3=adilette&srule=sort2-category-topsellers&prefv1=Originals&prefv2=regular&prefn3=productLineStyle">Adilette</a></li>
+                                    <li><a href="http://www.adidas.nl/personaliseren?prefn1=division&prefn2=outlet&prefv3=Spezial&srule=EOSS-sort2-category-topsellers&prefv1=Originals&prefv2=regular&prefn3=productLineStyle">Spezial</a></li>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=outlet&prefv3=ZX%20Flux&srule=sort2-category-topsellers&prefv1=Originals&prefv2=regular&prefn3=productLineStyle">ZX Flux</a></li>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=outlet&prefv3=Gazelle&srule=sort2-category-topsellers&prefv1=Originals&prefv2=regular&prefn3=productLineStyle">Gazelle</a></li>
+                                    <li><a href="/voetbal-kleding-add_name_number">Gepersonaliseerde Voetbalshirts</a></li>
+                                    <li><a href="https://www.adidas.nl/teamkleding">Ontwerp je teamtenue</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/personaliseren?prefn1=gender&prefn2=outlet&srule=newest-to-oldest&prefv1=Heren&prefv2=regular">Ontwerp voor Heren</a></div>
+                                  <ul>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=gender&prefv3=regular&srule=newest-to-oldest&prefv1=Originals&prefv2=Heren&prefn3=outlet">Originals</a></li>
+                                    <li><a href="/personaliseren?prefn1=gender&prefn2=outlet&prefv3=Running&srule=newest-to-oldest&prefv1=Heren&prefv2=regular&prefn3=sport">Hardlopen</a></li>
+                                    <li><a href="/personaliseren?prefn1=gender&prefn2=outlet&prefv3=Basketbal&srule=newest-to-oldest&prefv1=Heren&prefv2=regular&prefn3=sport">Basketbal</a></li>
+                                    <li><a href="/personaliseren?prefn1=gender&prefn2=outlet&prefv3=Baseball&srule=newest-to-oldest&prefv1=Heren&prefv2=regular&prefn3=sport">Baseball</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href="/personaliseren?prefn1=gender&prefn2=outlet&srule=newest-to-oldest&prefv1=Dames&prefv2=regular">Ontwerp voor Dames</a></div>
+                                  <ul>
+                                    <li><a href="/personaliseren?prefn1=division&prefn2=gender&prefv3=regular&srule=newest-to-oldest&prefv1=Originals&prefv2=Dames&prefn3=outlet">Originals</a></li>
+                                    <li><a href="/personaliseren?prefn1=gender&prefn2=outlet&prefv3=Running&srule=newest-to-oldest&prefv1=Dames&prefv2=regular&prefn3=sport">Hardlopen</a></li>
+                                    <li><a href="/personaliseren?prefn1=gender&prefn2=outlet&prefv3=Basketbal&srule=newest-to-oldest&prefv1=Dames&prefv2=regular&prefn3=sport">Basketbal</a></li>
+                                    <li><a href="/personaliseren?prefn1=gender&prefn2=outlet&prefv3=Baseball&srule=newest-to-oldest&prefv1=Dames&prefv2=regular&prefn3=sport">Baseball</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-5">
+                                  <div class="headline"><a href=""></a></div>
+                                  <ul>
+                                    <li><a href="/personaliseren"><img alt="Customise" src="https://www.adidas.nl/static/on/demandware.static/-/Sites-adidas-NL-Library/default/dwe431edd5/FlyoutNav_NL.gif" /></a></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="bottom-line">
+                                <div class="col-5"><a href="/personaliseren?grid=true"><strong>Bekijk alle producten</strong></a></div>
+                                <div class="col-5"><a href="/personaliseren?prefn1=gender&prefn2=outlet&srule=newest-to-oldest&prefv1=Heren&prefv2=regular"><strong>Alle producten voor heren</strong></a></div>
+                                <div class="col-5"><a href="/personaliseren?prefn1=gender&prefn2=outlet&srule=newest-to-oldest&prefv1=Dames&prefv2=regular"><strong>Alle producten voor dames</strong></a></div>
+                                <div class="col-5"><a href="/personaliseren"><strong>Meet the Creators</strong></a></div>
+                              </div>
+                            </div>
+                          </div><!-- End contentasset -->
+                        </fetch>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </template>
+    <script>
+    class StoreNavigationFlyout extends StoreBaseElement {
+      static get is () { return 'store-navigation-flyout' }
+      static get properties () {
+        return {
+          label: {
+            type: String
+          },
+          link: {
+            type: String
+          }
+        }
+      }
+
+      _labelEquals (value) {
+        return this.label === value
+      }
+    }
+
+    customElements.define(StoreNavigationFlyout.is, StoreNavigationFlyout)
+    </script>
+</dom-module>

@@ -1,0 +1,230 @@
+<dom-module id="store-icons">
+    <template>
+        <custom-style>
+            <style>
+                .icon {
+                    font-family: 'icomoonregular';
+                    font-weight: normal;
+                    font-variant: normal;
+                    line-height: normal;
+                    text-rendering: auto;
+                    font-style: normal;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+                /* Logo icons */
+                .icon-adidas:before {
+                    content: '\e62b';
+                }
+                .icon-originals:before {
+                    content: '\e62c';
+                    color: var(--AdiPrimary);
+                }
+                .icon-stella:before {
+                    content: '\e62b';
+                    color: #7e7f82;
+                }
+                .icon-neo {
+                    width: 82px;
+                    height: 15px;
+                    position: relative;
+                }
+                .icon-neo:before {
+                    content: "";
+                    position: absolute;
+                    background: url(../../img/adidas_desktop_sprite.png) no-repeat -1440px -1265px;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                }
+                .icon-porsche {
+                    width: 122px;
+                    height: 25px;
+                    position: relative;
+                }
+                .icon-porsche:before {
+                    content: "";
+                    position: absolute;
+                    background: url(../../img/adidas_desktop_sprite.png) no-repeat -964px -417px;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                }
+
+                /* Icomoon icons */
+                .icon-heart-empty:before {
+                    content: '\e908';
+                }
+                .icon-heart-filled:before {
+                    content: '\e909';
+                }
+                .icon-arrow-left:before {
+                    content: '\e628';
+                }
+                .icon-arrow-right:before {
+                    content: '\e627';
+                }
+                .icon-arrow-up:before {
+                    content: '\e628';
+                }
+                .icon-arrow-down:before {
+                    content: '\e627';
+                }
+                .icon-arrow-left-circle:before {
+                    content: '\e600';
+                    display: inline-block;
+                    transform:rotate(-180deg);
+                }
+                .icon-arrow-right-circle:before {
+                    content: '\e600';
+                }
+                .icon-tick:before {
+                    content: '\e612';
+                }
+                .icon-tick-circle:before {
+                    content: '\e605';
+                }
+                .icon-close:before {
+                    content: "\e62f";
+                }
+
+                /* Adipicto icons */
+                .icon-star-filled:before {
+                    font-family: 'adiPictoRegular';
+                    content: '\e608';
+                }
+                .icon-star-empty:before {
+                    font-family: 'adiPictoRegular';
+                    content: '\e905';
+                }
+                .icon-zoom-in:before {
+                    font-family: 'adiPictoRegular';
+                    content: '\e671';
+                }
+                .icon-facebook:before {
+                    font-family: 'adiPictoRegular';
+                    content: '\e805b';
+                }
+                .icon-twitter:before {
+                    font-family: 'adiPictoRegular';
+                    content: "\e806b";
+                }
+                .icon-instagram:before {
+                    font-family: 'adiPictoRegular';
+                    content: "\e804b";
+                }
+                .icon-youtube:before {
+                    font-family: 'adiPictoRegular';
+                    content: "\e809b";
+                }
+
+                /* SVG icons */
+                .icon-personalize {
+                    width: 18px;
+                    height: 18px;
+                    position: relative;
+                }
+                .icon-personalize:before {
+                    background: url(../../img/icon-customize.svg);
+                    background-size: cover;
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0px;
+                    top: -2px;
+                }
+                .icon-pin {
+                    width: 18px;
+                    height: 22px;
+                    position: relative;
+                }
+                .icon-pin:before {
+                    background: url(../../img/icon-pin.svg);
+                    background-size: cover;
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0px;
+                }
+
+                /* Sprite icons */
+                .icon-customize {
+                    width: 18px;
+                    height: 18px;
+                    position: relative;
+                }
+                .icon-customize:before {
+                    background: url(../../img/adidas_desktop_sprite.png) no-repeat -597px -1403px;
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0px;
+                    top: -2px;
+                }
+
+                /* Flags icons */
+                [class*=flag-] {
+                    width: 15px;
+                    height: 11px;
+                    overflow: hidden;
+                    display: block;
+                    background-image: url('../../img/adidas_desktop_sprite.png');
+                }
+                .flag-en_GB {background-position: -1151px -1403px;}
+                .flag-nl_NL {background-position: -1096px -1470px;}
+                .flag-fi_FI {background-position: -1014px -1403px;}
+                .flag-en_US {background-position: -1041px -1403px;}
+                .flag-en_CA, .flag-fr_CA {background-position: -1096px -1403px;}
+                .flag-de_DE {background-position: -1206px -1403px;}
+                .flag-fr_FR {background-position: -1371px -1403px;}
+                .flag-es_ES {background-position: -1481px -1403px;}
+                .flag-it_IT {background-position: -1316px -1403px;}
+                .flag-ru_RU {background-position: -1261px -1403px;}
+                .flag-zh_CN {background-position: -1206px -1470px;}
+                .flag-pt_BR {background-position: -1151px -1470px;}
+                .flag-ja_JP {background-position: -1426px -1403px;}
+                .flag-ec_ES {background-position: -986px -1403px;}
+                .flag-ko_KR {background-position: -1041px -1470px;}
+                .flag-en_AE {background-position: -1261px -1470px;}
+                .flag-es_AR {background-position: -1316px -1470px;}
+                .flag-es_CO {background-position: -986px -1403px;}
+                .flag-en_IN {background-position: -1371px -1470px;}
+                .flag-es_MX {background-position: -1425px -1470px;}
+                .flag-de_AT {background-position: -1069px -1403px;}
+                .flag-en_CZ {background-position: -1125px -1403px;}
+                .flag-da_DK {background-position: -1181px -1403px;}
+                .flag-en_NO {background-position: -1237px -1403px;}
+                .flag-pl_PL {background-position: -1291px -1403px;}
+                .flag-sv_SE {background-position: -1344px -1403px;}
+                .flag-de_CH, .flag-en_CH, .flag-fr_CH, .flag-it_CH {background-position: -1399px -1403px;}
+                .flag-en_AU {background-position: -1454px -1403px;}
+                .flag-en_NZ {background-position: -1512px -1403px;}
+                .flag-sk_SK, .flag-en_SK {background-position: -1542px -1403px;}
+                .flag-fr_BE { background-position: -1069px -1470px;}
+                .flag-en_IE {background-position: -1125px -1470px;}
+                .flag-es_CL {background-position: -1181px -1470px;}
+                .flag-es_PE {background-position: -1237px -1470px;}
+                .flag-id_ID {background-position: -1291px -1470px;}
+                .flag-zh_HK {background-position: -1344px -1470px;}
+                .flag-en_MY {background-position: -1399px -1470px;}
+                .flag-en_PH {background-position: -1454px -1470px;}
+                .flag-en_SG {background-position: -1481px -1470px;}
+                .flag-th_TH {background-position: -1512px -1470px;}
+                .flag-zh_TW {background-position: -1542px -1470px;}
+                .flag-vi_VN {background-position: -1014px -1436px;}
+                .flag-en_ZA {background-position: -1041px -1436px;}
+                .flag-el_GR, .flag-en_GR {background-position: -1069px -1436px;}
+                .flag-hu_HU {background-position: -1096px -1436px;}
+                .flag-pt_PT, .flag-en_PT {background-position: -1125px -1436px;}
+                .flag-tr_TR {background-position: -1151px -1436px;}
+
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

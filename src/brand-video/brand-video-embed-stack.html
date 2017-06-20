@@ -1,0 +1,152 @@
+<link rel="import" href="../store-shared-styles/store-typography.html">
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../store-hero-stack/store-hero-stack.html">
+<link rel="import" href="../store-description-stack/store-description-stack.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-header/store-header.html">
+<link rel="import" href="../store-footer/store-footer.html">
+<link rel="import" href="../store-shared-styles/store-grid.html">
+<link rel="import" href="../store-shared-styles/store-z-index.html">
+<link rel="import" href="../store-carousel/store-carousel.html">
+<link rel="import" href="../store-slider-stack/store-slider-stack.html">
+
+<dom-module id="brand-video-embed-stack">
+    <template>
+      <!-- MEDIA EMBED -->
+       
+      <style include="shared-styles">
+          
+               
+        h1, h2, h3, h4, h5, h6, .adineue-bd, .title-mega, .title-super, .title-48, .title-32, .title-28, .title-22, .title-18, .title-16 {
+            font-family: 'adiLight', Arial, Helvetica, Verdana, sans-serif!important;
+            text-transform: uppercase !important;
+        }
+          
+         h2, .title-32 {
+            font-family: 'adilight' , Arial, Helvetica, Verdana, sans-serif!important;
+            letter-spacing: 6px !important;
+            font-size: 32px !important;
+            line-height: 90%!important;
+             font: inherit;
+        }
+        
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            background: transparent;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 24px;
+            color: #000;
+        }
+
+        .adihaus, body, p, .title-upper, .para-intro, .para-normal, .para-small, .button-primary, .button-var, .primary-label, .form-label, .reg-price, .sale-price, .sale-old-price, .link-super, .link-fine, .link-headline, input {
+            font-family: 'adihausregular',Arial,Helvetica,Verdana,sans-serif;
+        }    
+          
+        .para-intro {
+            font-size: 18px !important;
+            margin: 20px 20px 40px 0 !important;
+            line-height: 24px !important;
+            font-weight: normal !important;
+            text-align: center;
+        }
+          
+        .ytcontainer{
+          width:100%;
+          height:auto;
+        }
+          
+        @media (max-width: 959px) {
+            h2, .title-super {
+            font-size: 1.4rem !important;
+            font-family: 'adiBlack',Arial,Helvetica,Verdana,sans-serif !important;
+            letter-spacing: 0 !important;
+            }
+
+        }
+        
+      </style>
+      <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>   
+      <div class="media-slider-header owlCarouselEnabled" style="margin: 0 auto;clear:both;">
+         <h2 class="stack-title" style="text-align: center;">{{videoStack.stack-title}}</h2>
+         <p class="para-intro" style="text-align: center;">
+            <span id = "subtitle" class="stackheader-subtitle"></span>
+         </p>
+          
+          
+        <div class="ytcontainer video-container-black" tabindex="-1">
+            <img src="{{videoStack.imageUrl}}" class="video-frame" height="475px" tabindex="-1" style="display: none;width: 950px; margin:0 auto;">
+            <div class="video-icon-wrapper icon-big" tabindex="-1" style="display: block;">
+               <div class="video-icon" tabindex="-1"></div>
+            </div>
+            <div class="video-center-wrapper" style="z-index: 50;" tabindex="-1"><iframe id="" class="" style="height: 475px; width: 100%;" tabindex="-1" frameborder="0" allowfullscreen="1" title="YouTube video player" src="https://www.youtube.com/embed/{{getVideoId(videoStack.videoUrl)}}?autoplay=0&controls=1&iv_load_policy=3&cc_load_policy=1&modestbranding=1&rel=0&showinfo=0&wmode=transparent&enablejsapi=1&origin=http%3A%2F%2Fwww.adidas.co.uk&widgetid=1 "></iframe></div>
+         </div>
+      </div>
+      <iron-ajax
+            auto
+            url="http://10.67.90.232:83/api/fragment/getContent"
+            id="videoStackDataRequest"
+            handle-as="json"
+             params="{{filter}}"
+            on-response="handleResponse_VideoStackData">
+         </iron-ajax>
+      <!-- MEDIA EMBED END -->    
+    
+    </template>
+    
+    <script>
+        
+        class VideoEmbedStack extends Polymer.Element {
+            
+            static get is () { return 'brand-video-embed-stack'; }
+            static get properties () {
+              return {
+                  
+                    videoStack: {
+                        type: Object,
+                        value: {
+                                "stack-title":"",
+                                "subtitle":"",
+                                "imageUrl":"",
+                                "videoUrl":"",
+                                "height":"",
+                                "width":""                                             
+                                }
+                      },
+                      filter: Object
+                  
+              }
+            }
+        ready() {
+              super.ready()
+              this.filter = (this.filter ==null || this.filter ==undefined ) ? this.queryParams : this.filter;
+                this.$.videoStackDataRequest.generateRequest();
+                           
+          }
+
+        handleResponse_VideoStackData(data)
+          {
+              this.videoStack = data.detail.response;
+              this.$.subtitle.innerHTML=this.videoStack.subtitle;
+          }
+          getVideoId(url)
+          {
+              var videoID=url.split("=").pop();
+              return videoID;
+          }
+            
+        }
+        
+          window.customElements.define(VideoEmbedStack.is, VideoEmbedStack);
+    </script>
+</dom-module>

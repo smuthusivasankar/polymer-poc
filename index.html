@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	   <title>store</title>
+    <meta name="description" content="store description">
+    <link rel="manifest" href="/manifest.json">
+    <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="/src/store-app/store-app.html">
+    <style>
+      html, body {
+        height: 100%;
+        font-size: 14px;
+      }
+      @media (max-width : 959px) {
+        html, body {
+          font-size: 16px;
+        }
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus,
+      button:focus {
+        outline: none!important;
+      }
+      *, *:after, *:before {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <store-app></store-app>
+  </body>
+</html>

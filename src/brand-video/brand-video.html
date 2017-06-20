@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel = "import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/google-youtube/google-youtube.html">
+
+
+<dom-module id="brand-video">
+    <template>
+        <style>
+            :host{
+                display: block;
+            }
+        .divvp{
+            /*margin-left:218px;*/        
+            width:100%;
+            margin-top:20px;
+            margin-bottom:90px; 
+        }
+        .div2{
+            margin: 0 auto;
+            width: 70%;
+            overflow: hidden;
+        }
+        </style>
+        <div class="divvp">
+            <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+            <div class="div2">
+                <google-youtube
+                id="player"
+                video-id="{{generateVideoId(brandvideo.videoUrl)}}"
+                width="850px"
+                height="600px"               
+                rel="0"
+                start="5"   
+                autoplay="1"
+                thumbnail="{{brandvideo.imageUrl}}" >        
+            </google-youtube>
+            </div>
+        </div>
+        <iron-ajax
+            id="requestText"
+            url="http://10.67.90.232:83/api/fragment/getContent"
+            params="{{filter}}"
+            handle-as="json"
+            last-response = "{{brandvideo}}"            
+            on-response="handleResponse">
+        </iron-ajax>  
+    </template>
+    <script>
+    Polymer({
+        is: "brand-video", properties: {
+                filter: Object
+            },
+        ready: function () {
+		      this.filter = (this.filter ==null || this.filter ==undefined ) ? this.queryParams : this.filter;
+                this.$.requestText.generateRequest();
+            },
+
+            handleResponse: function (data) {
+                this.jsontext= data.detail.response;                         
+            },
+
+            generateVideoId: function(url){
+                var videoID = url.split("=").pop();
+                return videoID;
+            }
+    });
+    </script>
+</dom-module>

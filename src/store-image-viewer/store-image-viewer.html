@@ -1,0 +1,463 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<dom-module id="store-image-viewer">
+  <template>
+    <style include="store-foundation">
+      :host {
+        display: block;
+        width: 100%;
+        height: 100vw;
+      }
+
+      .images-container {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      .images-container img {
+        width: 100vw;
+        height: 100vw;
+        display: block;
+        transition: transform 0.2s ease-in-out;
+      }
+      .images-container img:not(.active) {
+        display: none;
+      }
+
+      .thumbnails-container {
+        width: auto;
+      }
+
+      .thumbnails-container .thumbnail {
+        float: left;
+        display: block;
+        position: relative;
+      }
+
+      .thumbnails-container .thumbnail img {
+        display: block;
+      }
+      .thumbnails-container .thumbnail.active:after {
+        content:"";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom:0;
+        border-bottom: 2px solid var(--AdiBlack);
+        border-top: 2px solid var(--AdiBlack);
+      }
+
+      button.controls {
+        position: absolute;
+        top: calc(50% - 20px);
+        padding: 0;
+        line-height: 40px;
+        border: none;
+        background: none;
+        color: #FFF;
+        text-shadow: -1px 0 var(--AdiGrey20), 0 1px var(--AdiGrey20), 1px 0 var(--AdiGrey20), 0 -1px var(--AdiGrey20);
+        font-size: 40px;
+        opacity: 0.7;
+      }
+      button:hover,
+      button:focus {
+        opacity: 1;
+      }
+      #prevBtn {
+        left: 12px;
+      }
+      #nextBtn {
+        right: 12px;
+      }
+      button[disabled] {
+        opacity: 0.4;
+      }
+      button.zoom {
+        position: absolute;
+        bottom: 20px;
+        right: 10px;
+        color: #333;
+        border: 1px solid var(--AdiGrey20);
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      button.zoom i {
+        font-size: 20px;
+      }
+
+      store-image-zoom {
+        display: none;
+        z-index: var(--z-index-product-image-zoom);
+      }
+
+      @media (min-width: 960px) {
+        :host {
+          height: 100%
+        }
+        .images-container {
+          float: right;
+          width: auto;
+          cursor: url(../../img/cursor-zoom.png) 24 24, auto;
+          height: 100%;
+          width: 100%;
+        }
+        .images-container img {
+          float: right;
+          transition: none;
+        }
+        .images-container img.active {
+          width: auto;
+          height: 100%;
+        }
+
+        .thumbnails-container {
+          width: 54px;
+          position: absolute;
+          top: 80px;
+          bottom: 60px;
+          overflow: hidden;
+        }
+        .thumbnails-container .thumbnail {
+          border: solid 1px var(--AdiGrey20);
+          margin-top: 10px;
+          width: 54px;
+          height: 54px;
+        }
+        .thumbnails-container .thumbnail img {
+          width: 100%;
+        }
+        .thumbnails-container .thumbnail:first-child {
+          margin-top: 0px;
+        }
+        .thumbnails-container .thumbnail.active:after {
+          border-top: 0;
+          bottom: -1px;
+          left: -1px;
+          right: -1px;
+        }
+      }
+      @media (min-width: 960px) and (min-height: 500px) {
+        .images-container {width: 500px;}
+      }
+      @media (min-width: 960px) and (min-height: 600px) {
+        .images-container {width: 600px;}
+      }
+      @media (min-width: 960px) and (min-height: 800px) {
+        .images-container {width: 700px;}
+      }
+      @media (min-width: 960px) and (min-height: 1000px) {
+        .images-container {width: 800px;}
+      }
+    </style>
+    <div class="images-container" on-click="_toggleZoom" on-mousemove="_zoomIn" on-mouseout="_zoomOut">
+      <dom-repeat items="[[views]]" as="view" index-as="count" id="images">
+        <template>
+          <img data-src$="[[_getMediumImageURL(view.image_url)]]" class$="{{_isActive(count)}}" id$="{{_setImageId(count)}}">
+        </template>
+      </dom-repeat>
+      <dom-if if="[[mobile]]">
+        <template>
+          <button class="controls" id="prevBtn" on-click="previous"><i class="icon icon-arrow-right"></i></button>
+          <button class="controls" id="nextBtn" on-click="next"><i class="icon icon-arrow-left"></i></button>
+          <button class="zoom" on-click="_openZoom"><i class="icon icon-zoom-in"></i></button>
+        </template>
+      </dom-if>
+    </div>
+    <div class="thumbnails-container">
+      <dom-repeat items="[[views]]" as="view" index-as="count" id="thumbnails">
+        <template>
+          <div class$="{{_isActive(count)}} thumbnail">
+            <img src="[[_getThumbnailURL(view.image_url)]]" id$="{{_setThumbnailId(count)}}" on-click="_setActiveView" data-view-index$="[[count]]">
+          </div>
+        </template>
+      </dom-repeat>
+    </div>
+    <dom-if if="[[mobile]]">
+      <template>
+        <store-image-zoom id="zoom" image="[[zoomUrl]]" opened="{{zoomOpened}}" index="[[zoomIndex]]" count="[[views.length]]" mobile="[[mobile]]"></store-image-zoom>
+      </template>
+    </dom-if>
+  </template>
+  <script>
+    class StoreImageViewer extends StoreBaseElement {
+      static get is () { return 'store-image-viewer' }
+      static get properties () {
+        return {
+          views: {
+            type: Array
+          },
+          activeViewIndex: {
+            type: Number,
+            reflect: true
+          },
+          zoomUrl: {
+            type: String,
+            notify: true
+          },
+          zoomOpened: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          zoomActive: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+          zoomIndex: {
+            type: Number,
+            computed: '_computeZoomIndex(activeViewIndex)'
+          },
+          background: {
+            type: String,
+            notify: true,
+            value: ''
+          },
+          zoomPosition: {
+            type: Object,
+            notify: true
+          }
+        }
+      }
+      connectedCallback () {
+        super.connectedCallback()
+        this.listen(this, 'touchstart', '_touchstart')
+        this.listen(this, 'touchmove', '_touchmove')
+        this.listen(this, 'touchend', '_touchend')
+      }
+      ready () {
+        super.ready()
+        if (this.views.length) {
+          Polymer.RenderStatus.afterNextRender(null, () => {
+            this._renderActiveView(0)
+            this._preloadImages(this.views)
+          })
+        }
+      }
+      _isActive (count) {
+        return (count === this.activeViewIndex) ? 'active' : ''
+      }
+      _setThumbnailId (count) {
+        return 'thumbnail_' + count
+      }
+      _setImageId (count) {
+        return 'view_' + count
+      }
+      _setActiveView (event) {
+        const oldIndex = this.activeViewIndex
+        this.activeViewIndex = event.target.getAttribute('data-view-index') - ''
+        this._renderActiveView(this.activeViewIndex, oldIndex)
+      }
+      _renderActiveView (activeViewIndex, oldActiveViewIndex) {
+        this._loadImage(this.shadowRoot.querySelector('#view_' + activeViewIndex))
+
+        if (activeViewIndex > 0) {
+          this._loadImage(this.shadowRoot.querySelector('#view_' + (activeViewIndex - 1)))
+        }
+        if (this.views && activeViewIndex < (this.views.length - 1)) {
+          this._loadImage(this.shadowRoot.querySelector('#view_' + (activeViewIndex + 1)))
+        }
+        if (typeof oldActiveViewIndex !== 'undefined') {
+          if (activeViewIndex < oldActiveViewIndex) {
+            this._translateX(this.shadowRoot.querySelector('#view_' + oldActiveViewIndex), 0)
+            this._translateX(this.shadowRoot.querySelector('#view_' + activeViewIndex), -this.offsetWidth)
+          } else {
+            this._translateX(this.shadowRoot.querySelector('#view_' + oldActiveViewIndex), 0)
+            this._translateX(this.shadowRoot.querySelector('#view_' + activeViewIndex), this.offsetWidth)
+          }
+          this.shadowRoot.querySelector('#thumbnail_' + oldActiveViewIndex).parentElement.classList.remove('active')
+          this.shadowRoot.querySelector('#view_' + oldActiveViewIndex).classList.remove('active')
+          this.shadowRoot.querySelector('#view_' + activeViewIndex).classList.add('active')
+          this.shadowRoot.querySelector('#thumbnail_' + activeViewIndex).parentElement.classList.add('active')
+          if (activeViewIndex < oldActiveViewIndex) {
+            this._translateX(this.shadowRoot.querySelector('#view_' + oldActiveViewIndex), this.offsetWidth, this.mobile)
+            this._translateX(this.shadowRoot.querySelector('#view_' + activeViewIndex), 0, this.mobile)
+          } else {
+            this._translateX(this.shadowRoot.querySelector('#view_' + oldActiveViewIndex), -this.offsetWidth, this.mobile)
+            this._translateX(this.shadowRoot.querySelector('#view_' + activeViewIndex), 0, this.mobile)
+          }
+        }
+        this._setBackground()
+        this._setZoomUrl()
+      }
+      previous () {
+        var oldIndex = this.activeViewIndex
+        if (this.activeViewIndex > 0) {
+          this.activeViewIndex--
+        } else {
+          this.activeViewIndex = this.views.length - 1
+        }
+        this._renderActiveView(this.activeViewIndex, oldIndex)
+      }
+      next () {
+        var oldIndex = this.activeViewIndex
+        if (this.activeViewIndex < (this.views.length - 1)) {
+          this.activeViewIndex++
+        } else {
+          this.activeViewIndex = 0
+        }
+        this._renderActiveView(this.activeViewIndex, oldIndex)
+      }
+      _loadImage (img) {
+        if (img && !img.src) {
+          img.src = img.getAttribute('data-src')
+        }
+      }
+      _translateX (elem, x, transition) {
+        elem.style.transition = transition ? 'transform 0.2s' : ''
+        elem.style.transform = 'translate3d(' + x + 'px, 0, 0)'
+      }
+
+      _touchstart (event) {
+        if (this.zoomOpened) {
+          return
+        }
+        if (this.views.length < 2) {
+          return
+        }
+
+        if (!this._touchDir) {
+          this._startX = event.changedTouches[0].clientX
+          this._startY = event.changedTouches[0].clientY
+        }
+      }
+
+      _touchmove (event) {
+        if (this.zoomOpened) {
+          return
+        }
+        if (this.views.length < 2) {
+          return
+        }
+        if (!this._touchDir) {
+          const absX = Math.abs(event.changedTouches[0].clientX - this._startX)
+          const absY = Math.abs(event.changedTouches[0].clientY - this._startY)
+          this._touchDir = absX > absY ? 'x' : 'y'
+        }
+
+        if (this._touchDir === 'x') {
+          event.preventDefault()
+        }
+      }
+
+      _touchend (event) {
+        if (this.zoomOpened) {
+          return
+        }
+
+        if (this.views.length < 2) {
+          return
+        }
+        if (event.touches.length) {
+          return
+        }
+
+        if (!this._touchDir) {
+          const absX = Math.abs(event.changedTouches[0].clientX - this._startX)
+          const absY = Math.abs(event.changedTouches[0].clientY - this._startY)
+          this._touchDir = absX > absY ? 'x' : 'y'
+        }
+        if (this._touchDir === 'x') {
+          var oldIndex = this.activeViewIndex
+          var dx = Math.round(event.changedTouches[0].clientX - this._startX)
+
+          if (dx > 0) {
+            if (dx > 100) {
+              if (this.activeViewIndex > 0) {
+                this.activeViewIndex--
+              } else {
+                this.activeViewIndex = this.views.length - 1
+              }
+              this._renderActiveView(this.activeViewIndex, oldIndex)
+            }
+          } else if (dx < 0) {
+            if (dx < -100) {
+              if (this.activeViewIndex < (this.views.length - 1)) {
+                this.activeViewIndex++
+              } else {
+                this.activeViewIndex = 0
+              }
+              this._renderActiveView(this.activeViewIndex, oldIndex)
+            }
+          }
+        }
+        this._touchDir = null
+      }
+      _openZoom (event) {
+        this._setZoomUrl()
+        if (this.mobile) {
+          this.shadowRoot.querySelector('#zoom').style.display = 'block'
+          this.shadowRoot.querySelector('#zoom').initZoom()
+        }
+        this.zoomOpened = true
+      }
+      _setZoomUrl () {
+        const imgUrl = this.views[this.activeViewIndex].image_url + '?sw=2000&sfrm=jpg'
+        this.zoomUrl = imgUrl
+      }
+      _computeZoomIndex (activeViewIndex) {
+        return (activeViewIndex + 1)
+      }
+      _preloadImages (views) {
+        Polymer.RenderStatus.afterNextRender(null, () => {
+          this._loadImage(this.shadowRoot.querySelector('#view_' + this.activeViewIndex))
+          this._loadImage(this.shadowRoot.querySelector('#view_' + (this.activeViewIndex + 1)))
+          this._loadImage(this.shadowRoot.querySelector('#view_' + (views.length - 1)))
+          this._setBackground()
+        })
+      }
+      _setBackground () {
+        if (this.views) {
+          const view = this.views[this.activeViewIndex]
+          const baseUrl = view.image_url
+          if (view.type === 'standard') {
+            this.background = 'url(' + baseUrl + '?sfrm=jpg&cx=0&cy=0&cw=10&ch=2000&sh=600)'
+          } else if (view.type === 'detail') {
+            this.background = '#000'
+          } else {
+            this.background = ''
+          }
+        }
+      }
+      _zoomIn (event) {
+        if (this.zoomOpened && !this.mobile) {
+          var posX = (event.offsetX ? (event.offsetX) : event.pageX - event.target.offsetLeft) * 2.5
+          var posY = (event.offsetY ? (event.offsetY) : event.pageY - event.target.offsetTop) * 2.5
+
+          this.zoomPosition = {
+            'x': posX,
+            'y': posY
+          }
+          this.zoomActive = true
+        }
+      }
+      _zoomOut () {
+        if (this.zoomOpened && !this.mobile) {
+          this.zoomActive = false
+        }
+      }
+      _toggleZoom (event) {
+        if (!this.mobile) {
+          if (this.zoomOpened) {
+            this.zoomOpened = false
+            this.zoomActive = false
+          } else {
+            this._openZoom(event)
+            this._zoomIn(event)
+          }
+        }
+      }
+
+      _getThumbnailURL (imageURL) {
+        return imageURL + '?sw=60&sfrm=jpg'
+      }
+
+      _getMediumImageURL (imageURL) {
+        return imageURL + '?sw=600&sfrm=jpg'
+      }
+    }
+    customElements.define(StoreImageViewer.is, StoreImageViewer)
+  </script>
+</dom-module>

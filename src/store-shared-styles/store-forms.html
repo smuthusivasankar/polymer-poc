@@ -1,0 +1,157 @@
+<dom-module id="store-forms">
+    <template>
+        <custom-style>
+            <style>
+                /* General */
+                form {
+                    width: 100%;
+                }
+                input:focus,
+                textarea:focus {
+                    outline: none!important;
+                }
+                input[type="text"], input[type="email"], input[type="password"], textarea {
+                    width: 100%;
+                    font-size: inherit;
+                    font-family: inherit;
+                    border: 1px solid var(--AdiGrey20);
+                    padding: 0 20px;
+                    position: relative;
+                    margin-bottom: 10px;
+                    transition: all .2s ease-in-out;
+                    border-radius: 0;
+                }
+                input[type="text"], input[type="email"], input[type="password"] {
+                    height: 50px;
+                }
+                input[type="text"]:disabled,
+                input[type="email"]:disabled,
+                input[type="password"]:disabled,
+                textarea:disabled,
+                .custom-input.disabled {
+                    border: 1px solid var(--AdiGrey10);
+                    background: var(--AdiGrey00);
+                    cursor: initial;
+                }
+                textarea {
+                    resize: none;
+                    min-height: 100px;
+                    padding: 20px;
+                }
+                .form-group {
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+
+                /* States */
+                input[type="text"]:focus,
+                input[type="email"]:focus,
+                input[type="password"]:focus,
+                textarea:focus,
+                .custom-input:focus {
+                    border-bottom-color: var(--AdiGrey80);
+                    box-shadow: 0 2px 0 0 var(--AdiGrey80);
+                }
+                input[type="text"].error,
+                input[type="email"].error,
+                input[type="password"].error,
+                textarea.error,
+                .custom-input.error {
+                    border-bottom-color: var(--AdiError);
+                    box-shadow: 0 2px 0 0 var(--AdiError);
+                }
+                input[type="text"].valid,
+                input[type="email"].valid,
+                input[type="password"].valid,
+                textarea.valid,
+                .custom-input.valid {
+                    border-bottom-color: var(--AdiSuccess);
+                    box-shadow: 0 2px 0 0 var(--AdiSuccess);
+                }
+                input[type="text"].warning,
+                input[type="email"].warning,
+                input[type="password"].warning,
+                textarea.warning,
+                .custom-input.warning {
+                    border-bottom-color: var(--AdiWarning);
+                    box-shadow: 0 2px 0 0 var(--AdiWarning);
+                }
+
+                /* Messages */
+                .message {
+                    font-size: calc(var(--FontDtBaseline) * 0.8571);
+                    color: var(--AdiGrey40);
+                    margin-top: -2px;
+                }
+                .message.error {
+                    color: var(--AdiError);
+                }
+
+                /* Checkboxes */
+                input[type="checkbox"] {
+                    display: none;
+                }
+                input[type="checkbox"] + label span {
+                    display:inline-block;
+                    width:24px;
+                    height:24px;
+                    border: 1px solid var(--AdiGrey20);
+                    position: relative;
+                    margin: 0 10px 10px 0;
+                    vertical-align: -webkit-baseline-middle;
+                    background: #fff;
+                    transition: all .2s ease-in-out;
+                }
+                input[type="checkbox"]:disabled + label span {
+                    border: 1px solid var(--AdiGrey10);
+                    background: var(--AdiGrey00);
+                }
+                input[type="checkbox"]:checked + label span {
+                    border: none;
+                    background-color: var(--AdiPrimary);
+                }
+                input[type="checkbox"]:checked + label span:after {
+                    content: "\e612";
+                    position: absolute;
+                    top: 7px;
+                    left: 6px;
+                    font: normal normal normal 11px/1 "icomoonregular";
+                    color: #fff;
+                }
+
+                /* Radio buttons */
+                input[type="radio"] {
+                    display: none;
+                }
+                input[type="radio"] + label span {
+                    display:inline-flex;
+                    width:24px;
+                    height:24px;
+                    border: 1px solid var(--AdiGrey20);
+                    vertical-align:-webkit-baseline-middle;
+                    margin: 0 10px 10px 0;
+                    background: #fff;
+                    border-radius: 50%;
+                    transition: all .2s ease-in-out;
+                    align-items: center;
+                    justify-content: center;
+                }
+                input[type="radio"]:disabled + label span {
+                    border: 1px solid var(--AdiGrey10);
+                    background: var(--AdiGrey00);
+                }
+                input[type="radio"]:checked + label span {
+                    border: none;
+                    background-color: var(--AdiPrimary);
+                }
+                input[type="radio"]:checked + label span:after {
+                    content: "";
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: #fff;
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

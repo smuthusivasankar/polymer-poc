@@ -1,0 +1,66 @@
+<dom-module id="store-alerts">
+    <template>
+        <custom-style>
+            <style>
+                .alert {
+                    padding: 20px 24px 20px 52px;
+                    border-left: 3px solid;
+                    color: #000;
+                    position: relative;
+                    margin-bottom: 20px;
+                }
+                @media (max-width : 599px) {
+                    .alert {
+                        border-left: 0px;
+                        border-bottom: 3px solid;
+                    }
+                }
+
+                .alert .alert-content p,
+                .alert .alert-content ul {
+                    margin-bottom: 0;
+                }
+                .alert:after {
+                    top: 16px;
+                    left: 14px;
+                    padding: 2px;
+                    font-size: 1.714rem;
+                    position: absolute;
+                    font-family: 'icomoonregular';
+                }
+                .alert.alert-info {
+                    border-color: var(--AdiInfo);
+                    background: var(--AdiInfoLight);
+                }
+                .alert.alert-info:after {
+                    color: var(--AdiInfo);
+                    content: "\e602";
+                }
+                .alert.alert-warning {
+                    border-color: var(--AdiWarning);
+                    background: var(--AdiWarningLight);
+                }
+                .alert.alert-warning:after {
+                    color: var(--AdiWarning);
+                    content: "\e603";
+                }
+                .alert.alert-error {
+                    border-color: var(--AdiError);
+                    background: var(--AdiErrorLight);
+                }
+                .alert.alert-error:after {
+                    color: var(--AdiError);
+                    content: "\e606";
+                }
+                .alert.alert-success {
+                    border-color: var(--AdiSuccess);
+                    background: var(--AdiSuccessLight);
+                }
+                .alert.alert-success:after {
+                    color: var(--AdiSuccess);
+                    content: "\e605";
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel = "import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/l2t-paper-slider/l2t-paper-slider.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<dom-module id="brand-imagecarousel">
+    <template>
+        <style>
+            :host{
+                display: block;
+            }
+            .swipeDis {
+                --paper-slide-height: 400px;
+                --paper-slide-dot: rgba(120,144,156 ,.8);
+                --paper-slide-dot-selected: rgba(38,50,56 ,1);               
+            }
+            .specialDiv{
+                width: 70%; margin: 0 auto;
+                 margin-top:30px; 
+            }
+        </style>
+ <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+        <div class="specialDiv">
+            <l2t-paper-slider class="swipeDis" total-slides="4">             
+             <template is="dom-repeat" items={{brandcarousel.imageUrlList}}>
+                <paper-slide style="background-image: url({{item.url}})"></paper-slide>           
+             </template>        
+            </l2t-paper-slider>
+        </div>
+        <iron-ajax
+            id="requestText"
+            url="http://10.67.90.232:83/api/fragment/getContent"
+            params="{{filter}}"
+            handle-as="json"
+            last-response = "{{brandcarousel}}"            
+            on-response="handleResponse">
+        </iron-ajax>  
+
+    </template>
+    <script>
+        Polymer({
+            is: "brand-imagecarousel", properties: {
+                filter: Object
+            },
+            ready: function () {
+			 this.filter = (this.filter ==null || this.filter ==undefined ) ? this.queryParams : this.filter;
+                this.$.requestText.generateRequest();
+            },
+
+            handleResponse: function (data) {
+                this.jsontext= data.detail.response;                         
+            }
+        });
+    </script>
+</dom-module>

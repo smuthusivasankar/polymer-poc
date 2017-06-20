@@ -1,0 +1,99 @@
+{
+  "youMayAlsoLike": [
+    {
+      "name": "BB1305",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1300",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1309",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BA7719",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1302",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1260",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BA7715",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1319",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB2792",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1322",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1321",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB2395",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB2899",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB2791",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1241",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    },
+    {
+      "name": "BB1323",
+      "price": "$100",
+      "imgNormal": "/img/img_samples/product-sample-1.jpg",
+      "imgHover": "/img/img_samples/product-sample-2.jpg"
+    }
+  ]}

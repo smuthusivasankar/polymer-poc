@@ -1,0 +1,151 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+
+<dom-module id="brand-bannerimg">
+    <template>
+        <style include="store-foundation">
+             :host {
+                display: block;
+                width: 100%;
+                min-height: 100%;
+                position: relative;
+            }
+
+            .contain {
+                position: relative;
+            }
+
+            .banner {
+
+                height: 600px;
+            }
+
+            .banner--text {
+                color: white;
+                font-size: 56px;
+                line-height: 80%;
+                position: absolute;
+                left: 14%;
+                top: 20%;
+                font-family: 'adiBlack';
+                font-weight: 800;
+                text-transform: uppercase;
+            }
+
+            .banner--paratext {
+                color: white;
+                top: 70%;
+                font-family: 'adihausregular', Arial, Helvetica, Verdana, sans-serif;
+                line-height: 23px;
+                font-size: 18px;
+                margin: 8px 20px 40px 0;
+                font-weight: normal;
+                text-transform: none;
+            }
+
+            .blue-btn {
+                font-size: 17px;
+                background-color: rgba(2, 134, 205, 0.8);
+                padding: 17px 16px;
+                line-height: 14px;
+                position: relative;
+                font-family: 'adiBlack';
+                font-weight: 800;
+                width: 205px;
+                margin-top: 13px;
+            }
+            /*.blue-btn:first-child {             
+               width:100px;           
+            }*/
+
+            .blue-btn:nth-child(2n) {
+                width: 147px;
+            }
+
+            .btn-top {
+                top: 44%;
+            }
+
+            .blue-btn:after {
+
+                content: "\e600";
+                z-index: 1;
+                font-family: 'icomoonregular';
+                top: 42%;
+                right: 19px;
+                width: 18px;
+                height: 16px;
+                font-size: 16px;
+                margin-top: -8px;
+                color: white;
+                padding-left: 8px;
+            }
+
+            .para-text {
+                color: #000;
+                width: 100%;
+                margin: 24px 0 6px;
+                text-align: center;
+                font-size: 18px;
+                font-family: 'adiBlack', Arial, Helvetica, Verdana, sans-serif;
+                display: block;
+                margin-bottom: 12px;
+                /* font-weight: 800; */
+                line-height: 16.2px;
+                margin-top: 24px;
+                text-decoration-style: solid;
+            }
+
+            .anc-text {
+                color: #025f8e;
+                text-align: center;
+                font-size: 16px;
+                font-family: 'adihausregular', Arial, Helvetica, Verdana, sans-serif;
+                line-height: 2px;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        </style>
+
+        <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+
+        <div style="background: url({{bannerdata.bannerImage}}) center center no-repeat; height: 750px;">
+            <div class="banner--text">{{bannerdata.title}}<br>
+                <p class="banner--paratext">{{bannerdata.caption}}</p>
+                <template is="dom-repeat" items="{{bannerdata.callToAction}}">
+                    <div class="blue-btn"><a href="#" style="color:white;">{{item.title}}</a></div>
+                </template>
+            </div>
+
+        </div>
+        <iron-ajax id="requestText" url="http://10.67.90.232:83/api/fragment/getContent" params="{{filter}}" handle-as="json"
+            last-response="{{bannerdata}}" on-response="handleResponse">
+        </iron-ajax>
+
+    </template>
+    <script>
+        Polymer({
+            is: "brand-bannerimg",
+            properties: {
+                filter: Object
+            },
+			
+            ready: function () {
+			    this.filter = (this.filter ==null || this.filter ==undefined ) ? this.queryParams : this.filter;
+                this.$.requestText.generateRequest();
+                console.log(this.filter);                
+            },		
+
+            handleResponse: function (data) {
+                this.jsontext = data.detail.response;
+            }
+
+        });
+    </script>
+</dom-module>

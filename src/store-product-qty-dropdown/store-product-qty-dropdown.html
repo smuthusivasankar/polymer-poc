@@ -1,0 +1,78 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-dropdown/store-dropdown.html">
+<dom-module id="store-product-qty-dropdown">
+  <template>
+    <style></style>
+    <store-dropdown value={{value}} items=[[quantityRange]] error=[[error]]></store-dropdown>
+  </template>
+  <script>
+  class StoreProductQtyDropdown extends StoreBaseElement {
+    static get is () { return 'store-product-qty-dropdown' }
+    static get properties () {
+      return {
+        siteMaxQuantity: {
+          type: Number,
+          observer: '_updateQuantityRange'
+        },
+        productMaxQuantity: {
+          type: Number,
+          observer: '_updateQuantityRange'
+        },
+        productAvailability: {
+          type: Number,
+          observer: '_updateQuantityRange'
+        },
+        quantityRange: {
+          type: Array
+        },
+        name: {
+          type: String
+        },
+        required: {
+          type: Boolean,
+          value: false
+        },
+        value: {
+          type: Number,
+          notify: true
+        },
+        error: Boolean
+      }
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+      this.dispatchEvent(new Event('iron-form-element-register'))
+    }
+
+    disconnectedCallback () {
+      super.disconnectedCallback()
+      if (this._parentForm) {
+        const event = new Event('iron-form-element-unregister')
+        event.detail = {target: this}
+        this._parentForm.dispatchEvent(event)
+      }
+    }
+
+    _updateQuantityRange () {
+      const isDefined = a => typeof a !== 'undefined' && a !== null
+      const min = (val) => {
+        return isDefined(this.productAvailability) ? Math.min(val, this.productAvailability) : val
+      }
+
+      const getMaxOrderQuantity = () => {
+        if (isDefined(this.siteMaxQuantity) && isDefined(this.productMaxQuantity)) {
+          return min(this.productMaxQuantity)
+        } else if (this.siteMaxQuantity) {
+          return min(this.siteMaxQuantity)
+        }
+        return this.configuration.product.maxOrderQuantity
+      }
+
+      this.quantityRange = this._arrayFromRange(1, getMaxOrderQuantity())
+    }
+  }
+
+  customElements.define(storeProductQtyDropdown.is, storeProductQtyDropdown)
+  </script>
+</dom-module>

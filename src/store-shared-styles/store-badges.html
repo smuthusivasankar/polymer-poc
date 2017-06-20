@@ -1,0 +1,42 @@
+<dom-module id="store-badges">
+    <template>
+        <custom-style>
+            <style>
+                .badge {
+                    color: #fff;
+                    text-transform: uppercase;
+                    font-family: 'adihausbold';
+                    padding: 10px 20px;
+                    text-align: center;
+                    display: inline-block;
+                    line-height: 1;
+                }
+                .badge.small {
+                    font-size: calc(var(--FontDtBaseline) * 0.8571);
+                    padding: 6px 10px 4px;
+                }
+                @media (max-width : 959px) {
+                    .badge {
+                        font-size: calc(var(--FontMbBaseline) * 0.8571);
+                    }
+                    .badge.small {
+                        font-size: calc(var(--FontDtBaseline) * 0.75);
+                    }
+                }
+                .badge.new {
+                    background: var(--AdiNew);
+                }
+                .badge.sale {
+                    background: var(--AdiSale);
+                }
+                .badge.sold-out {
+                    background: var(--AdiGrey20);
+                }
+                .badge.exclusive {
+                    background: var(--AdiPrimary);
+                }
+
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

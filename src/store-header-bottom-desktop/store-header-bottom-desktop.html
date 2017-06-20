@@ -1,0 +1,98 @@
+<link rel="import" href="../store-base-element/store-base-element.html">\
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../store-navigation-flyout/store-navigation-flyout.html">
+<link rel="import" href="../store-header-cart-link/store-header-cart-link.html">
+<dom-module id="store-header-bottom-desktop">
+  <template>
+    <style include="store-foundation">
+      :host {
+        height: 48px;
+        background-color: #000;
+        color: #fff;
+        display: block;
+      }
+
+      app-toolbar {
+        box-sizing: border-box;
+        height: inherit;
+        max-width: 1220px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      #main-menu {
+        flex: 1;
+      }
+
+      .menu-spacer {
+        display: inline-block;
+        vertical-align: top;
+        width: 1px;
+        height: 24px;
+        background: rgba(255,255,255,0.25);
+        margin: 12px 3px 12px;
+      }
+
+      #logo:after {
+        content: '\e904';
+        font: 30px 'icomoonregular';
+        color: #fff;
+        text-indent: 0;
+        -webkit-font-smoothing: antialiased;
+        display: block;
+        transform-origin: 0 50px;
+        transition: transform 0.4s cubic-bezier(0,.7,.6,1);
+      }
+      #logo.big:after {
+        transition-timing-function: ease-in-out;
+        transform: scale3d(1.4148,1.4148,1);
+      }
+      #logo {
+        display: block;
+        margin-right: 20px;
+        width: 44px;
+        transition: width 0.4s;
+        text-decoration: none;
+      }
+      #logo.big {
+        width: 69px;
+      }
+
+
+    </style>
+    <app-toolbar>
+      <a id="logo" href="/" class$="{{logoClass(bigLogo)}}"></a>
+      <div id="main-menu">
+        <store-navigation-flyout link="header-link-men" label="Men" s18n-attrs="link"></store-navigation-flyout>
+        <store-navigation-flyout link="header-link-women" label="Women" s18n-attrs="link"></store-navigation-flyout>
+        <store-navigation-flyout link="header-link-kids" label="Kids" s18n-attrs="link"></store-navigation-flyout>
+        <div class="menu-spacer"></div>
+        <store-navigation-flyout link="header-link-sports" label="Sports" s18n-attrs="link"></store-navigation-flyout>
+        <store-navigation-flyout link="header-link-labels" label="Brands" s18n-attrs="link"></store-navigation-flyout>
+        <div class="menu-spacer"></div>
+        <store-navigation-flyout link="header-link-customise" label="Customise" s18n-attrs="link"></store-navigation-flyout>
+      </div>
+      <store-search></store-search>
+      <store-header-cart-link></store-header-cart-link>
+    </app-toolbar>
+  </template>
+<script>
+class storeHeaderBottomDesktop extends StoreBaseElement {
+  static get is () { return 'store-header-bottom-desktop' }
+  static get properties () {
+    return {
+      bigLogo: {
+        type: Boolean,
+        value: false
+      }
+    }
+  }
+
+  logoClass (bigLogo) {
+    return bigLogo ? 'big' : 'small'
+  }
+}
+
+customElements.define(storeHeaderBottomDesktop.is, storeHeaderBottomDesktop)
+</script>
+</dom-module>

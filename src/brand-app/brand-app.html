@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel = "import" href="/src/brand-bannerimg/brand-bannerimg.html">
+<link rel = "import" href="/src/brand-creatorstext/brand-creatorstext.html">
+<link rel = "import" href="/src/brand-followus/brand-followus.html">
+<link rel = "import" href="/src/brand-imagecarousel/brand-imagecarousel.html">
+<link rel = "import" href="/src/brand-originalbyminitext/brand-originalbyminitext.html">
+<link rel = "import" href="/src/brand-video/brand-video.html">
+<link rel = "import" href="/src/store-header/store-header.html">
+<link rel = "import" href="/src/store-footer/store-footer.html">
+<link rel = "import" href="/src/brand-wingshorns/brand-wingshorns.html">
+<link rel="import" href="/src/brand-bannerbottom/brand-bannerbottom.html">   
+
+
+<dom-module id="brand-app">
+  <template>
+    <style>
+      :host {
+      display: flex;
+      flex-direction: column;
+    }
+     
+      .main {
+      flex: 1;
+      flex-basis: 0.000000001px;
+      padding-top: 60px;
+    }
+    @media (min-width: 960px) {
+      .main { padding-top: 80px; }
+    }
+
+    footer {
+      background-color: #000;
+      color:#FFF;
+    }
+    .contain {
+              position: relative;
+            }
+        /*follow-us{
+          margin-top: 48px;
+          margin-left: 180px;
+        }*/
+        .followus {
+          width : 70%;
+          margin : 0 auto;
+          margin-top : 48px;
+        }
+    </style>
+    <store-header></store-header>
+    <div class="main">
+        <brand-bannerimg></brand-bannerimg>    
+        <brand-bannerbottom></brand-bannerbottom>
+        <brand-creatorstext></brand-creatorstext>
+        <brand-video></brand-video>
+        <brand-originalbyminitext></brand-originalbyminitext>
+        <brand-imagecarousel></brand-imagecarousel>
+        <brand-wingshorns></brand-wingshorns>
+      <div class="followus">
+        <follow-us></follow-us>
+      </div>
+    
+    </div>
+    <store-footer> </store-footer>
+  </template>
+
+  <script>
+    /** @polymerElement */
+   Polymer({
+     is: "brand-app"
+   });
+  </script>
+</dom-module>

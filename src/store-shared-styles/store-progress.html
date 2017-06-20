@@ -1,0 +1,37 @@
+<dom-module id="store-progress">
+    <template>
+        <custom-style>
+            <style>
+                .progress {
+                    background: var(--AdiGrey10);
+                    height: 8px;
+                    border-radius: 4px;
+                    position: relative;
+                }
+                .progress-bar,
+                .progress-indicator {
+                    background: var(--AdiFeedback);
+                    height: 8px;
+                    border-radius: 4px;
+                }
+                .progress-indicator {
+                    position: absolute;
+                    width: 16px;
+                }
+                .progress .indicators div {
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 50%;
+                    background: #fff;
+                    position: absolute;
+                    top: 2px;
+                }
+                .progress .indicators div:nth-child(1) {margin-left: 2px;}
+                .progress .indicators div:nth-child(2) {left: 25%; margin-left: -2px;}
+                .progress .indicators div:nth-child(3) {left: 50%; margin-left: -2px;}
+                .progress .indicators div:nth-child(4) {left: 75%; margin-left: -2px;}
+                .progress .indicators div:nth-child(5) {left: 100%; margin-left: -6px;}
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

@@ -1,0 +1,168 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<link rel="import" href="../store-dropdown/store-dropdown.html">
+<dom-module id="store-product-size-dropdown">
+  <template>
+    <style include="store-foundation">
+    :root {
+      --options-container-mixin: {
+        border: 1px solid var(--AdiGrey20);
+        right: -72%;
+      };
+
+      --options-ul-mixin: {
+        max-height: none;
+        font-size: 0px;
+        margin: 0px;
+        padding: 20px;
+      };
+
+      --options-ul-li-mixin: {
+        border: 1px solid var(--AdiGrey20);
+        border-top: 1px solid var(--AdiGrey20);
+        display: inline-block;
+        font-size: 12px;
+        height: 36px;
+        line-height: 36px;
+        margin: 0 5px 5px 0;
+        min-width: 36px;
+        padding: 0px;
+        text-align: center;
+        width: auto;
+      };
+
+      --options-ul-li-selected-mixin: {
+        border-bottom: 2px solid var(--AdiSecondary);
+      };
+
+      --options-ul-li-last-child-mixin: {
+        border-bottom: 1px solid var(--AdiGrey20);
+      };
+
+      --options-ul-li-hover-mixin: {
+        border-bottom: 1px solid var(--AdiSecondary);
+        border-left: 1px solid var(--AdiSecondary);
+        border-right: 1px solid var(--AdiSecondary);
+        border-top: 1px solid var(--AdiSecondary);
+        color: var(--AdiSecondary);
+        cursor: pointer;
+      };
+
+      --custom-input-open-mixin: {
+        border-bottom: 1px solid #fff;
+        box-shadow: none;
+        z-index: var(--z-index-dropdown-input-open);
+      };
+    }
+    </style>
+    <div id="wrapper">
+      <store-dropdown
+      items=[[options]]
+      label='Select size'
+      value={{value}}
+      warning=[[warning]]
+      error=[[error]]
+      help-text=[[warningText]]
+      ></store-dropdown>
+    </div>
+  </template>
+  <script>
+  class StoreProductSizeDropdown extends StoreBaseElement {
+    static get is () { return 'store-product-size-dropdown' }
+    static get properties () {
+      return {
+        product: {
+          type: Object,
+          observer: '_productObserver'
+        },
+        options: {
+          type: Array,
+          value: []
+        },
+        name: {
+          type: String
+        },
+        required: {
+          type: Boolean,
+          value: false
+        },
+        value: {
+          type: String,
+          notify: true,
+          observer: '_sizeChanged'
+        },
+        selectedProduct: {
+          type: Object
+        },
+        warning: {
+          type: Boolean,
+          value: false,
+          observer: '_warningChanged'
+        },
+        warningText: {
+          type: String
+        },
+        threshold: {
+          type: Number
+        },
+        thresholdWarning: {
+          type: Object
+        },
+        error: Boolean,
+        _parentForm: {
+          type: Object
+        }
+      }
+    }
+
+    connectedCallback () {
+      super.connectedCallback()
+      this.dispatchEvent(new Event('iron-form-element-register'))
+    }
+
+    disconnectedCallback () {
+      super.disconnectedCallback()
+      if (this._parentForm) {
+        const event = new Event('iron-form-element-unregister')
+        event.detail = {target: this}
+        this._parentForm.dispatchEvent(event)
+      }
+    }
+
+    validate () {
+      if (this.required && !this.selectedProduct) {
+        this.warningText = 'Please select your size'
+        this.error = true
+        return false
+      }
+
+      this.warningText = ''
+      this.error = false
+      return true
+    }
+
+    _productObserver () {
+      const availableProducts = this.product ? this.product.variation_list.filter(i => parseFloat(i.availability) > 0) : []
+      this.options = availableProducts.map(p => ({ label: p.size, value: p.sku }))
+    }
+
+    _sizeChanged () {
+      if (this.product) {
+        this.selectedProduct = this.product.variation_list.find(p => p.sku === this.value)
+        this.warning = parseInt(this.selectedProduct.availability) < this.threshold
+      }
+    }
+
+    _warningChanged () {
+      if (this.warning && this.thresholdWarning.onlyXLeft) {
+        this.warningText = `Only ${this.selectedProduct.availability} left in stock`
+      } else if (this.warning) {
+        this.warningText = 'Low on stock'
+      } else {
+        this.warningText = ''
+      }
+    }
+  }
+  customElements.define(StoreProductSizeDropdown.is, StoreProductSizeDropdown)
+  </script>
+</dom-module>

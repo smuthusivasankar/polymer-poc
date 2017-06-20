@@ -1,0 +1,136 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="brand-subnav-breadcrumbs-stack">
+   <template>
+      <style include="store-foundation">
+         :host {
+         display: none;
+         }
+         ul {
+         padding: 10px 0;
+         margin-bottom: 0;
+         }
+         li {
+         display: inline-block;
+         vertical-align: middle;
+         padding: 0 4px 0 0;
+         color: var(--AdiGrey40);
+         }
+         li a,
+         li.back {
+         color: var(--AdiBlack);
+         }
+         .spacer {
+         color: var(--AdiBlack);
+         padding: 0 4px 0 0;
+         }
+         li.back {
+         cursor: pointer;
+         }
+         li.back * {
+         display: inline-block;
+         vertical-align: middle;
+         }
+         li.back i {
+         margin: -2px 6px 0 0;
+         }
+         @media (min-width: 960px) {
+         :host {
+         display: block;
+         }
+         }
+         .subnav .wrapper h1 {
+         float: left;
+         padding-right: 16px;
+         font-size: 20px;
+         text-transform: uppercase;
+         color: #000;
+         margin-bottom: 0;
+         }
+         #breadcrumb .subnav {
+         position: relative;
+         min-width: 950px;
+         width: 950px;
+         margin: 0 auto;
+         font-family: 'adilight',Arial,Helvetica,Verdana,sans-serif;
+         }
+         h1{   letter-spacing: 0px; }
+         .subnav a {
+         float: left;
+         font-family: 'adilight',Arial,Helvetica,Verdana,sans-serif;
+         letter-spacing: 1px;
+         text-transform: capitalize;
+         color: #000;
+         display: block;
+         margin: 18px 0 0 16px;
+         font-size: 14px;
+         }    
+         .subnav li a {
+         margin-top: 0;
+         }
+      </style>
+      <div id="breadcrumb">
+         <div class="subnav">
+            <div class="wrapper">
+               <template is="dom-if" if="[[subnavStackData.current_page_title]]">
+                  <h1>[[subnavStackData.current_page_title]]</h1>
+               </template>
+               <ul>
+                  <span class="spacer">|</span>
+                  <template is="dom-repeat" items="[[subnavStackData.subnav_items]]">
+                     <li>
+                        <template is="dom-if" if="[[item.link]]">
+                           <a href="[[item.link]]">[[item.text]]</a>
+                        </template>
+                        <template is="dom-if" if="[[!item.link]]">
+                           <span>[[item.text]]</span>
+                        </template>
+                     </li>
+                  </template>
+               </ul>
+            </div>
+         </div>
+      </div>
+	   <iron-ajax
+            auto
+            url="http://10.67.90.232:88/data/data_subnav_breadcrum.json"
+            id="subNavdDataRequest"
+            handle-as="json"
+            on-response="handleResponse_SubNavData">
+         </iron-ajax>
+	  
+   </template>
+   <script>
+      class SubnavBreadcrumbsStack extends StoreBaseElement {
+        static get is () { return 'brand-subnav-breadcrumbs-stack' }
+        static get properties () {
+          return {
+                      
+            subnavStackData: {
+                type: Object,
+                value: {}
+                }
+      
+            }
+        }
+		
+		ready() {
+              super.ready()              
+              this.$.subNavdDataRequest.generateRequest();
+              //this.$.mastheadDataRequest.generateRequest();
+               //console.log(this.filter);                
+          }
+		  handleResponse_SubNavData(data)
+          {
+              this.subnavStackData = data.detail.response;
+          }
+      }
+          
+          
+      
+      
+      customElements.define(SubnavBreadcrumbsStack.is, SubnavBreadcrumbsStack);
+   </script>
+</dom-module>

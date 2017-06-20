@@ -1,0 +1,307 @@
+    <!-- FEATURE CARD -->
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../store-hero-stack/store-hero-stack.html">
+<link rel="import" href="../store-description-stack/store-description-stack.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-header/store-header.html">
+<link rel="import" href="../store-footer/store-footer.html">
+<link rel="import" href="../store-shared-styles/store-grid.html">
+<link rel="import" href="../store-shared-styles/store-z-index.html">
+<link rel="import" href="../store-carousel/store-carousel.html">
+<link rel="import" href="../store-slider-stack/store-slider-stack.html">
+<dom-module id="brand-featurecard">
+   <template>
+      <style>
+         .feature-cards {
+         height: inherit;
+         padding-bottom: 32px;
+         border: none;
+         margin: 0 5px 20px;
+         -webkit-transition: all 0.3s ease-in-out;
+         -moz-transition: all 0.3s ease-in-out;
+         -ms-transition: all 0.3s ease-in-out;
+         -o-transition: all 0.3s ease-in-out;
+         transition: all 0.3s ease-in-out;
+         }
+         /*.feature-cards-double {width: 468px;}*/
+          
+         .feature-cards-double {width: 30%;}  
+          
+         .feature-cards:hover, .feature-cards-double:hover, .feature-cards-single:hover {
+         box-shadow: 0 0 50px rgba(0, 0, 0, 0.2) !important;
+         -moz-box-shadow: 0 0 50px rgba(0, 0, 0, 0.2) !important;
+         -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.2) !important;
+         z-index: 9;
+         }
+         .features-cards-title {
+         font-family: 'adiblack', Arial, Helvetica, Verdana, sans-serif;
+         text-transform: uppercase;
+         letter-spacing: 0.5px;
+         padding: 0 20px;
+         }
+         .feature-cards .features-cards-title {
+         margin: 24px 0 6px 0;
+         font-size: 18px!important;
+         }
+         .feature-cards .feature-cards-link {text-transform: capitalize;}
+         .feature-cards-single {
+         /*width: 230px;*/
+         width: 100%;
+         overflow: hidden
+         }
+         .feature-cards-double {
+         /*width: 470px;*/
+         width: auto;
+         overflow: hidden;
+         height:auto;
+         }
+         .feature-cards {
+         background-color: #fff;
+         border: 1px solid #fff;
+         float: left;
+         /*height: 340px;*/
+         height: auto;
+             
+         margin: 0 5px 40px;
+         position: relative
+         }
+         .feature-cards:hover,
+         .contentstack #videocontent:hover {
+         -webkit-box-shadow: 0 0 20px #000;
+         -moz-box-shadow: 0 0 20px #000;
+         box-shadow: 0 0 20px #000
+         }
+         .contentstack #videocontent {
+         margin: 0
+         }
+         .feature-cards-title {
+         text-align: center;
+         margin: 13px 0 -2px
+         }
+         .feature-cards-link {
+         text-align: center;
+         display: block;
+         color: #025f8e
+         }
+         .feature-cards-double-bar {
+         margin: -15px 0 0 0;
+         width: 100%
+         }
+         .feature-cards-double-bar .hoverBlock {
+         background: #fff;
+         z-index: 1000;
+         position: relative;
+         text-align: center;
+         padding: 0 15px 24px;
+         display: none
+         }
+         .feature-cards-double-bar .hoverBlock .para-small {
+         margin: 0 0 16px
+         }
+         .feature-cards-double-bar .hoverBlock .title-22 {
+         margin: 0 0 4px;
+         padding: 12px 0 0
+         }
+         .hoverBlock .feature-cards-link {
+         margin: 0 0 -3px
+         }
+         .feature-cards-double:hover .feature-cards-double-bar {
+         position: absolute;
+         bottom: 0
+         }
+         .feature-cards-double:hover .hoverBlock {
+         display: block
+         }
+         .feature-cards-bar {
+         background: #fff;
+         height: 15px;
+         opacity: .7;
+         filter: alpha(opacity=70)
+         }
+         .feature-cards-bar>div {
+         width: 28px;
+         margin: 0 auto;
+         padding: 4px 0 0
+         }
+         .feature-cards-bar span {
+         border-bottom: 1px solid #9a9b9b;
+         display: block;
+         margin: 0 0 2px;
+         height: 1px
+         }
+         .contentstack a.features-cards-title,
+         .contentstack a.features-cards-title:hover,
+         .contentstack a.features-cards-title:focus {
+         display: block;
+         color: #000;
+         text-decoration: none
+         }
+         .media-slider .singleasset .featurevideo {
+         margin: 0 auto
+         }
+         .feature-cards .features-cards-title {
+         /*width: 100%;*/
+         overflow: hidden;
+         margin: 16px 0 6px 0;
+         line-height: 100%;
+         text-align: center;
+         text-overflow: ellipsis;
+         white-space: nowrap
+         }
+         .homepage .feature-cards .feature-cards-link {
+         color: #0286cd
+         }
+         .homepage .feature-cards .feature-cards-link:hover {
+         color: #025f8e;
+         text-decoration: underline
+         }
+         .homepage .feature-cards:hover,
+         .contentstack #videocontent:hover {
+         -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+         -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5)
+         }
+         .feature-cards .feature-cards-link {
+         text-transform: capitalize;
+         }
+         .contentstack a {
+         color: #0286cd;
+         }
+         .adihaus, body, p, .title-upper, .para-intro, .para-normal, .para-small, .button-primary, .button-var, .primary-label, .form-label, .reg-price, .sale-price, .sale-old-price, .link-super, .link-fine, .link-headline, input {
+         font-family: 'adihausregular',Arial,Helvetica,Verdana,sans-serif;
+         }
+         .feature-cards-link {
+         text-align: center;
+         display: block;
+         color: #025f8e;
+         }
+         .link-super, .link-fine {
+         font-size: 16px;
+         }
+         a {
+         text-decoration: none;
+         }
+         #main #clp-slot-2, #main #clp-slot-3, #main #clp-slot-4, #main #clp-slot-5, #main #clp-slot-6, #main #clp-slot-7, #main #clp-slot-8, #main #clp-slot-9, #main #clp-slot-10 {
+         /*width: 1000px;*/
+         width: auto;
+         margin: 0 auto;
+         float: none;
+         /*padding-left: 25px;*/
+         padding-left: 15%;
+         clear:both;
+         } 
+          
+         img{ width: 100%; height: auto;} 
+          
+         @media (max-width: 1160px) {
+              #main #clp-slot-2  {
+                padding: 7%;
+              }
+             
+             .feature-cards-double {
+                    width: 100%;
+                }
+            
+             #feature_card_container{margin-top: inherit;}
+             
+            } 
+          
+          @media (min-width: 1400px) {
+              #main #clp-slot-2  {
+                padding-left: 25%;
+              }
+                                      
+            } 
+          
+          #feature_card_container{ clear:both; }
+          
+      </style>
+      <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>		
+      <template is="dom-if" if="[[featureCardStack.featureList]]">
+         <div id="feature_card_container" style="clear:both;">
+            <div id="main" class="categorylanding wide_carousel">
+               <div id="clp-slot-2" data-contentblock="clp-slot-2" class="track stack" data-track="clp-slot-2">
+                  <div class="contentstack clearfix contentstack-featurecards ">
+                     <div class="feature-cards-wrapper clearfix">
+                        <template is="dom-repeat" items="[[featureCardStack.featureList]]">
+                           <template is="dom-if" if="[[item.title]]">
+                              <div class="js-feature-cards-double feature-cards-double feature-cards light " data-component="content/ExternalLinks" data-contentasset="BRAND_originals-ss17-iniki-fcd-x" data-linkscontext="featurecard">
+                                 <div class="feature-cards-in">
+                                    <a class="feature-cards-image" href="[[item.linkUrl]]" tabindex="-1" manual_cm_sp="">
+                                    <img src="{{item.image}}" alt="" title="">
+                                    </a>
+                                    <span class="feature-cards-info">
+                                    <a class="title-22 features-cards-title" href="[[item.linkUrl]]" tabindex="-1" manual_cm_sp="">
+                                    [[item.title]]
+                                    </a>
+                                    <a class="link-fine feature-cards-link" href="[[item.linkUrl]]" manual_cm_sp="">
+                                    <span class="feature-cards-link-in">
+                                    [[item.linkTitle]]
+                                    </span>
+                                    </a>
+                                    </span>
+                                 </div>
+                              </div>                               
+                           </template>
+                        </template>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>   
+  
+      </template>
+      <iron-ajax
+          auto
+          url="http://10.67.90.232:83/api/fragment/getContent"
+          id="featureCardRequest"
+          handle-as="json"
+          params="{{filter}}"
+          on-response="handleResponse_FeatureCardData">
+        </iron-ajax>
+    
+   </template>
+   <script>
+      class FeatureCard extends Polymer.Element {
+          static get is () { return 'brand-featurecard'; }
+          
+          static get properties () {
+            return {
+                
+                  featureCardStack: {
+                      type: Object,
+                      value: {                            
+                              "featureList":[                                    
+                                  {
+                                    //   "featurecard_image":"http://demandware.edgesuite.net/sits_pod14-adidas/dw/image/v2/aagl_prd/on/demandware.static/-/Sites-adidas-GB-Library/en/dwa4431185/brand/images/2017/03/originals-ss17-iniki-fcd-x_141387.jpg?sw=470&sh=264&sm=fit&cx=0&cy=1&cw=470&ch=263&sfrm=jpg", "featurecard_title":"TITLE", "featurecard_link_text":"TEXT", "featurecard_link":"#"
+                                  }
+                              ]
+                          
+                          }
+                    },
+                    filter: Object
+            }
+          }
+
+          ready() {
+              super.ready()
+              this.filter = (this.filter ==null || this.filter ==undefined ) ? this.queryParams : this.filter;
+              this.$.featureCardRequest.generateRequest();
+              //this.$.mastheadDataRequest.generateRequest();
+               //console.log(this.filter);                
+          }
+
+           handleResponse_FeatureCardData(data)
+          {
+                        
+              this.featureCardStack = data.detail.response;
+          }
+
+          
+        }
+        window.customElements.define(FeatureCard.is, FeatureCard);
+   </script>
+</dom-module>

@@ -1,0 +1,46 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<dom-module id="store-price">
+    <template>
+      <style include="store-foundation">
+        .price-not-used {
+          font-family: 'adihausregular', Arial, Helvetica, Verdana, sans-serif;
+          font-size: 16px;
+          text-decoration: line-through;
+        }
+
+        .sale-price {
+          color: #c53622;
+          padding: 0 5px 0 0;
+        }
+      </style>
+      <template is="dom-if" if="[[prices]]">
+        <template is="dom-if" if="[[prices.sale_price]]">
+          <span class="price-big sale-price">€[[prices.sale_price]]</span>
+        </template>
+        <template is="dom-if" if="[[prices.standard_price]]">
+          <span class$="{{_computePriceClasses(prices)}}">€[[prices.standard_price]]</span>
+        </template>
+      </template>
+    </template>
+    <script>
+    class StorePrice extends StoreBaseElement {
+      static get is () { return 'store-price' }
+      static get properties () {
+        return {
+          prices: {
+            type: Object
+          }
+        }
+      }
+
+      _computePriceClasses (prices) {
+        if (prices.standard_price && prices.sale_price) {
+          return 'price-big price-not-used'
+        }
+        return 'price-big'
+      }
+    }
+    customElements.define(StorePrice.is, StorePrice)
+    </script>
+</dom-module>

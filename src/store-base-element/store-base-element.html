@@ -1,0 +1,145 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/async.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<dom-module id="store-base-element">
+  <template>
+    <style>
+        </style>
+  </template>
+  <script>
+    class StoreBaseElement extends Polymer.Element {
+      static get is () { return 'store-base-element' }
+      static get properties () {
+        return {
+          configuration: {
+            value: {
+              product: {
+                availability: {
+                  threshold: 10,
+                  warningType: {
+                    lowOnStock: true,
+                    onlyXLeft: false
+                  }
+                },
+                maxOrderQuantity: 8
+              }
+            }
+          },
+          dataLayer: {
+            type: Object,
+            value: {}
+          }
+        }
+      }
+      connectedCallback () {
+        super.connectedCallback()
+        this.testConfiguration = window.testConfiguration
+        this.listen(window, 'test-configuration-update', '_testConfigurationListener')
+      }
+      ready () {
+        super.ready()
+        window.performance && performance.mark && performance.mark(this.localName + ' polymer element ready')
+      }
+      listen (node, eventName, methodName) {
+        node = node || this
+        var hbl = this.__boundListeners ||
+          (this.__boundListeners = new WeakMap())
+        var bl = hbl.get(node)
+        if (!bl) {
+          bl = {}
+          hbl.set(node, bl)
+        }
+        var key = eventName + methodName
+        if (!bl[key]) {
+          bl[key] = this._addMethodEventListenerToNode(
+            node, eventName, methodName, this)
+        }
+      }
+
+      importHref (href, onload, onerror, optAsync) {
+        return Polymer.importHref.apply(this, arguments)
+      }
+      debounce (jobName, callback, wait) {
+        this._debouncers = this._debouncers || {}
+        this._debouncers[jobName] = Polymer.Debouncer.debounce(
+          this._debouncers[jobName], callback, wait, this)
+        return this._debouncers[jobName]
+      }
+
+      isDebouncerActive (jobName) {
+        this._debouncers = this._debouncers || {}
+        var debouncer = this._debouncers[jobName]
+        return !!(debouncer && debouncer.isActive())
+      }
+
+      flushDebouncer (jobName) {
+        this._debouncers = this._debouncers || {}
+        var debouncer = this._debouncers[jobName]
+        if (debouncer) {
+          debouncer.flush()
+        }
+      }
+      cancelDebouncer (jobName) {
+        this._debouncers = this._debouncers || {}
+        var debouncer = this._debouncers[jobName]
+        if (debouncer) {
+          debouncer.cancel()
+        }
+      }
+      async (callback, waitTime) {
+        return Polymer.Base.async(() => {
+          callback.call(this)
+        }, waitTime)
+      }
+
+      cancelAsync (handle) {
+        handle < 0 ? Polymer.Async.microTask.cancel(~handle)
+            : Polymer.Async.timeOut.cancel(handle)
+      }
+
+      modifyDataLayer (mode, params) {
+        Object.keys(params).forEach(function (key) {
+          if (mode === 'REMOVE') {
+            delete window.dataLayer[key]
+          }
+          if (mode === 'APPEND') {
+            if (window.dataLayer[key]) {
+              if (typeof window.dataLayer[key] === 'object') {
+                window.dataLayer[key].append(params[key])
+              } else {
+                window.dataLayer[key] = [window.dataLayer[key], params[key]]
+              }
+            } else {
+              window.dataLayer[key] = params[key]
+            }
+          }
+          if (mode === 'UPDATE') {
+            window.dataLayer[key] = params[key]
+          }
+        })
+      }
+
+      _once (element, eventName, callback) {
+        const doOnce = (arg) => {
+          element.removeEventListener(eventName, doOnce)
+          callback(arg)
+        }
+        element.addEventListener(eventName, doOnce)
+        return doOnce
+      }
+
+      _arrayFromRange (from, to) {
+        return [...Array(Math.abs(from - to) + 1).keys()].map(n => from + n * (from > to ? -1 : 1))
+      }
+
+      _testConfigurationListener () {
+        this.testConfiguration = window.testConfiguration
+      }
+
+      _printCurrency (amount) {
+        return `£${amount.toFixed(2)}`
+      }
+    }
+    customElements.define(StoreBaseElement.is, StoreBaseElement)
+  </script>
+</dom-module>

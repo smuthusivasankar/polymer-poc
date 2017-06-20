@@ -1,0 +1,36 @@
+<dom-module id="store-dividers">
+    <template>
+        <custom-style>
+            <style>
+                [class*=hr] {
+                  border: 0;
+                  margin: 0 0 20px 0;
+                }
+                [class*=hr-1] {
+                    border-bottom: 1px;
+                }
+                [class*=hr-2] {
+                    border-bottom: 2px;
+                }
+                [class*=hr-4] {
+                    border-bottom: 4px;
+                }
+                [class*=hr-1-solid], [class*=hr-2-solid], [class*=hr-4-solid] {
+                    border-bottom-style: solid;
+                }
+                [class*=hr-1-dotted], [class*=hr-2-dotted], [class*=hr-4-dotted] {
+                    border-bottom-style: dotted;
+                }
+                [class*=hr][class*=black] {
+                    border-bottom-color: var(--AdiBlack);
+                }
+                [class*=hr][class*=grey] {
+                    border-bottom-color: var(--AdiGrey10);
+                }
+                [class*=hr][class*=white] {
+                    border-bottom-color: var(--AdiWhite);
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

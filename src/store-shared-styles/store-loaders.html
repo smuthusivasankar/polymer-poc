@@ -1,0 +1,70 @@
+<dom-module id="store-loaders">
+    <template>
+        <custom-style>
+            <style>
+                .loader,
+                .btn.btn-loading::after {
+                    content: '';
+                    display: block;
+                    border-radius: 50%;
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: relative;
+                    transform: translateZ(0);
+                    box-sizing: border-box;
+                    animation: loader 1.5s infinite linear;
+                    background: none;
+                }
+
+                .btn.btn-loading::after {
+                    vertical-align: -4px;
+                }
+                .loader-small-white,
+                .loader-medium-white,
+                .loader-big-white,
+                .btn.btn-loading::after {
+                    border-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.5) #fff;
+                    border-style: solid;
+                }
+                .loader-small-black,
+                .loader-medium-black,
+                .loader-big-black,
+                .btn.btn-white.btn-loading::after,
+                .btn.btn-sec-blue.btn-loading::after,
+                .btn.btn-sec-black.btn-loading::after,
+                .btn.btn-custom.btn-loading::after,
+                .btn.btn-personal.btn-loading::after {
+                    border-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.3) #242624;
+                    border-style: solid;
+                }
+                .loader-small-white,
+                .loader-small-black,
+                .btn.btn-loading::after {
+                    width: 18px;
+                    height: 18px;
+                    border-width: 2px;
+                }
+                .loader-medium-white,
+                .loader-medium-black {
+                    width: 64px;
+                    height: 64px;
+                    border-width: 4px;
+                }
+                .loader-big-white,
+                .loader-big-black {
+                    width: 96px;
+                    height: 96px;
+                    border-width: 5px;
+                }
+                @keyframes loader {
+                    0% {
+                      transform: rotate(0deg);
+                    }
+                    100% {
+                      transform: rotate(360deg);
+                    }
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

@@ -1,0 +1,115 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel = "import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<!--<link rel="import" href="../store-shared-styles/store-foundation.html">-->
+
+
+<dom-module id="brand-wingshorns">
+    <template>
+     <style include="store-foundation">
+        :host{
+                display: block;
+                width: 100%;
+                min-height: 100%;
+                position: relative;
+            }
+            .contain {
+              position: relative;
+              margin-top:60px;
+            }
+            /*.wideS{
+                
+            }*/
+            .banner--text {
+                color: #FFF;
+                font-size: 56px;
+                line-height: 80%;
+                position: absolute;
+                left: 15%;
+                top: 12%;
+                font-family: 'adiBlack',Arial,Helvetica,Verdana,sans-serif;
+                font-weight: 800;
+                margin-top: 0;
+                margin-bottom: 10px;
+                /* font-size: 56px; */
+                /* line-height: 80%; */
+                text-transform: uppercase;           
+            }
+            .banner--paratext {
+                color: white;
+                position: absolute;
+                top: 70%;
+                left: 13px;
+                font-family: 'adiBlack',Arial,Helvetica,Verdana,sans-serif;
+                line-height: 32px;
+                font-size: 19px;
+                margin: 16px 10px 37px 0;
+                font-weight: 400;
+                margin-bottom: 30px;
+                color: #fff;
+                text-align: left;
+                font-size: 18px;
+                margin: 20px 20px 40px 0;
+                line-height: 24px;
+                font-family: 'adihausregular',Arial,Helvetica,Verdana,sans-serif;   
+                padding-top: 15px;
+                text-transform: none;         
+            }
+             .blue-btn{
+                font-size: 17px;
+                background-color: rgba(2,134,205,0.8);
+                padding: 13px 20px;
+            }
+            .btn-top{
+                top: 44%;
+            }
+            .btn-top:after{
+                    content: "\e600";
+                    z-index: 1;
+                    font-family: 'icomoonregular';
+                    top: 50%;
+                    right: 20px;
+                    width: 18px;
+                    height: 16px;
+                    font-size: 16px;
+                    margin: -8px 0 0;
+                    padding-left: 8px;
+            }
+            a {
+                text-decoration:none;
+                color:white;
+            }       
+        </style>
+
+        <div class="contain">
+            <div style="background: url({{bannerdata.bannerimg}}) center center no-repeat; height : 525px;">
+                <div class="banner--text">{{bannerdata.HeadText}}<br>{{bannerdata.HeaderText2}}<br>
+                <p class="banner--paratext">{{bannerdata.ParaText}}<br>{{bannerdata.ParaText2}}</p></div>
+                <div class="banner--text blue-btn btn-top"><a href="#">{{bannerdata.btnlarge}}</a></div>
+            </div>
+        </div>    
+        <iron-ajax
+            id="requestText"
+            url="http://127.0.0.1:8081/TestJson/brandwingshorns.json"
+            params='{"type":"all"}'
+            handle-as="json"
+            last-response = "{{bannerdata}}"            
+            on-response="handleResponse">
+        </iron-ajax> 
+        <!--<div style="width : 100%;height:500px;overflow: hidden;">
+            <img src="/images/originals-ss17-wingshorns-clp-mh_138531.jpg">
+        </div>-->       
+    </template>
+    <script>
+    Polymer({
+        is : "brand-wingshorns",
+         ready: function () {
+                this.$.requestText.generateRequest();
+            },
+
+            handleResponse: function (data) {
+                this.jsontext= data.detail.response;                         
+            }
+    });
+    </script>    
+</dom-module>

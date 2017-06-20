@@ -1,0 +1,383 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-colors.html">
+
+<dom-module id="store-footer">
+  <template>
+    <style include="store-foundation">
+      ol, ul {
+        list-style: none;
+      }
+      #footer .footer-copy {
+        position: relative;
+      }
+      #footer .footer-copy .content-wrapper {
+        clear: both;
+        padding: 20px 0 0;
+        margin: 0 auto;
+        width: 960px;
+        max-width: 100%;
+      }
+
+      #footer .footer-copy ul {
+        float: left;
+        width: 182px;
+        margin: 20px 0 30px 10px;
+      }
+
+      #footer .footer-copy ul:first-child {
+        margin: 20px 0 0
+      }
+
+      #footer .footer-copy ul li {
+        line-height: 14px;
+      }
+
+      #footer .footer-copy ul h5 {
+        font-size: 18px;
+        line-height: 23px;
+        margin-bottom: 10px;
+      }
+
+      #footer .footer-copy ul a {
+        display: block;
+        color: var(--AdiBlack);
+        line-height: 23px;
+      }
+
+      #footer .footer-copy a:hover,
+      #footer .footer-copy a:focus {
+        text-decoration: underline;
+      }
+
+      #footer .footer-copy ol li,
+      #footer .footer-copy ol li div {
+        display: inline;
+      }
+
+      #footer .footer-copy ol span {
+        position: relative;
+        margin: 0 8px;
+        padding: 0!important;
+      }
+
+      #footer-newsletter {
+        background-color: var( --AdiBlack);
+      }
+      #footer-newsletter-subscribe-input-wrapper {
+        position: relative;
+      }
+      #footer-newsletter-subscribe-label {
+        font-family:"adiBlack",Arial,Helvetica,Verdana,sans-serif;
+        color: var( --AdiWhite);
+      }
+      #footer-newsletter-subscribe-input {
+        position: relative;
+      }
+      #footer-newsletter-subscribe-button {
+        position: absolute;
+        font: 400 20px/36px 'icomoonregular';
+        color: var( --AdiWhite);
+        text-align: center;
+        height: 38px;
+        width: 38px;
+        right: 2px;
+        top: 2px;
+      }
+      #footer-newsletter-subscribe-button::before {
+        content: "\e628";
+      }
+
+      #footer-country-selector .country-selector-text {
+        padding-left: 33px;
+        color: var(--AdiGrey20);
+        font-size: 12px;
+        display: block;
+      }
+      #footer-country-selector span {
+        display: block;
+        width: 15px;
+        float: left;
+        height: 11px;
+        overflow: hidden;
+        line-height: 999px;
+      }
+      .language-selector{
+        background-image: url('/img/adidas_desktop_sprite.png');
+        background-position: -1014px -1403px;
+      }
+
+      @media (min-width: 960px) {
+        #mobileFooter {
+          display: none;
+        }
+        #footer-newsletter-subscribe {
+          height: 92px;
+          width: 930px;
+          margin: 0px auto;
+        }
+        #footer-newsletter-subscribe-input-wrapper {
+          float: right;
+        }
+        #footer-newsletter-subscribe-input {
+          width: 365px;
+          height: 42px;
+          margin-bottom: 0;
+          border: 0;
+        }
+        #footer-newsletter-subscribe-label {
+          font-size: 22px;
+        }
+        #footer-newsletter-subscribe-button {
+          background: var( --AdiBlack);
+        }
+        #footer-country-selector .country_selector::after {
+          content: '';
+          width: 5px;
+          height: 3px;
+          position: absolute;
+          top: 5px;
+          margin-left: 3px;
+          background: url('/img/adidas_desktop_sprite.png') no-repeat -280px -1544px;
+        }
+        #footer .footer-copy ol {
+          width: 950px;
+          margin: 0px auto;
+          text-align: right;
+          padding: 13px 0 12px 210px;
+        }
+        #footer .footer-copy ol a,
+        #footer .footer-copy ol span,
+        #footer .footer-copy ol li {
+          color: var(--AdiGrey20);
+          font-size: 12px;
+        }
+        #footer-country-selector {
+          position: absolute;
+          padding-left: 10px;
+          width: 210px;
+          bottom: 13px;
+          left: 50%;
+          margin: 0 0 0 -475px;
+        }
+
+        #footer .footer-copy .copy-wrapper {
+          clear: both;
+          background-color: var(--AdiGrey80);
+        }
+      }
+      @media (max-width: 959px) {
+        #desktopFooter .content-wrapper{
+          display: none;
+        }
+        #mobileFooter {
+          background-color: var( --AdiBlack);
+          padding: 12px 20px;
+        }
+        #mobileFooter a {
+          display: block;
+          text-align: center;
+          padding: 9px 0;
+          font-size: 12px;
+          line-height: 1.25;
+          color: var( --AdiWhite);
+        }
+        #footer-newsletter {
+          padding: 0 20px;
+        }
+        #footer-newsletter-subscribe-input {
+          width: 100%;
+          height: 42px;
+        }
+        #footer-newsletter-subscribe-label {
+          font-size: 16px;
+          line-height: 16px;
+          color: var( --AdiWhite);
+          display: block;
+          margin: 12px 0;
+        }
+        #footer-newsletter-subscribe-button {
+          background: var( --AdiPrimary);
+        }
+        .copy-wrapper {
+          border-top: 1px solid #5e5f60;
+          padding-top: 50px;
+        }
+        .copy-wrapper ol {
+          padding: 0 20px;
+          margin: 0;
+          text-align: center;
+        }
+        #footer .footer-copy ol a,
+        #footer .footer-copy ol span,
+        #footer .footer-copy ol li {
+          color: var( --AdiWhite);
+          font-size: 12px
+        }
+        #footer .copy-wrapper ol li:last-child {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          color: var(--AdiGrey40);
+          padding: 5px 0 20px;
+        }
+        #footer-country-selector {
+          position: absolute;
+          top: 15px;
+          left: 20px;
+        }
+        #footer-country-selector .country-selector-text {
+          padding-left: 23px;
+        }
+        #footer .footer-copy .copy-wrapper {
+          background-color: #262626;
+        }
+      }
+  </style>
+
+  <footer id="footer">
+    <div id="footer-newsletter">
+      <form action="" method="post" id="footer-newsletter-form" class="container">
+        <input type="hidden" name="signup_source" value="footer" />
+        <div id="footer-newsletter-subscribe" class="row align-items-center">
+          <div class="col-dt-12 col-mb-12 no-gutters">
+            <label id="footer-newsletter-subscribe-label" for="subscribeInput">
+              <t>MELD JE AAN EN ONTVANG EEN WELKOMSTCADEAU</t>
+            </label>
+          </div>
+          <div class="col-dt-12 col-mb-12 no-gutters">
+            <div id="footer-newsletter-subscribe-input-wrapper">
+              <input id="footer-newsletter-subscribe-input" type="email"  value=""  maxlength="50" name="email" placeholder="your email"/>
+              <a id="footer-newsletter-subscribe-button" ></a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="mobileFooter" class="container">
+      <div class="row">
+        <div class="col-mb-6"><a href="/help?hcid=HCID_DELIVERY"><t>Delivery</t></a></div>
+        <div class="col-mb-6"><a href="/help?hcid=HCID_ORDERING_PAYMENTS"><t>Payment</t></a></div>
+      </div>
+      <div class="row">
+        <div class="col-mb-6"><a href="/help?hcid=HCID_RETURN_REFUND"><t>Return &amp; Refunds</t></a></div>
+        <div class="col-mb-6"><a href="/help"><t>Help</t></a></div>
+      </div>
+      <div class="row">
+        <div class="col-mb-6"><a href="/order-tracker"><t>Order Tracker</t></a></div>
+        <div class="col-mb-6"><a href="/storefinder/"><t>Store Finder</t></a></div>
+      </div>
+    </div>
+
+  <div id="desktopFooter">
+    <div class="row">
+      <div class="col-dt-24 col-mb-12 no-gutters footer-copy" data-component="content/ExternalLinks" data-linkscontext="footer">
+        <fetch url="footer-url" s18n-attrs="url">
+
+          <div class="contentasset" data-contentasset-id="footer-eCom" data-contentasset="footer-eCom">
+            <div class="content-wrapper">
+              <ul>
+                <li><h5>Producten</h5></li>
+                <li><a href="">Schoenen</a></li>
+                <li><a href="">Kleding</a></li>
+                <li><a href="">Accessoires</a></li>
+                <li>&nbsp;</li>
+                <li><a href="">Nieuwe Producten</a></li>
+                <li><a href="">Outlet</a></li>
+              </ul>
+              <ul>
+                <li><h5>SPORTEN</h5></li>
+                <li><a href="">Chelsea</a></li>
+                <li><a href="">Manchester United</a></li>
+                <li><a href="">FC Bayern München</a></li>
+                <li><a href="">Real Madrid</a></li>
+                <li>&nbsp;</li>
+                <li><a href="">Golfkleding</a></li>
+                <li><a href="">Tenniskleding</a></li>
+                <li><a href="">Tennisschoenen</a></li>
+              </ul>
+              <ul>
+                <li><h5>Collecties</h5></li>
+                <li><a href="">Yeezy</a></li>
+                <li><a href="">Y-3</a></li>
+                <li>&nbsp;</li>
+                <li><a href="">ZX Flux</a></li>
+                <li><a href="">Samba</a></li>
+                <li><a href="">Los Angeles</a></li>
+                <li><a href="">Spezial</a></li>
+                <li><a href="">Dragon</a></li>
+            </ul>
+            <ul>
+              <li><h5>BEDRIJFSGEGEVENS</h5></li>
+              <li><a href="">Over ons</a></li>
+              <li><a href="">Vacatures</a></li>
+              <li><a href="">Pers</a></li>
+              <li>&nbsp;</li>
+              <li><h5>Meer adidas</h5></li>
+              <li><a href="">Brillen</a></li>
+              <li><a href="">Trainingsapparatuur</a></li>
+              <li><a href="">micoach</a></li>
+              <li><h5></h5></li>
+            </ul>
+            <ul>
+              <li><h5>SUPPORT</h5></li>
+              <li><a href="">Help & Klantenservice</a></li>
+              <li><a href="">Bezorging</a></li>
+              <li><a href="">Retour</a></li>
+              <li><a href="">Winkel zoeken</a></li>
+              <li><a href="">Korting</a></li>
+              <li><a href="">Affiliate Programma</a></li>
+              <li><a href="">Studentenkorting</a></li>
+            </ul>
+          </div>
+          <div class="content-wrapper">
+            <p><small></small> </p>
+            <p><small></small> </p>
+          </div>
+
+          <div class="copy-wrapper">
+            <ol class="copy">
+              <li><div id="teconsent" style="display: none;"></div></li>
+              <span style="padding-right: 21px;">|</span>
+              <li><a href="" rel="nofollow">Cookies</a></li>
+              <span style="padding-right: 21px;">|</span>
+              <li><a href="" rel="nofollow">Privacy Policy</a></li>
+              <span style="padding-right: 21px;">|</span>
+              <li><a href="" rel="nofollow">Algemene voorwaarden</a></li>
+              <span style="padding-right: 21px;">|</span>
+              <li><a href="" rel="nofollow">Colofon</a></li><span style="padding-right: 21px;">|</span>
+              <li style="max-width: 225px">© 2017 adidas Int</li>
+            </ol>
+          </div>
+        </div>
+      </fetch>
+
+      <div id="footer-country-selector">
+        <a class="country_selector" href="" >
+          <span class="language-selector" s18n-attrs="class"> </span>
+        </a>
+        <a class="country-selector-text" href="/country-selector.html" >
+          <t>language-selector country</t>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  </footer>
+  </template>
+
+  <script>
+
+
+    class StoreFooter extends StoreBaseElement {
+      static get is () { return 'store-footer' }
+      static get properties () {
+        return { }
+      }
+    }
+
+    // Register custom element definition using standard platform API
+    customElements.define(StoreFooter.is, StoreFooter)
+  </script>
+</dom-module>

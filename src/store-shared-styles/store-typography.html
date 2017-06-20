@@ -1,0 +1,204 @@
+<link href="/fonts/fonts.css" type="text/css" rel="stylesheet" />
+<dom-module id="store-typography">
+    <template>
+        <custom-style>
+            <style>
+                :root {
+                    --HorizontalBaseline: 10px;
+                    --FontDtBaseline: 14px;
+                    --FontMbBaseline: 16px;
+                    font-family: 'adihausregular';
+                }
+
+                /* General */
+                a {
+                    color: var(--AdiPrimary);
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+                strong, .strong {
+                    font-family: 'adihausbold';
+                }
+
+                /* Headings */
+                h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+                    font-family: "adiBlack";
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    margin-top: 0;
+                }
+                h1.light,h2.light,h3.light,h4.light,h5.light,h6.light,
+                .h1.light,.h2.light,.h3.light,.h4.light,.h5.light,.h6.light {
+                    font-family: "adiLight";
+                    font-weight: 100;
+                }
+                h1, .h1 {
+                    font-size: calc(var(--FontDtBaseline) * 4);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 4);
+                    line-height: calc(var(--HorizontalBaseline) * 5);
+                }
+                h2, .h2 {
+                    font-size: calc(var(--FontDtBaseline) * 3.429);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 3);
+                    line-height: calc(var(--HorizontalBaseline) * 4);
+                }
+                h3, .h3 {
+                    font-size: calc(var(--FontDtBaseline) * 2.286);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 3);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                }
+                h4, .h4 {
+                    font-size: calc(var(--FontDtBaseline) * 2);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                }
+                h5, .h5 {
+                    font-size: calc(var(--FontDtBaseline) * 1.571);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                h6, .h6 {
+                    font-size: calc(var(--FontDtBaseline) * 1.286);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                @media (max-width : 959px) {
+                    h1, .h1 {
+                        font-size: calc(var(--FontMbBaseline) * 3.429);
+                        margin-bottom: calc(var(--HorizontalBaseline) * 3);
+                        line-height: calc(var(--HorizontalBaseline) * 4);
+                    }
+                    h2, .h2 {
+                        font-size: calc(var(--FontMbBaseline) * 2.286);
+                        margin-bottom: calc(var(--HorizontalBaseline) * 3);
+                        line-height: calc(var(--HorizontalBaseline) * 3);
+                    }
+                    h3, .h3 {
+                        font-size: calc(var(--FontMbBaseline) * 2);
+                        margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                        line-height: calc(var(--HorizontalBaseline) * 3);
+                    }
+                    h4, .h4 {
+                        font-size: calc(var(--FontMbBaseline) * 1.571);
+                        margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                        line-height: calc(var(--HorizontalBaseline) * 2.5);
+                    }
+                    h5, .h5 {
+                        font-size: calc(var(--FontMbBaseline) * 1.286);
+                        margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                        line-height: calc(var(--HorizontalBaseline) * 2);
+                    }
+                    h6, .h6 {
+                        font-size: calc(var(--FontMbBaseline) * 1.143);
+                        margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                        line-height: calc(var(--HorizontalBaseline) * 2);
+                    }
+                }
+
+                /* Paragraphs */
+                p  {
+                    font-size: var(--FontDtBaseline);
+                    margin-top: 0;
+                    margin-bottom: calc(var(--HorizontalBaseline) * 3);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                }
+                p.huge {
+                    font-size: calc(var(--FontDtBaseline) * 1.286);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 3);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                }
+                p.big {
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                }
+                p.small {
+                    font-size: calc(var(--FontDtBaseline) * 0.8571);
+                    margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                ul {
+                    font-size: var(--FontDtBaseline);
+                    padding-left: var(--FontDtBaseline);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                    margin: 0 0 calc(var(--HorizontalBaseline) * 3) 0;
+                }
+                @media (max-width : 959px) {
+                    p {
+                        font-size: var(--FontMbBaseline);
+                    }
+                    p.huge {
+                        font-size: calc(var(--FontMbBaseline) * 1.286);
+                    }
+                    p.big {
+                        font-size: calc(var(--FontMbBaseline) * 1.143);
+                    }
+                    p.small {
+                        font-size: calc(var(--FontMbBaseline) * 0.8571);
+                    }
+                    ul {
+                        font-size: var(--FontMbBaseline);
+                    }
+                }
+
+                /* Prices */
+                .price, .price-big {
+                    font-family: 'adihausbold';
+                }
+                .price, .price-sale {
+                    font-size: calc(var(--FontDtBaseline) * 1.071);
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                .price-big, .price-sale-big {
+                    font-size: calc(var(--FontDtBaseline) * 1.714);
+                    line-height: calc(var(--HorizontalBaseline) * 3);
+                }
+                .price-sale, .price-sale-big {
+                    color: var(--AdiSale);
+                    font-family: 'adihausbold';
+                }
+                .price-old, .price-old-big {
+                    color: var(--AdiGrey60);
+                    text-decoration: line-through;
+                }
+                .price-old {
+                    font-size: calc(var(--FontDtBaseline) * 0.9286);
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                .price-old-big {
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    line-height: calc(var(--HorizontalBaseline) * 2);
+                }
+                @media (max-width : 959px) {
+                    .price, .price-sale {
+                        font-size: var(--FontMbBaseline);
+                        line-height: calc(var(--HorizontalBaseline) * 2);
+                    }
+                    .price-big, .price-sale-big {
+                        font-size: calc(var(--FontMbBaseline) * 1.5);
+                        line-height: calc(var(--HorizontalBaseline) * 3);
+                    }
+                    .price-old {
+                        font-size: calc(var(--FontMbBaseline) * 0.75);
+                        line-height: calc(var(--HorizontalBaseline) * 2);
+                    }
+                    .price-old-big {
+                        font-size: var(--FontMbBaseline);
+                        line-height: calc(var(--HorizontalBaseline) * 2);
+                    }
+                }
+
+                /* Text alignments */
+                .text-center {
+                    text-align: center;
+                }
+                .text-right {
+                    text-align: right;
+                }
+                .text-left {
+                    text-align: left;
+                }
+            </style>
+</custom-style>
+</template>
+</dom-module>

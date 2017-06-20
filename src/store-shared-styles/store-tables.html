@@ -1,0 +1,68 @@
+<dom-module id="store-tables">
+    <template>
+        <custom-style>
+            <style>
+                table {
+                    font-size: calc(var(--FontDtBaseline) * 1.143);
+                    text-align: center;
+                    width: 100%;
+                    overflow: hidden;
+                    border-collapse: collapse;
+                    table-layout: fixed;
+                    margin-bottom: calc(var(--HorizontalBaseline) * 2);
+                }
+                @media (max-width: 959px)  {
+                    table {
+                        font-size: calc(var(--FontMbBaseline) * 0.8571);
+                    }
+                }
+                table th, table td {
+                    padding: 17px 10px 15px;
+                    position: relative;
+                    border: 1px solid var(--AdiGrey20);
+                }
+                @media (max-width: 959px)  {
+                    table th, table td {
+                        padding: 12px 4px 10px;
+                    }
+                }
+                table th {
+                    border-top: 1px solid var(--AdiGrey20);
+                    border-bottom: 2px solid var(--AdiBlack);
+                    font-weight: normal;
+                    font-family: 'adihausbold';
+                }
+                table tr {
+                    border-bottom: 1px solid var(--AdiGrey20);
+                }
+                table tr:nth-of-type(even) {
+                    background: rgba(0,0,0,.025);
+                }
+                tbody tr:hover {
+                    background-color: rgba(0,0,0,.1)
+                }
+                table td:hover::after,
+                table thead th:not(:empty):hover::after,
+                table td:focus::after,
+                table thead th:not(:empty):focus::after {
+                    content: '';
+                    height: 10000px;
+                    left: 0;
+                    position: absolute;
+                    top: -5000px;
+                    width: 100%;
+                    z-index: -1;
+                }
+                table td:hover {
+                    background: var(--AdiBlack);
+                    color: var(--AdiWhite);
+                    font-family: 'adihausbold';
+                }
+                table td:hover::after,
+                table th:hover::after {
+                    background-color: rgba(0,0,0,.05);
+                }
+            </style>
+        </custom-style>
+    </template>
+</dom-module>

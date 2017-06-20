@@ -1,0 +1,145 @@
+/*! Adidas fonts loading
+--------------------------------------------*/
+@font-face {
+  font-family: "adiBlack";
+  src: url('adineuePRO-BlackWeb.eot');
+  src: url('adineuePRO-BlackWeb.eot?#iefix') format('embedded-opentype'),
+  url('adineuePRO-BlackWeb.woff2') format('woff2'),
+  url('adineuePRO-BlackWeb.woff') format('woff'),
+  url('adineuePRO-BlackWeb.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "adiLight";
+  src: url('adineuePRO-LightWeb.eot');
+  src: url('adineuePRO-LightWeb.eot?#iefix') format('embedded-opentype'),
+  url('adineuePRO-LightWeb.woff2') format('woff2'),
+  url('adineuePRO-LightWeb.woff') format('woff'),
+  url('adineuePRO-LightWeb.ttf') format('truetype');
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+@font-face {
+  font-family: 'adihausregular';
+  src: url('adihausregular.eot');
+  src: url('adihausregular.eot?#iefix') format('embedded-opentype'),
+  url('adihausregular.woff2') format('woff2'),
+  url('adihausregular.woff') format('woff'),
+  url('adihausregular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adihausbold';
+  src: url('adihausbold.eot');
+  src: url('adihausbold.eot?#iefix') format('embedded-opentype'),
+  url('adihausbold.woff2') format('woff2'),
+  url('adihausbold.woff') format('woff'),
+  url('adihausbold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiNeueRegular';
+  src: url('adiNeueRegular.eot');
+  src: url('adiNeueRegular.eot?#iefix') format('embedded-opentype'),
+  url('adiNeueRegular.woff2') format('woff2'),
+  url('adiNeueRegular.woff') format('woff'),
+  url('adiNeueRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiNeueBold';
+  src: url('adiNeueBold.eot');
+  src: url('adiNeueBold.eot?#iefix') format('embedded-opentype'),
+  url('adiNeueBold.woff2') format('woff2'),
+  url('adiNeueBold.woff') format('woff'),
+  url('adiNeueBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'icomoonregular';
+  src: url('icomoon.eot');
+  src: url('icomoon.eot?#iefix') format('embedded-opentype'),
+  url('icomoon.woff2') format('woff2'),
+  url('icomoon.woff') format('woff'),
+  url('icomoon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiPictoRegular';
+  src: url('adipictos-Regular.eot');
+  src: url('adipictos-Regular.eot?#iefix') format('embedded-opentype'),
+  url('adipictos-Regular.woff2') format('woff2'),
+  url('adipictos-Regular.woff') format('woff'),
+  url('adipictos-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/** MOBILE FONTS **/
+
+@font-face {
+  font-family: 'adiHaus';
+  src: url('adihausregular.woff2') format('woff2'),
+  url('adihausregular.woff') format('woff'),
+  url('adihausregular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiHaus';
+  src: url('adihausbold.woff2') format('woff2'),
+  url('adihausbold.woff') format('woff'),
+  url('adihausbold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiHausBold';
+  src: url('adihausbold.woff2') format('woff2'),
+  url('adihausbold.woff') format('woff'),
+  url('adihausbold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'adiNeuePro';
+  src: url('adineuepro-light.woff2') format('woff2'),
+  url('adineuepro-light.woff') format('woff'),
+  url('adineuepro-light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiNeuePro';
+  src: url('adineuepro-black.woff2') format('woff2'),
+  url('adineuepro-black.woff') format('woff'),
+  url('adineuepro-black.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'adiPictoRegular';
+  src: url('adipictos-Regular.woff2') format('woff2'),
+  url('adipictos-Regular.woff') format('woff'),
+  url('adipictos-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

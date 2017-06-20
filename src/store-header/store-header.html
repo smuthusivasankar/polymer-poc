@@ -1,0 +1,302 @@
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-header-top-desktop/store-header-top-desktop.html">
+<link rel="import" href="../store-header-bottom-desktop/store-header-bottom-desktop.html">
+<link rel="import" href="../store-header-cart-link/store-header-cart-link.html">
+
+<dom-module id="store-header">
+  <template>
+  <style include="store-grid"></style>
+  <style include="store-z-index"></style>
+  <style>
+  #mobile-toolbar {
+    background: #000;
+    color: #FFF;
+    display: flex;
+    height: 60px;
+    border-bottom: 1px solid #333;
+  }
+
+  #mobile-search-icon,
+  #mobile-menu-icon,
+  #mobile-addtobag-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    flex-direction: column;
+    margin: 0 0 0 -16px;
+    font-size: 21px;
+  }
+  #mobile-menu-icon {
+    border-right: 1px solid #333;
+  }
+  #mobile-search-icon,
+  #mobile-addtobag-icon {
+    border-left: 1px solid #333;
+  }
+
+  #mobile-menu-icon hr {
+    display: block;
+    width: 20px;
+    border: 0;
+    height: 2px;
+    background: #FFF;
+    margin: 1px;
+    transition: transform 0.3s;
+  }
+  #mobile-menu-icon hr:nth-child(1) {
+    transform-origin: 5px 3px;
+  }
+  #mobile-menu-icon hr:nth-child(2) {
+    transition: opacity 0.3s;
+  }
+  #mobile-menu-icon hr:nth-child(3) {
+    transform-origin: 5px 0px;
+  }
+  #mobile-menu-icon.cross hr:nth-child(2) {
+    opacity: 0;
+  }
+  #mobile-menu-icon.cross hr:nth-child(1) {
+    transform: rotateZ(45deg);
+  }
+  #mobile-menu-icon.cross hr:nth-child(3) {
+    transform: rotateZ(-45deg);
+  }
+
+  #mobile-search-icon {
+    margin: 0px;
+  }
+  #mobile-search-icon.active {
+    background: #333;
+  }
+  #mobile-search-icon:after {
+    content: '\e625';
+    display: block;
+    font-family: 'icomoonregular';
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+  #mobile-addtobag-icon {
+    margin: 0 -16px 0 0;
+  }
+
+  #drawer {
+    top: 60px;
+    z-index: var(--z-index-mobile-drawer);
+    --app-drawer-width: 100%;
+    --app-drawer-content-container: {
+    padding-top: 0;
+    overflow-y: scroll;
+    background: #000;
+    }
+  }
+
+  #newsletter-signup {
+    background: #FFF;
+    color: #000;
+  }
+
+  #header {
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    z-index: var(--z-index-header);
+    top: 0px;
+    transition: top 0.3s;
+  }
+  #header.sticky {
+    position: fixed;
+  }
+  #header.hidable.hidden {
+    top: -60px;
+  }
+
+  #logo {
+    text-decoration: none;
+    margin: auto;
+  }
+  #logo:after {
+    color: #fff;
+    content: '\e904';
+    display: block;
+    font: 30px 'icomoonregular';
+    text-indent: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #reveal-newsletter {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.3s;
+  }
+  #reveal-newsletter.open {
+    transition-delay: 0.1s;
+  }
+  </style>
+
+  <div id="header" class$="{{_computeHeaderClasses(_scrollHidableHeader)}}">
+    <div class="hidden-mb">
+      <store-header-top-desktop newsletter-menu-open="{{_newsletterMenuOpen}}"></store-header-top-desktop>
+      <div id="reveal-newsletter">
+        <store-newsletter-signup
+          simple-signup-button="[[configuration.newsletter.simpleSignupButton]]"
+          gender-signup-buttons="[[configuration.newsletter.genderSignupButtons]]"
+          dob-dropdowns="[[configuration.newsletter.dobDropdowns]]"
+          age-checkbox="[[configuration.newsletter.ageCheckbox]]"
+          required-age="[[configuration.newsletter.requiredAge]]"
+          age-checked="[[configuration.newsletter.ageChecked]]"
+        ></store-newsletter-signup>
+      </div>
+      <store-header-bottom-desktop big-logo="[[!_newsletterMenuOpen]]"></store-header-bottom-desktop>
+    </div>
+    <div class="hidden-dt">
+      <app-toolbar id="mobile-toolbar">
+        <a on-click="_toggleDrawer" id="mobile-menu-icon" class$="{{_mobileMenuIconClass(mobileDrawerOpen)}}">
+          <hr><hr><hr>
+        </a>
+        <a id="logo" href="/"></a>
+        <a on-click="_toggleMobileSearch" id="mobile-search-icon"></a>
+        <store-header-cart-link id="mobile-addtobag-icon"></store-header-cart-link>
+      </app-toolbar>
+      <store-search mobile id='mobile-search'></store-search>
+    </div>
+  </div>
+  </template>
+<script>
+class StoreHeader extends StoreBaseElement {
+  static get is () { return 'store-header' }
+  static get properties () {
+    return {
+      hidable: {
+        type: Boolean,
+        value: false,
+        observer: '_hidableAndStickyObserver'
+      },
+      sticky: {
+        type: Boolean,
+        value: false,
+        observer: '_hidableAndStickyObserver'
+      },
+      _mobileDrawerOpen: {
+        type: Boolean
+      },
+      _mobileSearchOpen: {
+        type: Boolean,
+        value: false
+      },
+      _newsletterMenuOpen: {
+        type: Boolean,
+        observer: '_updateNewsletterMenuOpen'
+      },
+      _lastScrollDirection: {
+        type: String
+      },
+      _lastScrollEvent: {
+        type: Number,
+        value: Date.now()
+      }
+    }
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this._lastScrollPosition = window.pageYOffset
+    this._handleScrollBind = this._handleScroll.bind(this)
+    document.addEventListener('scroll', this._handleScrollBind)
+  }
+
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    document.removeEventListener('scroll', this._handleScrollBind)
+  }
+
+
+  _hidableAndStickyObserver () {
+    this.$['header'].classList = this._computeHeaderClasses()
+  }
+
+
+  _handleScroll () {
+    if (!this.hidable || this._mobileSearchOpen || !this.initialScroll) {
+      if (!this.initialScroll) {
+        this.initialScroll = true
+      }
+      return
+    }
+
+    const scrollThrottle = 100
+    if (Date.now() - this._lastScrollEvent > scrollThrottle) {
+      this._lastScrollEvent = Date.now()
+
+      const currentScrollPosition = window.pageYOffset
+      const currentScrollDirection = currentScrollPosition > this._lastScrollPosition ? 'down' : 'up'
+      const scrollDirectionChanged = currentScrollDirection !== this._lastScrollDirection
+
+      if (scrollDirectionChanged) {
+        this._lastScrollDirection = currentScrollDirection
+      }
+
+      if (scrollDirectionChanged && currentScrollDirection === 'up') {
+        this.$['header'].classList.remove('hidden')
+      } else if (scrollDirectionChanged) {
+        this.$['header'].classList.add('hidden')
+      }
+
+      this._lastScrollPosition = currentScrollPosition
+    }
+  }
+
+  _computeHeaderClasses () {
+    if (this.sticky && this.hidable) {
+      return 'sticky hidable'
+    } else if (this.sticky) {
+      return 'sticky'
+    }
+    return ''
+  }
+
+
+  _mobileMenuIconClass (drawerOpen) {
+    return drawerOpen ? 'cross' : 'hamburger'
+  }
+
+  _updateNewsletterMenuOpen () {
+    const revealer = this.$['reveal-newsletter']
+    const revealee = revealer.querySelector('store-newsletter-signup')
+    if (this._newsletterMenuOpen) {
+      revealer.style.height = revealee.offsetHeight + 'px'
+      this._once(revealer, 'transitionend', () => {
+        if (this._newsletterMenuOpen) {
+          revealer.style.height = 'auto'
+          revealer.style.overflow = 'visible'
+        }
+      })
+      revealer.classList.add('open')
+    } else {
+      revealer.style.overflow = 'hidden'
+      revealer.style.height = revealee.offsetHeight + 'px'
+      requestAnimationFrame(() => {
+        revealer.style.height = ''
+        revealer.classList.remove('open')
+      })
+    }
+  }
+
+  _toggleDrawer () {
+    this.$.drawer.toggle()
+  }
+
+  _toggleMobileSearch () {
+    this._mobileSearchOpen = !this._mobileSearchOpen
+    this.root.querySelector('#mobile-search-icon').classList.toggle('active')
+    this.root.querySelector('#mobile-search').toggle()
+  }
+}
+
+customElements.define(StoreHeader.is, StoreHeader)
+</script>
+</dom-module>

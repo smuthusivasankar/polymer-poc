@@ -1,0 +1,99 @@
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<dom-module id="store-header-cart-link">
+  <template>
+    <style include="store-foundation">
+    :host {
+      width: 48px;
+      height: 48px;
+      display: block;
+      font-size: 20px;
+    }
+
+    #addtobag {
+      display: block;
+      width: 100%;
+      height: 100%;
+      color: var(--AdiWhite);
+      background: var(--AdiBlack);
+      margin-left: 1px;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.1s ease-in-out;
+    }
+
+    #addtobag::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-family: 'adiPictoRegular';
+      font-weight: 400;
+      content: '\E330';
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: color 0.2s;
+    }
+
+    #addtobag.empty::before {
+      content: '\E311';
+    }
+
+    #addtobag:hover,
+    #addtobag.active:hover {
+      background: var(--AdiWhite);
+    }
+
+    #addtobag:hover::before {
+      color: var(--AdiPrimary);
+    }
+    span {
+      font-family: 'adiHaus';
+      position: relative;
+      color: var(--AdiBlack);
+      font-size: 0.65em;
+      font-weight: 400;
+      line-height: 65px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 0.45em;
+      line-height: 53px;
+    }
+    #addtobag:hover span {
+      color: var(--AdiWhite);
+    }
+    #addtobag.active {
+      background: var(--AdiPrimary);
+    }
+    .active::bofre {
+      color: var(--AdiWhite);
+    }
+    .active span {
+      color: var(--AdiPrimary);
+    }
+    </style>
+    <a id="addtobag" href="" s18n-attrs="href">
+      <span id="value"></span>
+    </a>
+  </template>
+  <script>
+  class storeHeaderCartLink extends StoreBaseElement {
+    static get is () { return 'store-header-cart-link' }
+    static get properties () {
+      return { }
+    }
+
+  }
+  customElements.define(storeHeaderCartLink.is, storeHeaderCartLink)
+  </script>
+</dom-module>

@@ -1,0 +1,70 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../store-base-element/store-base-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../store-shared-styles/store-foundation.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<dom-module id="store-description-stack">
+    <template>
+        <style include="store-foundation">
+            @media (min-width: 960px) {
+                .description {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+            }
+        </style>
+	<app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+	<!--<div><h2> {{queryParams}}</h2></div>-->
+        <div class="container stack">
+            <div class="row">
+                <div class="col-mb-12 col-dt-24 text-center"><h3 class="light">[[description.title]]</h3></div>
+                <div class="col-mb-12 col-dt-24 text-center"><h5>[[description.subTitle]]</h5></div>
+                <div class="offset-dt-2 offset-mb-0 col-mb-12 col-dt-9 description"><p>[[description.description]]</p></div>
+                <div class="offset-dt-2 col-mb-12 col-dt-9 description">
+                    <template is="dom-if" if="[[description.usp-list.length]]">
+                        <ul>
+                            <template is="dom-repeat" items="[[description.usp-list]]" as="usp">
+                                <li>[[usp]]</li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </div>
+        </div>
+<iron-ajax
+              url="http://10.67.90.232:83/api/fragment/getContent"
+              id="productRequest"
+              handle-as="json"
+			  params="{{filter}}" 
+			  last-response="{{description}}"
+			  >
+          </iron-ajax>
+    </template>
+    <script>
+        class StoreDescriptionStack extends StoreBaseElement {
+		
+          static get is () { return 'store-description-stack' }
+          static get properties () {
+            return {
+			 filter:Object,
+              title: String,
+              subTitle: String,
+              descriptions: String,
+              uspList: {
+                type: Array,
+                value: []
+              }				
+			   
+            }
+          }
+		 ready(){		
+		  super.ready()
+		  this.filter = (this.filter == null || this.filter ==undefined ) ? this.queryParams : this.filter;
+		  this.$.productRequest.generateRequest();
+		  }
+        }
+        customElements.define(StoreDescriptionStack.is, StoreDescriptionStack)
+    </script>
+</dom-module>
